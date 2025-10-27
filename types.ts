@@ -1,4 +1,4 @@
-import type React from 'react';
+import type { ReactNode } from 'react';
 
 export interface Question {
   question: string;
@@ -22,7 +22,8 @@ export interface Challenge {
 export interface Lesson {
   id: string;
   title: string;
-  theory: React.ReactNode;
+  // Fix: Use ReactNode directly to avoid module-level conflicts.
+  theory: ReactNode;
   practice: {
     examples: PracticeExample[];
   };

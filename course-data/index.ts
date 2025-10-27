@@ -1,4 +1,5 @@
-import React from 'react';
+// Fix: Changed React import to a namespace import, which is a more robust pattern for use with React.createElement and helps avoid module resolution conflicts.
+import * as React from 'react';
 import type { CourseData } from '../types';
 
 export const courseData: CourseData = {
@@ -1391,11 +1392,54 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
             )
           ),
           practice: {
-            examples: []
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Verificar um Número",
+                description: 'Vamos verificar se um número é positivo, negativo ou zero.',
+                code: `const numero = 10;
+
+if (numero > 0) {
+  console.log("O número é positivo.");
+} else if (numero < 0) {
+  console.log("O número é negativo.");
+} else {
+  console.log("O número é zero.");
+}`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Atribuir Notas",
+                description: 'Uma cadeia de `if/else if` é perfeita para classificar um valor em diferentes categorias, como atribuir uma nota a uma pontuação.',
+                code: `const pontuacao = 85;
+let nota;
+
+if (pontuacao >= 90) {
+  nota = "A";
+} else if (pontuacao >= 80) {
+  nota = "B";
+} else if (pontuacao >= 70) {
+  nota = "C";
+} else {
+  nota = "Reprovado";
+}
+
+console.log("A nota final é:", nota); // B`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - Valores 'Falsy'",
+                description: "Em JavaScript, não são só os booleanos `false` que são tratados como falsos numa condição. Valores como `0`, `''` (string vazia), `null`, `undefined` e `NaN` também são 'falsy'. Isto pode ser útil, mas também uma fonte de bugs se não tiveres atenção.",
+                code: `const nomeUtilizador = "";
+
+if (nomeUtilizador) {
+  console.log("Bem-vindo, " + nomeUtilizador);
+} else {
+  console.log("Por favor, faça login."); // Esta linha será executada
+}`
+              }
+            ]
           },
           quiz: [
             {
-              question: "O que será impresso na consola? `const saldo = 50; if (saldo > 100) { console.log('Rico'); } else { console.log('Pobre'); }`",
+              question: "O que será impresso? `const saldo = 50; if (saldo > 100) { console.log('Rico'); } else { console.log('Pobre'); }`",
               options: [
                 'Rico',
                 'Pobre',
@@ -1403,9 +1447,46 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
                 'Vai dar erro'
               ],
               correctAnswerIndex: 1,
-              explanation: "A condição `saldo > 100` (ou seja, 50 > 100) é `false`. Como a condição do `if` não foi satisfeita, o código dentro do bloco `else` é executado, imprimindo 'Pobre' na consola."
+              explanation: "A condição `saldo > 100` (ou seja, 50 > 100) é `false`. Como a condição do `if` não foi satisfeita, o código dentro do bloco `else` é executado."
+            },
+            {
+              question: "Qual o output? `let temperatura = 15; if (temperatura < 10) { console.log('Frio'); } else if (temperatura <= 20) { console.log('Ameno'); } else { console.log('Quente'); }`",
+              options: [
+                'Frio',
+                'Ameno',
+                'Quente',
+                'Frio e Ameno'
+              ],
+              correctAnswerIndex: 1,
+              explanation: 'A primeira condição (`15 < 10`) é falsa. O JavaScript passa para a segunda: `15 <= 20` é verdadeira. O bloco correspondente é executado e a verificação para.'
+            },
+            {
+              question: "Qual destes valores NÃO é considerado 'falsy'?",
+              options: [
+                '0',
+                '""',
+                '[] (um array vazio)',
+                'null'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "Esta é uma armadilha comum! Um array vazio (e um objeto vazio `{}`) é 'truthy' em JavaScript. A condição `if ([])` será executada."
             }
-          ]
+          ],
+          challenge: {
+            description: "Escreve uma estrutura `if/else` para determinar o acesso a uma área restrita. Um utilizador só pode entrar se for um `admin` E se estiver `logado`. Cria as variáveis `eAdmin` e `estaLogado` (booleanos) e imprime 'Acesso Permitido' ou 'Acesso Negado'.",
+            starterCode: `const eAdmin = true;
+const estaLogado = false;
+
+// Escreve a tua condição aqui`,
+            solution: `const eAdmin = true;
+const estaLogado = false;
+
+if (eAdmin && estaLogado) {
+  console.log("Acesso Permitido");
+} else {
+  console.log("Acesso Negado");
+}`
+          }
         },
         {
           id: '3.2',
@@ -1430,7 +1511,75 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
             )
           ),
           practice: {
-            examples: []
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Dia da Semana",
+                description: 'Vamos converter um número (0-6) para o dia da semana correspondente.',
+                code: `const dia = 3;
+let nomeDia;
+
+switch (dia) {
+  case 0:
+    nomeDia = "Domingo";
+    break;
+  case 1:
+    nomeDia = "Segunda-feira";
+    break;
+  case 2:
+    nomeDia = "Terça-feira";
+    break;
+  // ... e assim por diante
+  default:
+    nomeDia = "Dia inválido";
+}
+console.log(nomeDia);`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Agrupar Casos",
+                description: "Podes agrupar vários `case` para executar o mesmo bloco de código. É útil para categorizar.",
+                code: `const mes = 4; // Abril
+let estacao;
+
+switch (mes) {
+  case 12:
+  case 1:
+  case 2:
+    estacao = "Inverno";
+    break;
+  case 3:
+  case 4:
+  case 5:
+    estacao = "Primavera";
+    break;
+  // ... etc
+  default:
+    estacao = "Mês inválido";
+}
+console.log("Estamos na:", estacao);`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - O 'Fall-through'",
+                description: "Vê o que acontece se nos esquecermos do `break`. A execução 'cai' para os casos seguintes até encontrar um `break` ou o fim do `switch`.",
+                code: `const nivelAcesso = "user";
+
+switch (nivelAcesso) {
+  case "admin":
+    console.log("Acesso total");
+    // break esquecido
+  case "editor":
+    console.log("Pode editar conteúdo");
+    // break esquecido
+  case "user":
+    console.log("Pode ver conteúdo");
+    break;
+  default:
+    console.log("Acesso negado");
+}
+// Output:
+// Pode editar conteúdo
+// Pode ver conteúdo`
+              }
+            ]
           },
           quiz: [
             {
@@ -1443,8 +1592,56 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
               ],
               correctAnswerIndex: 2,
               explanation: 'Isto chama-se "fall-through". Se um `case` corresponde e não tem `break`, o código continua a executar nos `case` seguintes até encontrar um `break` ou o fim do `switch`. É uma fonte comum de bugs!'
+            },
+            {
+                question: "O que será impresso? `let animal = 'gato'; switch(animal) { case 'cão': console.log('au'); break; case 'vaca': console.log('muu'); break; default: console.log('som'); }`",
+                options: [
+                  'au',
+                  'muu',
+                  'som',
+                  'Nada'
+                ],
+                correctAnswerIndex: 2,
+                explanation: "Como o valor de `animal` ('gato') não corresponde a nenhum dos `case` ('cão' ou 'vaca'), o bloco `default` é executado."
+            },
+            {
+                question: "Quando é que um `switch` é geralmente preferível a um `if/else if/else`?",
+                options: [
+                    "Quando tens condições complexas (ex: `idade > 18 && valor < 100`).",
+                    "Quando tens uma única variável ou expressão para comparar contra múltiplos valores distintos.",
+                    "Nunca, `if/else` é sempre melhor.",
+                    "Apenas quando se comparam números."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "`switch` brilha em cenários onde uma única variável é testada contra uma lista de possíveis valores discretos. Torna o código mais limpo e legível do que uma longa cadeia de `else if (variavel === ...)`."
             }
-          ]
+          ],
+          challenge: {
+            description: "Cria uma função `obterSaudacao(lingua)` que recebe um código de língua ('pt', 'en', 'es', 'fr') e devolve a saudação correspondente ('Olá', 'Hello', 'Hola', 'Bonjour'). Usa uma estrutura `switch`. Se a língua não for reconhecida, deve devolver 'Saudação não disponível'.",
+            starterCode: `function obterSaudacao(lingua) {
+  // Usa um switch aqui para retornar a saudação correta
+}
+
+console.log(obterSaudacao("pt")); // Deve imprimir "Olá"
+console.log(obterSaudacao("de")); // Deve imprimir "Saudação não disponível"`,
+            solution: `function obterSaudacao(lingua) {
+  switch (lingua) {
+    case "pt":
+      return "Olá";
+    case "en":
+      return "Hello";
+    case "es":
+      return "Hola";
+    case "fr":
+      return "Bonjour";
+    default:
+      return "Saudação não disponível";
+  }
+}
+
+console.log(obterSaudacao("pt"));
+console.log(obterSaudacao("de"));`
+          }
         },
         {
           id: '3.3',
@@ -1476,7 +1673,42 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
             )
           ),
           practice: {
-            examples: []
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Contar de 1 a 5",
+                description: 'O exemplo mais simples de um ciclo `for`: contar e imprimir números.',
+                code: `for (let i = 1; i <= 5; i++) {
+  console.log("Contagem:", i);
+}`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Somar os Elementos de um Array",
+                description: 'Uma das utilizações mais comuns de um ciclo `for` é percorrer um array para processar os seus elementos.',
+                code: `const numeros = [10, 20, 30, 40];
+let soma = 0;
+
+for (let i = 0; i < numeros.length; i++) {
+  soma += numeros[i];
+}
+
+console.log("A soma total é:", soma); // 100`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - Erros 'Off-by-One'",
+                description: "Um erro muito comum é usar `<=` em vez de `<` na condição ao percorrer um array. Como os índices vão de 0 a `length - 1`, usar `i <= numeros.length` faria com que o ciclo tentasse aceder a um índice que não existe, resultando em `undefined`.",
+                code: `const cores = ["azul", "verde"]; // length é 2, índices são 0 e 1
+
+// Ciclo correto
+for (let i = 0; i < cores.length; i++) {
+  console.log(cores[i]);
+}
+
+// Ciclo incorreto (descomenta para ver o \`undefined\`)
+// for (let i = 0; i <= cores.length; i++) {
+//   console.log(cores[i]); // Na última volta, tenta aceder a cores[2]
+// }`
+              }
+            ]
           },
           quiz: [
             {
@@ -1489,8 +1721,45 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
               ],
               correctAnswerIndex: 1,
               explanation: 'O ciclo executa para i = 0, i = 1, e i = 2. Quando `i` se torna 3, a condição `i < 3` torna-se `false` e o ciclo para. Portanto, executa 3 vezes.'
+            },
+            {
+              question: "Qual será o valor final de `contador`? `let contador = 0; for (let i = 0; i < 5; i++) { contador++; }`",
+              options: [
+                '4',
+                '5',
+                '6',
+                '0'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "O ciclo executa 5 vezes (para i=0, 1, 2, 3, 4). Em cada uma dessas vezes, `contador` é incrementado. Portanto, o seu valor final será 5."
+            },
+            {
+              question: "Como escreverias um ciclo `for` para contar de 10 para 1 (contagem decrescente)?",
+              options: [
+                'for (let i = 10; i < 1; i++)',
+                'for (let i = 10; i > 0; i--)',
+                'for (let i = 1; i <= 10; i--)',
+                'for (let i = 10; i > 1; i++)'
+              ],
+              correctAnswerIndex: 1,
+              explanation: 'Para uma contagem decrescente, a inicialização deve ser o valor mais alto, a condição deve verificar se o valor ainda é maior que o limite, e o incremento deve ser, na verdade, um decremento (`i--`).'
             }
-          ]
+          ],
+          challenge: {
+            description: "Escreve um ciclo `for` que imprima a tabuada do 7, de 1 a 10. O output deve ser no formato: '7 x 1 = 7', '7 x 2 = 14', etc.",
+            starterCode: `const numero = 7;
+
+console.log(\`Tabuada do \${numero}:\`);
+
+// Escreve o teu ciclo for aqui`,
+            solution: `const numero = 7;
+
+console.log(\`Tabuada do \${numero}:\`);
+
+for (let i = 1; i <= 10; i++) {
+  console.log(\`\${numero} x \${i} = \${numero * i}\`);
+}`
+          }
         },
         {
           id: '3.4',
@@ -1530,7 +1799,47 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
             )
           ),
           practice: {
-            examples: []
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - `while` para Contagem Decrescente",
+                description: 'Vamos usar um ciclo `while` para fazer uma contagem decrescente até ao lançamento.',
+                code: `let contagem = 5;
+
+while (contagem > 0) {
+  console.log(contagem);
+  contagem--; // Crucial para evitar um ciclo infinito!
+}
+
+console.log("Lançar!");`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Jogo de Adivinhas",
+                description: 'Um ciclo `while` é perfeito para um jogo que continua enquanto o jogador não acertar no número secreto.',
+                code: `const numeroSecreto = 7;
+let palpite = 0;
+
+while (palpite !== numeroSecreto) {
+  // Num programa real, o palpite viria do utilizador
+  palpite = Math.floor(Math.random() * 10) + 1;
+  console.log("Tentativa:", palpite);
+}
+
+console.log("Acertaste! O número era 7.");`
+              },
+              {
+                title: "Exemplo 3: A Nuance - `do...while` para Menus",
+                description: "`do...while` é útil para situações como menus de utilizador, onde queres que a ação (mostrar o menu) aconteça pelo menos uma vez, antes de verificares se o utilizador quer sair.",
+                code: `let escolha;
+
+do {
+  // Num programa real, pediríamos input ao utilizador
+  escolha = prompt("Escolha uma opção (ou 'sair' para terminar):");
+  console.log("Processando a escolha:", escolha);
+} while (escolha !== "sair");
+
+console.log("Programa terminado.");`
+              }
+            ]
           },
           quiz: [
             {
@@ -1543,8 +1852,49 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
               ],
               correctAnswerIndex: 2,
               explanation: 'Correto! Como `do...while` verifica a condição no final, o bloco de código é sempre executado pelo menos uma vez. `while` verifica a condição no início, por isso o seu bloco de código pode nunca ser executado se a condição for inicialmente falsa.'
+            },
+            {
+              question: "O que acontece neste código? `let i = 0; while(i < 5) { console.log(i); }`",
+              options: [
+                "Imprime os números de 0 a 4.",
+                "Imprime 0, 1, 2, 3, 4, 5.",
+                "Cria um ciclo infinito.",
+                "Não imprime nada."
+              ],
+              correctAnswerIndex: 2,
+              explanation: "A variável `i` nunca é incrementada dentro do ciclo. A condição `i < 5` (0 < 5) será sempre verdadeira, levando a um ciclo infinito que irá bloquear o programa."
+            },
+            {
+              question: "Quantas vezes a palavra 'Olá' será impressa? `let contador = 5; do { console.log('Olá'); contador++; } while (contador < 5);`",
+              options: [
+                '0 vezes',
+                '1 vez',
+                '5 vezes',
+                'Infinitas vezes'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "O ciclo `do...while` executa o bloco uma vez antes de verificar a condição. Ele imprime 'Olá', incrementa `contador` para 6. Depois, a condição `6 < 5` é avaliada como `false`, e o ciclo termina."
             }
-          ]
+          ],
+          challenge: {
+            description: "Simula o lançamento de um dado (um número aleatório de 1 a 6) repetidamente até que o resultado seja 6. Usa um ciclo `while` ou `do...while` e, no final, imprime quantas tentativas foram necessárias.",
+            starterCode: `let tentativas = 0;
+let dado;
+
+// Escreve o teu ciclo aqui
+
+console.log(\`Foram necessárias \${tentativas} tentativas para conseguir um 6!\`);`,
+            solution: `let tentativas = 0;
+let dado = 0;
+
+while (dado !== 6) {
+  dado = Math.floor(Math.random() * 6) + 1;
+  tentativas++;
+  console.log(\`Tentativa \${tentativas}: saiu o número \${dado}\`);
+}
+
+console.log(\`Foram necessárias \${tentativas} tentativas para conseguir um 6!\`);`
+          }
         },
         {
           id: '3.5',
@@ -1560,7 +1910,60 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
             )
           ),
           practice: {
-            examples: []
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - As Três Formas",
+                description: 'Vamos imprimir os elementos de um array usando as três abordagens para vermos as diferenças na sintaxe.',
+                code: `const frutas = ["maçã", "banana", "laranja"];
+
+// 1. Clássico 'for'
+for (let i = 0; i < frutas.length; i++) {
+  console.log(frutas[i]);
+}
+
+// 2. Moderno 'forEach'
+frutas.forEach(fruta => {
+  console.log(fruta);
+});
+
+// 3. Recomendado 'for...of'
+for (const fruta of frutas) {
+  console.log(fruta);
+}`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Usar o Índice",
+                description: "Às vezes, além do valor, também precisas do índice do elemento. O `for` clássico e o `forEach` dão-te acesso fácil a ele.",
+                code: `const nomes = ["Ana", "Rui", "Marta"];
+
+// Com forEach, o índice é o segundo parâmetro da callback
+nomes.forEach((nome, index) => {
+  console.log(\`\${index + 1}. \${nome}\`);
+});`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - Sair de um Loop",
+                description: "Uma diferença crucial: não podes 'parar' um `forEach` a meio com `break`. Se precisas dessa funcionalidade, o `for...of` ou o `for` clássico são a escolha certa.",
+                code: `const numeros = [1, 5, 10, 15, 20];
+
+// Encontrar o primeiro número maior que 10
+for (const num of numeros) {
+  if (num > 10) {
+    console.log("Encontrado:", num);
+    break; // Para o loop aqui
+  }
+}
+
+// Tentar fazer o mesmo com forEach (não funciona como esperado)
+numeros.forEach(num => {
+  if (num > 10) {
+    // 'return' aqui apenas sai da callback, não do forEach
+    return;
+  }
+  // console.log(num); // vai imprimir 1, 5, 10
+});`
+              }
+            ]
           },
           quiz: [
             {
@@ -1573,8 +1976,49 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
               ],
               correctAnswerIndex: 2,
               explanation: "`for...of` é a escolha ideal para uma simples iteração. É mais conciso que o ciclo `for` clássico e mais direto que o `forEach`, pois não necessita de uma função de callback. Dá-te diretamente o valor de cada item."
+            },
+            {
+              question: "Qual destes ciclos te permite usar a palavra-chave `break` para parar a iteração a meio?",
+              options: [
+                'forEach',
+                'map',
+                'for...of',
+                'reduce'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "Tanto o `for...of` como o ciclo `for` clássico permitem o uso de `break` para terminar o ciclo prematuramente. `forEach`, `map` e `reduce` não podem ser parados desta forma."
+            },
+            {
+              question: "O que devolve o método `.forEach()`?",
+              options: [
+                'Um novo array com os elementos modificados.',
+                'O último elemento do array.',
+                'O valor `undefined`.',
+                'O número de elementos no array.'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "`forEach` é usado para executar um 'efeito secundário' (como `console.log`) para cada elemento. Ele não devolve nenhum valor útil; o seu valor de retorno é sempre `undefined`."
             }
-          ]
+          ],
+          challenge: {
+            description: "Dado um array de palavras, usa um ciclo `for...of` para construir uma nova string que seja a concatenação de todas as palavras com mais de 3 letras, separadas por um espaço.",
+            starterCode: `const palavras = ["Olá", "mundo", "em", "JavaScript", "é", "top"];
+let fraseFinal = "";
+
+// Escreve o teu ciclo for...of aqui
+
+console.log(fraseFinal.trim()); // .trim() remove espaços extra no início/fim`,
+            solution: `const palavras = ["Olá", "mundo", "em", "JavaScript", "é", "top"];
+let fraseFinal = "";
+
+for (const palavra of palavras) {
+  if (palavra.length > 3) {
+    fraseFinal += palavra + " ";
+  }
+}
+
+console.log(fraseFinal.trim()); // "mundo JavaScript"`
+          }
         },
         {
             id: '3.6',
@@ -1592,7 +2036,45 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
               )
             ),
             practice: {
-              examples: []
+              examples: [
+                {
+                  title: "Exemplo 1: O Básico - `for...in`",
+                  description: 'Vamos usar o ciclo `for...in` para listar as propriedades e os valores de um objeto simples.',
+                  code: `const carro = {
+  marca: "Tesla",
+  modelo: "Model 3",
+  ano: 2022
+};
+
+for (const chave in carro) {
+  console.log(\`\${chave}: \${carro[chave]}\`);
+}`
+                },
+                {
+                  title: "Exemplo 2: O Caso Comum - `Object.keys()` + `forEach()`",
+                  description: 'Esta é uma abordagem moderna e muito comum. Primeiro obtemos um array com as chaves e depois iteramos sobre esse array.',
+                  code: `const utilizador = { nome: "Bia", idade: 25, cidade: "Porto" };
+
+const chaves = Object.keys(utilizador); // ["nome", "idade", "cidade"]
+
+chaves.forEach(chave => {
+  console.log(\`A propriedade '\${chave}' tem o valor '\${utilizador[chave]}'\`);
+});`
+                },
+                {
+                  title: "Exemplo 3: A Nuance - `Object.entries()` com Destructuring",
+                  description: "O método `Object.entries()` é extremamente poderoso quando combinado com `for...of` e desestruturação de arrays. Permite-nos aceder à chave e ao valor de forma muito elegante em cada iteração.",
+                  code: `const pontuacoes = {
+  matematica: 95,
+  portugues: 88,
+  historia: 92
+};
+
+for (const [disciplina, nota] of Object.entries(pontuacoes)) {
+  console.log(\`Nota em \${disciplina}: \${nota}\`);
+}`
+                }
+              ]
             },
             quiz: [
               {
@@ -1605,8 +2087,62 @@ console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
                 ],
                 correctAnswerIndex: 1,
                 explanation: "`Object.values()` é o método desenhado especificamente para esta tarefa. Ele extrai todos os valores das propriedades de um objeto e devolve-os num novo array."
+              },
+              {
+                question: "O que devolve `Object.keys({ a: 1, b: 2 })`?",
+                options: [
+                  "`['a: 1', 'b: 2']`",
+                  "`[1, 2]`",
+                  "`['a', 'b']`",
+                  "`[['a', 1], ['b', 2]]`"
+                ],
+                correctAnswerIndex: 2,
+                explanation: "`Object.keys()` devolve um array contendo apenas os nomes das chaves (propriedades) do objeto."
+              },
+              {
+                question: "Porque é que `for...in` deve ser usado com cuidado?",
+                options: [
+                  "É muito lento.",
+                  "Não funciona com todos os objetos.",
+                  "Pode iterar sobre propriedades herdadas do protótipo, o que pode não ser o desejado.",
+                  "Só funciona com strings."
+                ],
+                correctAnswerIndex: 2,
+                explanation: "Ao contrário dos métodos `Object.*`, `for...in` percorre a cadeia de protótipos. Para iterar apenas as propriedades 'próprias' de um objeto, os métodos `Object.keys`, `values`, ou `entries` são mais seguros e previsíveis."
               }
-            ]
+            ],
+            challenge: {
+                description: "Dado um objeto que representa as pontuações de um jogador, escreve uma função que calcula a pontuação total (a soma de todos os valores). Usa um dos métodos modernos (`Object.values` é uma boa escolha aqui).",
+                starterCode: `const pontuacoes = {
+  nivel1: 1500,
+  nivel2: 2300,
+  bonus: 500
+};
+
+function calcularTotal(scores) {
+  let total = 0;
+  // O teu código aqui
+  return total;
+}
+
+console.log("Pontuação Total:", calcularTotal(pontuacoes)); // Deve ser 4300`,
+                solution: `const pontuacoes = {
+  nivel1: 1500,
+  nivel2: 2300,
+  bonus: 500
+};
+
+function calcularTotal(scores) {
+  const valores = Object.values(scores); // [1500, 2300, 500]
+  let total = 0;
+  for (const valor of valores) {
+    total += valor;
+  }
+  return total;
+}
+
+console.log("Pontuação Total:", calcularTotal(pontuacoes));`
+            }
           }
       ]
     },
