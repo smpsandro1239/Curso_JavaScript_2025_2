@@ -2090,6 +2090,77 @@ buscarUtilizadores();`
               explanation: 'Correto! O método `.json()` é um passo crucial que "desempacota" os dados da resposta do servidor, transformando-os numa estrutura de dados de JavaScript (como um objeto ou array) com a qual podes trabalhar facilmente.'
             }
           ]
+        },
+        {
+          id: '6.5',
+          title: 'Aprofundando: O Event Loop',
+          theory: React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'Já vimos o "quê" do código assíncrono (callbacks, promises), mas agora vamos ver o "como". O Event Loop é o coração do modelo de concorrência do JavaScript e explica porque é que o código se comporta da forma que vemos.'
+            ),
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'A analogia é uma cozinha de um restaurante com um único ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'Chef (o Call Stack)'),
+              '. O Chef só pode fazer uma tarefa de cada vez. As tarefas demoradas (como cozinhar algo no forno) são entregues a ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'Ajudantes (as Web APIs)'),
+              '. O Chef continua o seu trabalho.'
+            ),
+             React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'Quando um Ajudante termina uma tarefa, ele não interrompe o Chef. Ele coloca um "aviso" numa ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'Fila de Espera (Callback Queue)'),
+              '. O ',
+              React.createElement('strong', { className: 'text-green' }, 'Event Loop'),
+              ' é como o maître do restaurante. Ele está constantemente a verificar: "O Chef está livre?". Se o Chef (Call Stack) estiver vazio, o Event Loop vai à Fila de Espera, pega no primeiro aviso e entrega-o ao Chef para ele o executar.'
+            ),
+            React.createElement(
+              'p',
+              null,
+              'Isto explica porque é que um `setTimeout(..., 0)` só executa depois de todo o código síncrono. O Chef tem de terminar tudo o que está a fazer antes de o maître lhe poder entregar novas tarefas da fila.'
+            )
+          ),
+          practice: {
+            description: 'Este código clássico demonstra o Event Loop em ação. Tenta prever a ordem do output antes de o veres. Presta atenção à Promise, que usa uma "fila prioritária" (Microtask Queue) e por isso "passa à frente" do setTimeout.',
+            code: `console.log("Início do script (Chef começa a trabalhar)");
+
+// O Chef entrega esta tarefa a um Ajudante (Web API) e continua.
+setTimeout(() => {
+  console.log("setTimeout: Tarefa do Ajudante terminada (da Fila normal)");
+}, 0);
+
+// As Promises têm uma fila especial de alta prioridade (Microtask Queue).
+Promise.resolve().then(() => {
+  console.log("Promise: Tarefa da Fila Prioritária");
+});
+
+console.log("Fim do script (Chef terminou o trabalho síncrono)");
+
+// Output esperado:
+// 1. Início do script
+// 2. Fim do script
+// 3. Promise: Tarefa da Fila Prioritária
+// 4. setTimeout: Tarefa do Ajudante terminada`
+          },
+          quiz: [
+            {
+              question: "No modelo do Event Loop, o que acontece quando chamas uma função como `fetch` ou `setTimeout`?",
+              options: [
+                'O Call Stack pausa e espera que a tarefa termine.',
+                'A tarefa é executada imediatamente pelo Call Stack.',
+                'A tarefa é entregue a uma Web API para ser processada em segundo plano, e o Call Stack continua a executar outro código.',
+                'O Event Loop executa a tarefa imediatamente.'
+              ],
+              correctAnswerIndex: 2,
+              explanation: 'Exatamente! A grande magia é que o Call Stack (o nosso Chef) não fica bloqueado. Ele delega tarefas demoradas às Web APIs (os Ajudantes) e continua a executar o código síncrono. Isto mantém a aplicação responsiva.'
+            }
+          ]
         }
       ]
     },
