@@ -3524,7 +3524,51 @@ addButton.addEventListener('click', () => {
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - `setTimeout`",
+                    description: "Vamos ver como o código assíncrono funciona. O `setTimeout` agenda a execução da função, mas o programa não espera. Ele continua e imprime 'Terceiro' antes de o tempo acabar.",
+                    code: `console.log("Primeiro");
+
+setTimeout(() => {
+  console.log("Segundo (após 1 segundo)");
+}, 1000); // 1000 milissegundos = 1 segundo
+
+console.log("Terceiro");`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - Simular um Download",
+                    description: "Uma função assíncrona muitas vezes aceita um callback para ser executado quando a tarefa termina. Isto permite-nos lidar com o resultado sem bloquear o programa.",
+                    code: `function fazerDownload(url, callback) {
+  console.log(\`A iniciar download de \${url}...\`);
+  
+  setTimeout(() => {
+    const dados = "Conteúdo do ficheiro";
+    callback(dados); // Chama o callback com o resultado
+  }, 2000);
+}
+
+fazerDownload("meus_dados.txt", (dadosRecebidos) => {
+  console.log(\`Download concluído! Dados: \${dadosRecebidos}\`);
+});
+
+console.log("O programa continua a executar enquanto o download ocorre...");`
+                },
+                {
+                    title: "Exemplo 3: A Armadilha - Callback Hell",
+                    description: "Quando tens múltiplas operações assíncronas que dependem umas das outras, podes acabar com um aninhamento excessivo de callbacks. Isto é chamado de 'Callback Hell' ou 'Pyramid of Doom' e torna o código muito difícil de ler e manter. Promises e async/await foram criados para resolver este problema.",
+                    code: `setTimeout(() => {
+  console.log("Operação 1 concluída.");
+  setTimeout(() => {
+    console.log("Operação 2 concluída.");
+    setTimeout(() => {
+      console.log("Operação 3 concluída.");
+      // E assim por diante...
+    }, 1000);
+  }, 1000);
+}, 1000);`
+                }
+            ]
           },
           quiz: [
             {
@@ -3537,8 +3581,54 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 2,
               explanation: "Isto é um conceito chave do JavaScript! Mesmo com um atraso de 0ms, `setTimeout` coloca a sua função de callback na 'fila de eventos'. O motor do JavaScript executa primeiro todo o código síncrono (`console.log('Primeiro')` e `console.log('Terceiro')`), e só depois verifica a fila e executa o `console.log('Segundo')`."
+            },
+            {
+                question: "O que é uma função de callback?",
+                options: [
+                  "Uma função que se chama a si mesma.",
+                  "Uma função que é passada como argumento a outra função para ser executada mais tarde.",
+                  "Uma função que retorna sempre `true` ou `false`.",
+                  "Uma função que bloqueia a execução do código."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "Exato! É um mecanismo para dizer: 'executa esta função, e quando terminares, chama esta outra função que te estou a dar'."
+            },
+            {
+                question: "O que significa dizer que JavaScript é 'single-threaded'?",
+                options: [
+                  "Só pode executar uma instrução em todo o programa.",
+                  "Só pode executar uma operação de cada vez no seu fluxo principal.",
+                  "Só pode ter um ficheiro de script por página.",
+                  "Só pode usar um tipo de dados."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "Significa que tem apenas um 'Call Stack' (uma lista de tarefas a fazer). O código assíncrono (com a ajuda do navegador/Node.js) é a forma de contornar esta limitação e evitar que a aplicação 'congele'."
             }
-          ]
+          ],
+          challenge: {
+              description: "Cria uma função `processarArray` que recebe um array e uma função de callback. A função deve, após 2 segundos, aplicar o callback a cada elemento do array e imprimir os resultados. Testa a tua função com um array de números e um callback que os duplica.",
+              starterCode: `const numeros = [1, 2, 3, 4];
+
+function processarArray(arr, callback) {
+  // O teu código aqui
+}
+
+const duplicar = (n) => n * 2;
+
+processarArray(numeros, duplicar);`,
+              solution: `const numeros = [1, 2, 3, 4];
+
+function processarArray(arr, callback) {
+  setTimeout(() => {
+    const resultado = arr.map(callback);
+    console.log(resultado);
+  }, 2000);
+}
+
+const duplicar = (n) => n * 2;
+
+processarArray(numeros, duplicar); // Imprime [2, 4, 6, 8] após 2 segundos.`
+          }
         },
         {
           id: '6.2',
@@ -3574,7 +3664,59 @@ addButton.addEventListener('click', () => {
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - Criar uma Promise",
+                    description: "Vamos criar uma promise que simula uma tarefa que pode ter sucesso ou falhar. `resolve` é a função a chamar em caso de sucesso, `reject` em caso de falha.",
+                    code: `const minhaPromise = new Promise((resolve, reject) => {
+  const sucesso = true; // Tenta mudar para 'false' para ver o .catch() a funcionar
+  
+  setTimeout(() => {
+    if (sucesso) {
+      resolve("Operação bem-sucedida!");
+    } else {
+      reject("Algo correu mal.");
+    }
+  }, 2000);
+});
+
+minhaPromise
+  .then((resultado) => console.log("Sucesso:", resultado))
+  .catch((erro) => console.log("Erro:", erro));`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - Encadeamento (Chaining)",
+                    description: "O poder das Promises está no encadeamento. O valor retornado por um `.then()` é passado como argumento para o `.then()` seguinte. Isto cria um fluxo de trabalho assíncrono limpo e sequencial.",
+                    code: `new Promise((resolve) => setTimeout(() => resolve(10), 1000))
+  .then((resultado1) => {
+    console.log("Primeiro then:", resultado1); // 10
+    return resultado1 * 2; // Passa para o próximo then
+  })
+  .then((resultado2) => {
+    console.log("Segundo then:", resultado2); // 20
+    return resultado2 + 5;
+  })
+  .then((resultado3) => {
+    console.log("Terceiro then:", resultado3); // 25
+  })
+  .catch((erro) => console.log("Apanhado no catch:", erro));`
+                },
+                {
+                    title: "Exemplo 3: A Armadilha - Esquecer o `.catch()`",
+                    description: "Se uma promise for rejeitada e não houver um bloco `.catch()` para lidar com o erro, o teu programa terá um 'Unhandled Promise Rejection', o que pode fazê-lo crashar ou comportar-se de forma inesperada. É uma boa prática terminar sempre uma cadeia de promises com um `.catch()`.",
+                    code: `const promiseComErro = new Promise((resolve, reject) => {
+  reject("Erro deliberado!");
+});
+
+// Sem .catch(), este erro aparece na consola como "Uncaught (in promise)"
+// promiseComErro.then(res => console.log(res));
+
+// Com .catch(), o erro é tratado de forma graciosa
+promiseComErro
+  .then(res => console.log(res))
+  .catch(err => console.error("Erro tratado:", err));`
+                }
+            ]
           },
           quiz: [
             {
@@ -3587,8 +3729,65 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 2,
               explanation: 'O método `.catch()` é o "plano B". Ele apanha qualquer erro que aconteça, seja uma falha de rede ou um erro lançado intencionalmente, permitindo-te lidar com a falha de forma controlada.'
+            },
+            {
+                question: "Uma Promise que ainda não foi resolvida nem rejeitada está em que estado?",
+                options: [
+                    "fulfilled",
+                    "rejected",
+                    "settled",
+                    "pending"
+                ],
+                correctAnswerIndex: 3,
+                explanation: "O estado inicial de qualquer promise é 'pending'. Ele permanece neste estado até que a operação assíncrona termine, altura em que transita para 'fulfilled' (com sucesso) ou 'rejected' (com erro)."
+            },
+            {
+                question: "O que é passado como argumento para a função dentro de um `.then()`?",
+                options: [
+                    "O motivo do erro da promise anterior.",
+                    "O valor com que a promise anterior foi resolvida (fulfilled).",
+                    "O objeto da promise em si.",
+                    "Nada."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "O método `.then(callback)` foi desenhado para lidar com o caso de sucesso. O `callback` recebe como seu primeiro (e único) argumento o valor que foi passado para a função `resolve()`."
             }
-          ]
+          ],
+          challenge: {
+              description: "Cria uma função `verificarNumero` que retorna uma Promise. A promise deve verificar um número: se for maior que 10, deve ser resolvida com a mensagem 'Número é válido'. Caso contrário, deve ser rejeitada com a mensagem 'Número inválido'. Testa a tua função chamando-a com os números 15 e 5, e usando `.then()` e `.catch()` para imprimir os resultados.",
+              starterCode: `function verificarNumero(num) {
+  // Retorna uma nova Promise aqui
+}
+
+// Testa com um número válido
+verificarNumero(15)
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+// Testa com um número inválido
+verificarNumero(5)
+  .then(res => console.log(res))
+  .catch(err => console.error(err));`,
+              solution: `function verificarNumero(num) {
+  return new Promise((resolve, reject) => {
+    if (num > 10) {
+      resolve("Número é válido");
+    } else {
+      reject("Número inválido");
+    }
+  });
+}
+
+// Testa com um número válido
+verificarNumero(15)
+  .then(res => console.log(res)) // "Número é válido"
+  .catch(err => console.error(err));
+
+// Testa com um número inválido
+verificarNumero(5)
+  .then(res => console.log(res))
+  .catch(err => console.error(err)); // "Número inválido"`
+          }
         },
         {
           id: '6.3',
@@ -3619,7 +3818,67 @@ addButton.addEventListener('click', () => {
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - Converter uma Promise",
+                    description: "Vamos pegar na promise do exemplo anterior e consumi-la com async/await. Repara como o código fica mais 'plano' e fácil de seguir.",
+                    code: `function operacaoDemorada() {
+  return new Promise(resolve => setTimeout(() => resolve("Terminou!"), 2000));
+}
+
+async function executar() {
+  console.log("A iniciar...");
+  const resultado = await operacaoDemorada(); // Pausa aqui até a promise resolver
+  console.log(resultado); // "Terminou!"
+  console.log("Fim.");
+}
+
+executar();`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - Lidar com Erros",
+                    description: "O bloco `try...catch` é a forma padrão de lidar com erros (promises rejeitadas) quando se usa async/await. É muito similar à forma como lidamos com erros em código síncrono.",
+                    code: `function podeFalhar() {
+  return new Promise((resolve, reject) => {
+    if (Math.random() > 0.5) {
+      resolve("Sucesso!");
+    } else {
+      reject("Falhou!");
+    }
+  });
+}
+
+async function tentarOperacao() {
+  try {
+    const resultado = await podeFalhar();
+    console.log("Resultado:", resultado);
+  } catch (erro) {
+    console.error("Apanhado no catch:", erro);
+  }
+}
+
+tentarOperacao();`
+                },
+                {
+                    title: "Exemplo 3: A Armadilha - Esquecer o `await`",
+                    description: "Um erro muito comum é chamar uma função que retorna uma promise dentro de uma função async, mas esquecer de usar `await`. O que recebes não é o valor resolvido, mas sim o próprio objeto da promise no estado pendente.",
+                    code: `function obterDados() {
+  return new Promise(resolve => setTimeout(() => resolve({ id: 1, nome: "Ana" }), 1000));
+}
+
+async function mostrarDados() {
+  // ERRADO:
+  const dadosErrados = obterDados();
+  console.log("Sem await:", dadosErrados); // Imprime Promise { <pending> }
+
+  // CORRETO:
+  const dadosCorretos = await obterDados();
+  console.log("Com await:", dadosCorretos); // Imprime { id: 1, nome: 'Ana' }
+}
+
+mostrarDados();`
+                }
+            ]
           },
           quiz: [
             {
@@ -3632,8 +3891,64 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 1,
               explanation: '`await` é a chave da magia! Só pode ser usado dentro de uma função `async` e efetivamente "pausa" a função naquele ponto, espera que a Promise termine, e depois continua a execução com o resultado da Promise.'
+            },
+            {
+                question: "O que é que uma função declarada com `async` retorna sempre?",
+                options: [
+                    "O valor `undefined`.",
+                    "O valor `null`.",
+                    "Uma Promise.",
+                    "Um objeto."
+                ],
+                correctAnswerIndex: 2,
+                explanation: "Mesmo que não uses `return` explicitamente (o que faria com que ela resolvesse com `undefined`), uma função `async` envolve sempre o seu valor de retorno numa Promise. Se retornares um valor, a promise resolve com esse valor. Se lançares um erro, a promise é rejeitada."
+            },
+            {
+                question: "Como lidas com erros de promises rejeitadas dentro de uma função `async`?",
+                options: [
+                    "Usando um bloco `.catch()` no final da função.",
+                    "Envolvendo o código com `await` num bloco `try...catch`.",
+                    "Não é possível lidar com erros.",
+                    "Usando um bloco `if/else`."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "`try...catch` é a forma idiomática e síncrona de lidar com erros assíncronos quando se usa `async/await`. O código no bloco `catch` será executado se qualquer uma das promises dentro do `try` for rejeitada."
             }
-          ]
+          ],
+          challenge: {
+              description: "Converte a cadeia de Promises do desafio da lição anterior para a sintaxe `async/await`. Cria uma função `async` chamada `testarNumero` que chama a função `verificarNumero` (da lição anterior) e imprime o resultado ou o erro na consola, usando `try...catch`.",
+              starterCode: `function verificarNumero(num) {
+  return new Promise((resolve, reject) => {
+    if (num > 10) resolve("Número é válido");
+    else reject("Número inválido");
+  });
+}
+
+async function testarNumero(numero) {
+  // O teu código com try...catch aqui
+}
+
+testarNumero(15);
+testarNumero(5);`,
+              solution: `function verificarNumero(num) {
+  return new Promise((resolve, reject) => {
+    if (num > 10) resolve("Número é válido");
+    else reject("Número inválido");
+  });
+}
+
+async function testarNumero(numero) {
+  try {
+    const resultado = await verificarNumero(numero);
+    console.log(\`Teste com \${numero}: \${resultado}\`);
+  } catch (erro) {
+    console.error(\`Teste com \${numero}: \${erro}\`);
+  }
+}
+
+testarNumero(15);
+testarNumero(5);`
+          }
         },
         {
           id: '6.4',
@@ -3644,7 +3959,7 @@ addButton.addEventListener('click', () => {
             React.createElement(
               'p',
               { className: 'mb-4' },
-              'Já usámos a `fetch` API, mas vamos aprofundar o seu propósito e o formato de dados mais comum na web: JSON.'
+              'A `Fetch API` é a ferramenta moderna do navegador para fazer pedidos de rede (como obter dados de um servidor). É uma funcionalidade assíncrona baseada em Promises, o que a torna perfeita para usar com `.then()` ou `async/await`.'
             ),
             React.createElement(
               'h3',
@@ -3673,7 +3988,58 @@ addButton.addEventListener('click', () => {
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - Usando `.then()`",
+                    description: "Vamos fazer um pedido a uma API pública de teste (JSONPlaceholder) para obter uma lista de tarefas (to-dos). Repara nos dois passos: o primeiro `.then()` lida com a resposta HTTP, e o segundo lida com os dados já convertidos para JSON.",
+                    code: `const url = 'https://jsonplaceholder.typicode.com/todos/1';
+
+fetch(url)
+  .then(response => response.json()) // Converte a resposta para JSON
+  .then(data => console.log("Dados recebidos:", data))
+  .catch(error => console.error("Erro no fetch:", error));`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - Usando `async/await`",
+                    description: "A mesma operação, mas escrita com `async/await`, que é geralmente considerada mais legível. A lógica do `try...catch` substitui o `.catch()` das promises.",
+                    code: `const url = 'https://jsonplaceholder.typicode.com/users/1';
+
+async function obterUtilizador() {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log("Utilizador:", data.name);
+  } catch (error) {
+    console.error("Falha ao obter utilizador:", error);
+  }
+}
+
+obterUtilizador();`
+                },
+                {
+                    title: "Exemplo 3: A Armadilha - `fetch` só rejeita em falha de rede",
+                    description: "Ao contrário de outras bibliotecas, `fetch` não rejeita a promise por erros de HTTP como '404 Not Found' ou '500 Internal Server Error'. Ele só falha se houver um problema de rede. É boa prática verificar a propriedade `response.ok` (que é `true` para respostas com sucesso, como 200-299) antes de continuar.",
+                    code: `const urlErrada = 'https://jsonplaceholder.typicode.com/posts/9999'; // Não existe
+
+async function verificarResposta() {
+  try {
+    const response = await fetch(urlErrada);
+    
+    if (!response.ok) {
+      // Lança um erro para ser apanhado pelo catch
+      throw new Error(\`Erro HTTP! Status: \${response.status}\`);
+    }
+    
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error(error.message); // "Erro HTTP! Status: 404"
+  }
+}
+
+verificarResposta();`
+                }
+            ]
           },
           quiz: [
             {
@@ -3686,8 +4052,59 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 2,
               explanation: 'Correto! O método `.json()` é um passo crucial que "desempacota" os dados da resposta do servidor, transformando-os numa estrutura de dados de JavaScript (como um objeto ou array) com a qual podes trabalhar facilmente.'
+            },
+            {
+                question: "O que é que a função `fetch()` retorna?",
+                options: [
+                  "Os dados em formato JSON diretamente.",
+                  "Uma string com o conteúdo da resposta.",
+                  "Uma Promise que resolve com o objeto Response.",
+                  "Um erro se o status não for 200."
+                ],
+                correctAnswerIndex: 2,
+                explanation: "`fetch()` retorna imediatamente uma Promise. Essa Promise não contém os dados, mas sim um objeto `Response` que representa toda a resposta HTTP. Precisas de usar métodos como `.json()` nesse objeto para extrair os dados."
+            },
+            {
+                question: "Qual a sintaxe de um ficheiro JSON?",
+                options: [
+                  "É muito similar a objetos e arrays de JavaScript, mas as chaves têm de estar entre aspas duplas.",
+                  "É igual à sintaxe de objetos do Python.",
+                  "É um formato binário, não legível por humanos.",
+                  "É igual a XML."
+                ],
+                correctAnswerIndex: 0,
+                explanation: "JSON é um subconjunto da sintaxe de objetos de JavaScript. A principal diferença é que os nomes das propriedades (chaves) devem sempre estar entre aspas duplas."
             }
-          ]
+          ],
+          challenge: {
+              description: "Usa a `Fetch API` para fazer um pedido ao endpoint `https://api.quotable.io/random`. Esta API devolve uma citação aleatória. Depois de receberes os dados, imprime a citação (`content`) e o autor (`author`) na consola.",
+              starterCode: `const apiUrl = 'https://api.quotable.io/random';
+
+async function obterCitacao() {
+  // O teu código async/await com fetch e try/catch aqui
+}
+
+obterCitacao();`,
+              solution: `const apiUrl = 'https://api.quotable.io/random';
+
+async function obterCitacao() {
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error("Não foi possível obter a citação.");
+    }
+    const data = await response.json();
+    
+    console.log('Citação: "', data.content, '"');
+    console.log('Autor:', data.author);
+    
+  } catch (error) {
+    console.error("Ocorreu um erro:", error);
+  }
+}
+
+obterCitacao();`
+          }
         },
         {
           id: '6.5',
@@ -3713,7 +4130,7 @@ addButton.addEventListener('click', () => {
               'p',
               { className: 'mb-4' },
               'Quando um Ajudante termina uma tarefa, ele não interrompe o Chef. Ele coloca um "aviso" numa ',
-              React.createElement('strong', { className: 'text-lightest-slate' }, 'Fila de Espera (Callback Queue)'),
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'Fila de Espera (Callback Queue ou Macrotask Queue)'),
               '. O ',
               React.createElement('strong', { className: 'text-green' }, 'Event Loop'),
               ' é como o maître do restaurante. Ele está constantemente a verificar: "O Chef está livre?". Se o Chef (Call Stack) estiver vazio, o Event Loop vai à Fila de Espera, pega no primeiro aviso e entrega-o ao Chef para ele o executar.'
@@ -3721,11 +4138,50 @@ addButton.addEventListener('click', () => {
             React.createElement(
               'p',
               null,
-              'Isto explica porque é que um `setTimeout(..., 0)` só executa depois de todo o código síncrono. O Chef tem de terminar tudo o que está a fazer antes de o maître lhe poder entregar novas tarefas da fila.'
+              'As Promises têm uma fila prioritária chamada Microtask Queue. O Event Loop verifica esta fila e esvazia-a *antes* de pegar em qualquer coisa da fila normal (Macrotask Queue). Isto explica porque é que o `.then()` de uma promise executa antes de um `setTimeout`.'
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - Síncrono vs. Assíncrono",
+                    description: 'O exemplo clássico que demonstra o Event Loop. O código síncrono corre sempre primeiro, depois o Event Loop processa as tarefas assíncronas.',
+                    code: `console.log("Início (Síncrono)"); // 1º
+
+setTimeout(() => {
+  console.log("Timeout (Macrotask)"); // 3º
+}, 0);
+
+console.log("Fim (Síncrono)"); // 2º`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - Microtasks vs. Macrotasks",
+                    description: "As Promises (`.then`, `.catch`, `.finally`) vão para a Microtask Queue, que tem prioridade sobre a Macrotask Queue (onde vão os `setTimeout`, `setInterval`). O Event Loop esvazia sempre a fila de microtasks primeiro.",
+                    code: `console.log("1. Síncrono");
+
+setTimeout(() => console.log("2. Macrotask (setTimeout)"), 0);
+
+Promise.resolve().then(() => console.log("3. Microtask (Promise)"));
+
+console.log("4. Síncrono");
+
+// Ordem do output: 1, 4, 3, 2`
+                },
+                {
+                    title: "Exemplo 3: A Armadilha - Bloquear o Event Loop",
+                    description: "Como o JavaScript é single-threaded, uma operação síncrona muito longa (como um ciclo gigante) pode 'bloquear' o Event Loop. Enquanto o Call Stack estiver ocupado com o ciclo, nenhuma tarefa assíncrona (como cliques ou timeouts) pode ser processada. A página 'congela'.",
+                    code: `console.log("A iniciar bloqueio...");
+
+// Este ciclo vai bloquear o thread principal por alguns segundos.
+// Nenhum outro código (incluindo timeouts ou eventos de clique)
+// será processado até que este termine.
+for (let i = 0; i < 3000000000; i++) {
+  // A fazer trabalho pesado...
+}
+
+console.log("Bloqueio terminado.");`
+                }
+            ]
           },
           quiz: [
             {
@@ -3738,8 +4194,58 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 2,
               explanation: 'Exatamente! A grande magia é que o Call Stack (o nosso Chef) não fica bloqueado. Ele delega tarefas demoradas às Web APIs (os Ajudantes) e continua a executar o código síncrono. Isto mantém a aplicação responsiva.'
+            },
+            {
+                question: "O que tem maior prioridade para o Event Loop depois de o Call Stack ficar vazio?",
+                options: [
+                    "A Macrotask Queue (ex: setTimeout)",
+                    "A Microtask Queue (ex: .then() de uma Promise)",
+                    "A ordem em que foram chamados.",
+                    "É aleatório."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "O Event Loop tem uma regra estrita: após cada tarefa, ele verifica e esvazia completamente a Microtask Queue antes de sequer considerar pegar numa nova tarefa da Macrotask Queue. É por isso que as Promises resolvem 'mais depressa' que os timeouts."
+            },
+            {
+                question: "O que é o 'Call Stack'?",
+                options: [
+                    "Uma lista de todos os eventos que aconteceram.",
+                    "Uma estrutura de dados que regista onde estamos na execução do programa (que funções estão a ser executadas).",
+                    "Uma API do navegador para fazer chamadas de rede.",
+                    "Uma fila para as callbacks do setTimeout."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "O Call Stack é como a lista de tarefas atual do nosso 'Chef'. Quando uma função é chamada, ela é adicionada ao topo da pilha. Quando termina, é removida. Código síncrono é basicamente o processo de encher e esvaziar esta pilha."
             }
-          ]
+          ],
+          challenge: {
+              description: "Sem executar o código, prevê a ordem exata em que as mensagens serão impressas na consola. Pensa no Call Stack, na Microtask Queue e na Macrotask Queue.",
+              starterCode: `console.log('A');
+
+setTimeout(() => console.log('B'), 0);
+
+Promise.resolve().then(() => {
+  console.log('C');
+  setTimeout(() => console.log('D'), 0);
+});
+
+Promise.resolve().then(() => console.log('E'));
+
+console.log('F');`,
+              solution: `// Ordem de execução:
+// 1. 'A' (Síncrono)
+// 2. 'F' (Síncrono)
+// --- Call Stack fica vazio ---
+// --- Processar Microtasks ---
+// 3. 'C' (Primeiro .then())
+// 4. 'E' (Segundo .then())
+// --- Microtasks vazia ---
+// --- Processar Macrotasks ---
+// 5. 'B' (Primeiro setTimeout)
+// 6. 'D' (setTimeout agendado dentro do .then())
+//
+// Output Final: A, F, C, E, B, D`
+          }
         }
       ]
     },
@@ -3767,7 +4273,44 @@ addButton.addEventListener('click', () => {
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - `.map()`",
+                    description: "Vamos pegar num array de números e criar um novo array com o dobro de cada número, sem modificar o original.",
+                    code: `const numeros = [1, 2, 3, 4, 5];
+const dobrados = numeros.map(n => n * 2);
+
+console.log(dobrados); // [2, 4, 6, 8, 10]
+console.log(numeros);  // [1, 2, 3, 4, 5] (o original fica intacto)`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - `.filter()`",
+                    description: "Vamos pegar num array de produtos (objetos) e filtrar apenas aqueles que estão em promoção.",
+                    code: `const produtos = [
+  { nome: 'Maçã', emPromocao: true },
+  { nome: 'Pêra', emPromocao: false },
+  { nome: 'Laranja', emPromocao: true }
+];
+
+const emPromocao = produtos.filter(p => p.emPromocao === true);
+console.log(emPromocao); // Array com os objetos Maçã e Laranja`
+                },
+                {
+                    title: "Exemplo 3: A Nuance - `.reduce()`",
+                    description: "O `.reduce()` é o mais flexível. Vamos usá-lo para somar o total de um carrinho de compras. Ele recebe um 'acumulador' (o valor que está a ser construído) e o 'valorAtual' em cada iteração. O `0` no final é o valor inicial do acumulador.",
+                    code: `const carrinho = [
+  { nome: 'Livro', preco: 20 },
+  { nome: 'Caneta', preco: 2 },
+  { nome: 'Caderno', preco: 5 }
+];
+
+const total = carrinho.reduce((acumulador, itemAtual) => {
+  return acumulador + itemAtual.preco;
+}, 0); // 0 é o valor inicial
+
+console.log("Total do carrinho:", total); // 27`
+                }
+            ]
           },
           quiz: [
             {
@@ -3780,8 +4323,56 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 3,
               explanation: '.filter() é a ferramenta perfeita para esta tarefa. Ele itera sobre o array e cria um novo array contendo apenas os elementos que retornam `true` para a condição especificada (neste caso, `produto.preco > 50`).'
+            },
+            {
+                question: "O que é que o método `.map()` retorna sempre?",
+                options: [
+                    "Um único valor.",
+                    "O primeiro elemento que satisfaz a condição.",
+                    "Um novo array com exatamente o mesmo número de elementos que o original.",
+                    "O valor `undefined`."
+                ],
+                correctAnswerIndex: 2,
+                explanation: "A principal característica do `.map()` é a transformação 1-para-1. Ele devolve sempre um novo array do mesmo tamanho que o array de origem, onde cada elemento é o resultado da aplicação da função de callback ao elemento original correspondente."
+            },
+            {
+                question: "Qual o valor de `soma`? `const nums = [1, 2, 3]; const soma = nums.reduce((acc, val) => acc + val, 10);`",
+                options: [
+                    "6",
+                    "10",
+                    "16",
+                    "Vai dar erro"
+                ],
+                correctAnswerIndex: 2,
+                explanation: "O segundo argumento de `.reduce()` é o valor inicial do acumulador (`acc`). A primeira iteração será `10 + 1`, a segunda `11 + 2`, e a terceira `13 + 3`, resultando em 16."
             }
-          ]
+          ],
+          challenge: {
+              description: "Dado o array de utilizadores, usa uma combinação (encadeamento) de `.filter()` e `.map()` para criar um novo array que contenha apenas os emails dos utilizadores com mais de 30 anos.",
+              starterCode: `const utilizadores = [
+  { nome: 'Ana', idade: 25, email: 'ana@exemplo.com' },
+  { nome: 'Rui', idade: 40, email: 'rui@exemplo.com' },
+  { nome: 'Marta', idade: 35, email: 'marta@exemplo.com' },
+  { nome: 'João', idade: 22, email: 'joao@exemplo.com' }
+];
+
+// O teu código aqui
+const emails = /* ... */;
+
+console.log(emails); // ['rui@exemplo.com', 'marta@exemplo.com']`,
+              solution: `const utilizadores = [
+  { nome: 'Ana', idade: 25, email: 'ana@exemplo.com' },
+  { nome: 'Rui', idade: 40, email: 'rui@exemplo.com' },
+  { nome: 'Marta', idade: 35, email: 'marta@exemplo.com' },
+  { nome: 'João', idade: 22, email: 'joao@exemplo.com' }
+];
+
+const emails = utilizadores
+  .filter(user => user.idade > 30)
+  .map(user => user.email);
+
+console.log(emails);`
+          }
         },
         {
           id: '7.2',
@@ -3822,7 +4413,43 @@ addButton.addEventListener('click', () => {
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - Destructuring",
+                    description: "Vamos extrair valores de um objeto e de um array para variáveis com nomes mais convenientes.",
+                    code: `// Com Objetos
+const pessoa = { nome: 'Carlos', idade: 42 };
+const { nome, idade } = pessoa;
+console.log(nome); // 'Carlos'
+
+// Com Arrays
+const cores = ['vermelho', 'verde', 'azul'];
+const [primeiraCor, segundaCor] = cores;
+console.log(primeiraCor); // 'vermelho'`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - Spread para Cópias e Combinações",
+                    description: "O operador spread é a forma moderna e preferida para criar cópias de arrays e objetos (evitando problemas com passagem por referência) e para os combinar.",
+                    code: `const arr1 = [1, 2];
+const arr2 = [3, 4];
+const combinado = [...arr1, ...arr2]; // [1, 2, 3, 4]
+
+const obj1 = { a: 1 };
+const obj2 = { b: 2 };
+const objCombinado = { ...obj1, ...obj2 }; // { a: 1, b: 2 }`
+                },
+                {
+                    title: "Exemplo 3: A Nuance - Parâmetros Rest",
+                    description: "Quando usado nos parâmetros de uma função, `...` agrupa todos os argumentos 'restantes' num array. É útil para funções que podem aceitar um número variável de argumentos.",
+                    code: `function somarTudo(...numeros) {
+  // 'numeros' é um array com todos os argumentos passados
+  return numeros.reduce((soma, num) => soma + num, 0);
+}
+
+console.log(somarTudo(1, 2));       // 3
+console.log(somarTudo(1, 2, 3, 4)); // 10`
+                }
+            ]
           },
           quiz: [
             {
@@ -3835,8 +4462,51 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 1,
               explanation: "O operador spread `...array1` \"espalha\" os elementos de `array1` dentro do novo array. Assim, em vez de inserir o array `[1, 2]` como um único elemento, ele insere os seus elementos individuais, 1 e 2, resultando em `[1, 2, 3, 4]`."
+            },
+            {
+                question: "O que fazem as chavetas `{}` nesta expressão? `const { nome } = { nome: 'Ana', idade: 30 };`",
+                options: [
+                    "Criam um novo objeto.",
+                    "Fazem uma comparação.",
+                    "É um erro de sintaxe.",
+                    "Desestruturam o objeto, extraindo a propriedade 'nome' para uma constante com o mesmo nome."
+                ],
+                correctAnswerIndex: 3,
+                explanation: "Esta é a sintaxe de desestruturação de objetos. Permite-te 'puxar' propriedades de um objeto diretamente para variáveis, tornando o código mais limpo do que escrever `const nome = pessoa.nome;`."
+            },
+            {
+                question: "Qual o valor de `resto`? `const [primeiro, ...resto] = [10, 20, 30, 40];`",
+                options: [
+                    "`20`",
+                    "`[20, 30, 40]`",
+                    "`[10]`",
+                    "`undefined`"
+                ],
+                correctAnswerIndex: 1,
+                explanation: "Aqui, `...` é o operador 'rest'. Ele agrupa todos os elementos 'restantes' do array, após as atribuições iniciais, num novo array. `primeiro` recebe 10, e `resto` recebe `[20, 30, 40]`."
             }
-          ]
+          ],
+          challenge: {
+              description: "Cria uma função `fundirObjetos` que aceita dois objetos como argumentos e retorna um novo objeto que é a fusão de ambos. Usa o operador spread. Se houver chaves duplicadas, as do segundo objeto devem prevalecer.",
+              starterCode: `const config1 = { tema: 'dark', fonte: 'Arial' };
+const config2 = { fonte: 'Roboto', notificacoes: true };
+
+function fundirObjetos(obj1, obj2) {
+  // O teu código aqui
+}
+
+const configFinal = fundirObjetos(config1, config2);
+console.log(configFinal); // { tema: 'dark', fonte: 'Roboto', notificacoes: true }`,
+              solution: `const config1 = { tema: 'dark', fonte: 'Arial' };
+const config2 = { fonte: 'Roboto', notificacoes: true };
+
+function fundirObjetos(obj1, obj2) {
+  return { ...obj1, ...obj2 };
+}
+
+const configFinal = fundirObjetos(config1, config2);
+console.log(configFinal);`
+          }
         },
         {
           id: '7.3',
@@ -3864,7 +4534,51 @@ addButton.addEventListener('click', () => {
             )
           ),
           practice: {
-            examples: []
+            examples: [
+                {
+                    title: "Exemplo 1: O Básico - Exportação Nomeada",
+                    description: "Esta é a forma mais comum. Exportas múltiplas 'ferramentas' de um ficheiro, e importas apenas as que precisas, usando o nome exato e chavetas `{}`.",
+                    code: `// Ficheiro: utils.js
+export const PI = 3.14;
+export function somar(a, b) {
+  return a + b;
+}
+
+// Ficheiro: main.js
+import { PI, somar } from './utils.js';
+console.log(somar(5, 2) * PI);`
+                },
+                {
+                    title: "Exemplo 2: O Caso Comum - Exportação Padrão (Default)",
+                    description: "Cada ficheiro pode ter uma (e apenas uma) exportação padrão. É usada para a 'coisa principal' que o ficheiro exporta. Ao importá-la, não usas chavetas e podes dar-lhe o nome que quiseres.",
+                    code: `// Ficheiro: saudacao.js
+export default function saudar(nome) {
+  return \`Olá, \${nome}!\`;
+}
+
+// Ficheiro: app.js
+import fazerSaudacao from './saudacao.js'; // posso dar o nome que quiser
+console.log(fazerSaudacao("Mundo"));`
+                },
+                {
+                    title: "Exemplo 3: A Nuance - Renomear na Importação",
+                    description: "E se já tiveres uma função `somar` no teu ficheiro e queres importar outra com o mesmo nome? Podes renomeá-la durante a importação usando a palavra-chave `as`.",
+                    code: `// Ficheiro: utils.js (o mesmo de cima)
+export const PI = 3.14;
+export function somar(a, b) { return a + b; }
+
+// Ficheiro: main.js
+import { somar as somarNumeros } from './utils.js';
+
+function somar(a, b) {
+  // A minha própria função de somar strings
+  return String(a) + String(b);
+}
+
+console.log(somarNumeros(2, 3)); // 5
+console.log(somar(2, 3));        // "23"`
+                }
+            ]
           },
           quiz: [
             {
@@ -3877,8 +4591,52 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 1,
               explanation: "Como `apiKey` é uma exportação nomeada (não `default`), temos de usar chavetas `{}` à volta do nome exato da variável que queremos importar."
+            },
+            {
+                question: "O que está errado na seguinte exportação? `export default const PI = 3.14;`",
+                options: [
+                    "Nada, está correto.",
+                    "Não se pode exportar constantes.",
+                    "`export default` não pode ser usado na mesma linha que a declaração de `const` ou `let`.",
+                    "Falta um ponto e vírgula."
+                ],
+                correctAnswerIndex: 2,
+                explanation: "A sintaxe de `export default` para variáveis é um pouco diferente. A forma correta seria declarar a variável primeiro e depois exportá-la: `const PI = 3.14; export default PI;`"
+            },
+            {
+                question: "Quantas exportações padrão (`export default`) pode ter um módulo (ficheiro)?",
+                options: [
+                    "As que forem necessárias.",
+                    "Apenas uma.",
+                    "Uma por cada função no ficheiro.",
+                    "Nenhuma, `export default` está obsoleto."
+                ],
+                correctAnswerIndex: 1,
+                explanation: "Cada módulo pode ter no máximo uma exportação padrão. É a 'exportação principal' do ficheiro."
             }
-          ]
+          ],
+          challenge: {
+              description: "Organiza o teu código. Cria dois ficheiros: `matematica.js` e `app.js`. No primeiro, cria e exporta (com exportação nomeada) duas funções: `multiplicar(a, b)` e `dividir(a, b)`. No segundo, importa essas duas funções e usa-as para calcular e imprimir `5 * 10` e `20 / 4`.",
+              starterCode: `// Ficheiro: matematica.js
+// Exporta as tuas funções aqui
+
+// Ficheiro: app.js
+// Importa e usa as funções aqui`,
+              solution: `// Ficheiro: matematica.js
+export function multiplicar(a, b) {
+  return a * b;
+}
+
+export function dividir(a, b) {
+  return a / b;
+}
+
+// Ficheiro: app.js
+import { multiplicar, dividir } from './matematica.js';
+
+console.log("5 x 10 =", multiplicar(5, 10));
+console.log("20 / 4 =", dividir(20, 4));`
+          }
         },
         {
           id: '7.4',
@@ -3926,21 +4684,30 @@ addButton.addEventListener('click', () => {
             examples: [
                 {
                     title: "Recursos para Continuar",
-                    description: 'Não há código a executar aqui. Em vez disso, aqui ficam alguns recursos fantásticos para continuares a tua jornada:',
-                    code: `// Documentação de referência (essencial):
-// MDN Web Docs: https://developer.mozilla.org/
+                    description: 'Não há código a executar aqui. Em vez disso, aqui ficam alguns recursos fantásticos e estruturados para continuares a tua jornada:',
+                    code: `/*
+== Documentação de Referência (Essencial) ==
+MDN Web Docs: A fonte de verdade para tudo o que é web.
+URL: https://developer.mozilla.org/
 
-// Para praticar com desafios de código:
-// freeCodeCamp: https://www.freecodecamp.org/
-// Codewars: https://www.codewars.com/
+== Praticar com Desafios de Código ==
+freeCodeCamp: Cursos completos e interativos.
+URL: https://www.freecodecamp.org/
 
-// Para aprender sobre frameworks (depois de dominares JS):
-// React: https://react.dev/
-// Vue: https://vuejs.org/
-// Angular: https://angular.io/
+Codewars: Desafios de programação ("kata") para todos os níveis.
+URL: https://www.codewars.com/
 
-// Para aprender sobre JavaScript no backend:
-// Node.js: https://nodejs.org/`
+== Aprender Frameworks (Depois de dominares JS) ==
+React: O mais popular para construir interfaces.
+URL: https://react.dev/
+
+Vue: Conhecido pela sua curva de aprendizagem mais suave.
+URL: https://vuejs.org/
+
+== Aprender JavaScript no Backend ==
+Node.js: Documentação oficial e guias.
+URL: https://nodejs.org/
+*/`
                 }
             ]
           },
@@ -3955,8 +4722,46 @@ addButton.addEventListener('click', () => {
               ],
               correctAnswerIndex: 2,
               explanation: "Exatamente! Frameworks dão-te super-poderes para o frontend. Eles gerem o estado da aplicação, atualizam o DOM de forma otimizada e permitem-te construir a tua UI em pequenos blocos reutilizáveis (componentes), acelerando drasticamente o desenvolvimento."
+            },
+            {
+                question: "O que é o Node.js?",
+                options: [
+                  "Um framework de frontend, como o React.",
+                  "Uma base de dados escrita em JavaScript.",
+                  "Uma versão especial do navegador Chrome.",
+                  "Um ambiente de execução que permite correr código JavaScript fora do navegador, no lado do servidor."
+                ],
+                correctAnswerIndex: 3,
+                explanation: "O Node.js abriu as portas para o desenvolvimento 'full-stack' com uma única linguagem. Permite usar JavaScript para criar servidores web, APIs, ferramentas de linha de comando, e muito mais."
+            },
+            {
+                question: "Qual é a atitude mais importante para te tornares um bom programador?",
+                options: [
+                  "Decorar toda a sintaxe da linguagem.",
+                  "Aprender a usar o máximo de ferramentas possível.",
+                  "Manter a curiosidade, praticar consistentemente e aprender a pesquisar soluções.",
+                  "Trabalhar sempre sozinho para não teres más influências."
+                ],
+                correctAnswerIndex: 2,
+                explanation: "Sem dúvida! A programação é menos sobre saber tudo de cor e mais sobre saber como encontrar as respostas e resolver problemas. A prática constante e a curiosidade são os teus melhores aliados."
             }
-          ]
+          ],
+          challenge: {
+              description: "O teu desafio final não envolve escrever código aqui, mas sim dar o próximo passo. Escolhe um dos recursos listados na secção 'Prática' (como o freeCodeCamp ou o MDN) e dedica a próxima hora a explorar um tópico que te interesse. Depois, pensa num pequeno projeto pessoal que gostarias de construir. Pode ser uma calculadora, uma galeria de fotos interativa, ou uma página que mostra a meteorologia da tua cidade usando uma API. Escreve a ideia principal do teu projeto.",
+              starterCode: `/*
+A minha ideia de projeto é:
+(Escreve aqui a tua ideia)
+*/`,
+              solution: `/*
+Exemplo de uma ideia:
+
+A minha ideia de projeto é:
+Criar uma "Pokédex" simples. Vou usar a PokéAPI (pokeapi.co)
+para ir buscar dados de um Pokémon quando o utilizador escreve
+o nome ou número num input. Depois, vou mostrar a imagem, o nome
+e os tipos do Pokémon na página.
+*/`
+          }
         }
       ]
     }
