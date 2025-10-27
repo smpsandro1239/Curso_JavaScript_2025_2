@@ -11,7 +11,6 @@ export const courseData: CourseData = {
         {
           id: '1.1',
           title: 'O que é JavaScript?',
-          // FIX: Converted JSX to React.createElement calls to be valid in a .ts file.
           theory: React.createElement(
             'div',
             null,
@@ -60,8 +59,30 @@ export const courseData: CourseData = {
             )
           ),
           practice: {
-            description: "O primeiro passo em qualquer linguagem é o famoso 'Olá, Mundo!'. Em JavaScript, usamos `console.log()` para imprimir mensagens na consola do navegador. É uma ferramenta essencial para depuração (debugging). Abre as ferramentas de programador do teu navegador (normalmente com F12 ou Ctrl+Shift+I) e vai ao separador 'Consola' para veres o resultado.",
-            code: `console.log('Olá, Mundo!');`
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - 'Olá, Mundo!'",
+                description: "O primeiro passo em qualquer linguagem é o famoso 'Olá, Mundo!'. Em JavaScript, usamos `console.log()` para imprimir mensagens na consola do navegador. É uma ferramenta essencial para depuração (debugging). Abre as ferramentas de programador do teu navegador (normalmente com F12 ou Ctrl+Shift+I) e vai ao separador 'Consola' para veres o resultado.",
+                code: `console.log('Olá, Mundo!');`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Múltiplas Mensagens",
+                description: "Podes usar `console.log()` várias vezes para seguir o fluxo do teu programa. É como deixar migalhas de pão para saberes por onde o código passou.",
+                code: `console.log("Passo 1: A iniciar o programa.");
+console.log("Passo 2: A processar dados...");
+console.log("Passo 3: Programa terminado.");`
+              },
+              {
+                title: "Exemplo 3: A Nuance - Imprimir Variáveis",
+                description: "O `console.log()` não serve apenas para texto. Podes (e deves!) usá-lo para inspecionar o conteúdo de variáveis em qualquer ponto do teu código.",
+                code: `const nome = "Ana";
+const idade = 28;
+
+console.log("Informação do Utilizador:");
+console.log("Nome:", nome);
+console.log("Idade:", idade);`
+              }
+            ]
           },
           quiz: [
             {
@@ -74,13 +95,41 @@ export const courseData: CourseData = {
               ],
               correctAnswerIndex: 2,
               explanation: 'Correto! JavaScript é a linguagem que dá "vida" a uma página, tornando-a interativa. A estrutura é definida pelo HTML e o estilo pelo CSS.'
+            },
+            {
+              question: 'Qual comando usas para imprimir uma mensagem na consola do navegador?',
+              options: [
+                'print("Olá")',
+                'document.write("Olá")',
+                'console.log("Olá")',
+                'debug.out("Olá")'
+              ],
+              correctAnswerIndex: 2,
+              explanation: '`console.log()` é o comando universal em JavaScript para registar informação na consola, sendo uma ferramenta fundamental para qualquer programador.'
+            },
+            {
+                question: 'Se a web fosse uma casa, o que seria o CSS?',
+                options: [
+                  'A estrutura (paredes, telhado).',
+                  'A eletricidade e a água.',
+                  'A decoração (cor, móveis).',
+                  'A morada da casa.'
+                ],
+                correctAnswerIndex: 2,
+                explanation: 'Exato! O CSS cuida da parte visual e da apresentação, tal como a decoração numa casa, enquanto o HTML é a estrutura e o JavaScript a funcionalidade.'
             }
-          ]
+          ],
+          challenge: {
+            description: "Escreve três comandos `console.log()`. O primeiro deve imprimir o teu nome. O segundo, a tua idade. O terceiro, a tua cidade.",
+            starterCode: `// Escreve o teu código aqui`,
+            solution: `console.log("O meu nome é Alex.");
+console.log("A minha idade é 30.");
+console.log("A minha cidade é Lisboa.");`
+          }
         },
         {
           id: '1.2',
           title: 'Adicionar JS a uma página',
-          // FIX: Converted JSX to React.createElement calls to be valid in a .ts file.
           theory: React.createElement(
             'div',
             null,
@@ -123,17 +172,36 @@ export const courseData: CourseData = {
             )
           ),
           practice: {
-            description: 'Abaixo, um exemplo de como ligar um ficheiro JavaScript externo a um HTML. Esta é a forma mais comum e recomendada.',
-            code: `<!-- No teu ficheiro index.html -->
-<head>
-  ...
-</head>
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Script Externo (Recomendado)",
+                description: 'Abaixo, um exemplo de como ligar um ficheiro JavaScript externo a um HTML. Esta é a forma mais comum e recomendada. O script é geralmente colocado antes de fechar a tag `</body>` para garantir que toda a página HTML seja carregada antes do script ser executado.',
+                code: `<!-- No teu ficheiro index.html -->
 <body>
   <h1>O meu site</h1>
 
-  <!-- O script é geralmente colocado antes de fechar a tag </body> -->
   <script src="o_meu_script.js"></script>
 </body>`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Script Interno",
+                description: "Para um pequeno teste rápido ou uma funcionalidade muito específica de uma única página, um script interno pode ser aceitável. Repara como o código JS fica diretamente dentro do HTML.",
+                code: `<!-- No teu ficheiro index.html -->
+<body>
+  <p id="mensagem">Olá!</p>
+
+  <script>
+    const paragrafo = document.getElementById('mensagem');
+    paragrafo.textContent = 'Olá diretamente do script interno!';
+  </script>
+</body>`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - Script Inline (A Evitar)",
+                description: "Este é um exemplo do que NÃO fazer na maioria das vezes. Colocar lógica no atributo `onclick` mistura HTML e JS, tornando o código difícil de ler e manter. Veremos a forma correta (com `addEventListener`) no módulo sobre o DOM.",
+                code: `<button onclick="alert('Foste clicado!')">Clica em Mim (Método Antigo)</button>`
+              }
+            ]
           },
           quiz: [
             {
@@ -146,6 +214,28 @@ export const courseData: CourseData = {
               ],
               correctAnswerIndex: 2,
               explanation: 'A melhor prática é usar ficheiros .js externos. Isto separa as responsabilidades (HTML para estrutura, JS para comportamento), melhora a organização, e permite que o navegador guarde o ficheiro em cache, acelerando o carregamento.'
+            },
+            {
+                question: 'Porque é que a tag `<script>` é geralmente colocada no final do `<body>`?',
+                options: [
+                  'Porque é uma regra do HTML e não funciona noutro lado.',
+                  'Para permitir que a página HTML seja carregada e renderizada primeiro, melhorando a experiência do utilizador.',
+                  'Para o JavaScript ter prioridade sobre o CSS.',
+                  'Não faz diferença onde é colocada.'
+                ],
+                correctAnswerIndex: 1,
+                explanation: 'Colocar o script no final garante que o navegador já construiu o DOM a partir do HTML. Se o script tentasse manipular um elemento que ainda não foi carregado, resultaria num erro.'
+            },
+            {
+                question: 'Qual das seguintes opções descreve um script inline?',
+                options: [
+                  '<script src="ficheiro.js"></script>',
+                  '<script>console.log("olá");</script>',
+                  '<button onclick="console.log(\'clicado\')">',
+                  'Nenhuma das anteriores'
+                ],
+                correctAnswerIndex: 2,
+                explanation: 'Um script inline é quando o código JavaScript é colocado diretamente dentro de um atributo de um elemento HTML, como `onclick`, `onmouseover`, etc. É uma prática geralmente desaconselhada.'
             }
           ]
         }
@@ -222,18 +312,41 @@ export const courseData: CourseData = {
             )
           ),
           practice: {
-            description: "Vamos declarar algumas variáveis. `let` para um valor que muda (pontuação num jogo) e `const` para um valor que não muda (nome do jogador).",
-            code: `let pontuacao = 100;
+            examples: [
+              {
+                title: "Exemplo 1: O Básico",
+                description: "Vamos declarar algumas variáveis. `let` para um valor que muda (pontuação num jogo) e `const` para um valor que não muda (nome do jogador).",
+                code: `let pontuacao = 100;
 console.log("Pontuação inicial:", pontuacao);
 
 pontuacao = 125; // A pontuação aumentou
 console.log("Nova pontuação:", pontuacao);
 
 const nomeJogador = "Alex";
-console.log("Bem-vindo,", nomeJogador);
+console.log("Bem-vindo,", nomeJogador);`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Calcular um Total",
+                description: "Num cenário de compras, a taxa de IVA é constante, mas o total do carrinho muda à medida que adicionamos produtos. `const` e `let` são perfeitos para isto.",
+                code: `const TAXA_IVA = 0.23; // 23%
+let totalCarrinho = 150; // Em euros
 
-// A linha abaixo causaria um erro, porque não se pode reatribuir uma constante.
-// nomeJogador = "Sam";`
+let valorIva = totalCarrinho * TAXA_IVA;
+let totalFinal = totalCarrinho + valorIva;
+
+console.log("Total com IVA:", totalFinal);`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - O Erro com `const`",
+                description: "Tentar reatribuir o valor a uma variável `const` resulta num erro. Isto é uma salvaguarda importante para evitar que valores que deveriam ser fixos mudem acidentalmente.",
+                code: `const dataNascimento = "1990-01-15";
+console.log("Nascido em:", dataNascimento);
+
+// A linha abaixo está comentada porque causaria um erro e pararia o script.
+// Tenta descomentá-la para ver o que acontece na consola!
+// dataNascimento = "1991-02-20"; // TypeError: Assignment to constant variable.`
+              }
+            ]
           },
           quiz: [
             {
@@ -246,6 +359,39 @@ console.log("Bem-vindo,", nomeJogador);
               ],
               correctAnswerIndex: 2,
               explanation: '`const` significa "constante". Usa-se para garantir que a referência a um valor não seja alterada após a sua inicialização, o que torna o código mais seguro e previsível.'
+            },
+            {
+              question: "Qual será o output do código? `let cor = 'azul'; cor = 'verde'; console.log(cor);`",
+              options: [
+                'azul',
+                'verde',
+                'undefined',
+                'Vai dar erro'
+              ],
+              correctAnswerIndex: 1,
+              explanation: 'A variável `cor` foi declarada com `let`, o que permite que o seu valor seja reatribuído. O `console.log` irá imprimir o valor mais recente, que é "verde".'
+            },
+            {
+              question: "O que acontece ao executar este código? `const animal = 'cão'; animal = 'gato';`",
+              options: [
+                'A variável `animal` passa a ser "gato".',
+                'A variável `animal` fica `undefined`.',
+                'O código ignora a segunda linha.',
+                'O código produz um erro (TypeError).'
+              ],
+              correctAnswerIndex: 3,
+              explanation: "Uma variável declarada com `const` não pode ser reatribuída. Tentar fazê-lo resulta num `TypeError`, uma das formas do JavaScript nos proteger de erros lógicos."
+            },
+            {
+              question: "Qual é a recomendação moderna sobre o uso de `var`?",
+              options: [
+                'Usar `var` para todas as variáveis.',
+                'Usar `var` para variáveis que mudam e `let` para as que não mudam.',
+                'Evitar o uso de `var` e preferir `let` e `const`.',
+                '`var`, `let` e `const` são todos iguais.'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "Devido ao seu comportamento com hoisting e escopo, `var` pode levar a bugs difíceis de encontrar. A convenção moderna é usar `let` para variáveis que mudam e `const` para as que não mudam, evitando `var` por completo."
             }
           ]
         },
@@ -328,18 +474,39 @@ console.log("Bem-vindo,", nomeJogador);
             )
           ),
           practice: {
-            description: "Vamos criar variáveis para cada tipo de dado primitivo e usar `typeof` para ver o que a consola nos diz sobre cada uma.",
-            code: `const nome = "Ana";        // String
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Declarar e Verificar",
+                description: "Vamos criar variáveis para cada tipo de dado primitivo e usar `typeof` para ver o que a consola nos diz sobre cada uma.",
+                code: `const nome = "Ana";        // String
 const idade = 25;          // Number
 const eEstudante = true;   // Boolean
 let morada;                // Undefined (não foi atribuído valor)
 const carro = null;        // Null (valor nulo intencional)
 
-console.log(typeof nome);       // "string"
-console.log(typeof idade);      // "number"
-console.log(typeof eEstudante); // "boolean"
-console.log(typeof morada);     // "undefined"
-console.log(typeof carro);      // "object" (isto é um quirk antigo do JS!)`
+console.log('Tipo de nome:', typeof nome);
+console.log('Tipo de idade:', typeof idade);
+console.log('Tipo de eEstudante:', typeof eEstudante);
+console.log('Tipo de morada:', typeof morada);`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Concatenação de Strings",
+                description: "O operador `+` comporta-se de forma diferente com strings e números. Quando usado com uma string, ele 'concatena' (junta) os valores.",
+                code: `const nome = "Alex";
+const bemVindo = "Bem-vindo, " + nome + "!";
+console.log(bemVindo);
+
+const numeroString = "10";
+const numeroReal = 5;
+console.log("Juntar string e número:", numeroString + numeroReal); // "105"`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - A Peculiaridade do `typeof null`",
+                description: "Por razões históricas, o JavaScript tem uma peculiaridade (quirk) famosa: `typeof null` devolve 'object', não 'null'. É um bug que foi mantido para não quebrar código antigo na web. Lembra-te disto!",
+                code: `const valorNulo = null;
+console.log(typeof valorNulo); // Output: "object"`
+              }
+            ]
           },
           quiz: [
             {
@@ -352,6 +519,28 @@ console.log(typeof carro);      // "object" (isto é um quirk antigo do JS!)`
               ],
               correctAnswerIndex: 1,
               explanation: 'Em JavaScript, tanto números inteiros (42) como decimais (3.14) são do tipo "number". Não existe uma distinção entre "integer" e "float" como noutras linguagens.'
+            },
+            {
+              question: 'O que é que a variável `resultado` irá conter? `let resultado;`',
+              options: [
+                'null',
+                '0',
+                '"" (string vazia)',
+                'undefined'
+              ],
+              correctAnswerIndex: 3,
+              explanation: 'Quando uma variável é declarada com `let` mas não lhe é atribuído um valor, o JavaScript atribui-lhe automaticamente o valor primitivo `undefined`.'
+            },
+            {
+              question: "Qual o output de `console.log('5' + 3);`?",
+              options: [
+                '8',
+                '"53"',
+                'undefined',
+                'Vai dar erro'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "Quando o operador `+` é usado e um dos operandos é uma string, o JavaScript converte o outro operando para uma string e concatena-os. Assim, 3 torna-se '3', e '5' + '3' resulta em '53'."
             }
           ]
         },
@@ -402,19 +591,56 @@ console.log(typeof carro);      // "object" (isto é um quirk antigo do JS!)`
             )
           ),
           practice: {
-            description: 'Vamos criar um objeto para descrever um utilizador e um array para a sua lista de tarefas. Depois, acederemos a partes específicas dessa informação.',
-            code: `const utilizador = {
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Utilizador e Tarefas",
+                description: 'Vamos criar um objeto para descrever um utilizador e um array para a sua lista de tarefas. Depois, acederemos a partes específicas dessa informação.',
+                code: `const utilizador = {
   nome: "Carlos",
   idade: 35,
   isAdmin: true,
   tarefas: ["Responder emails", "Reunião às 15h", "Regar as plantas"]
 };
 
-const primeiraTarefa = utilizador.tarefas[0]; // Aceder ao primeiro item do array 'tarefas'
-
+// Aceder com notação de ponto
 console.log("Nome do utilizador:", utilizador.nome);
-console.log("A primeira tarefa é:", primeiraTarefa);
-console.log("A segunda tarefa é:", utilizador.tarefas[1]); // Acesso direto`
+
+// Aceder a um item do array dentro do objeto
+console.log("A primeira tarefa é:", utilizador.tarefas[0]);`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Lista de Produtos",
+                description: "Um caso de uso muito comum é ter um array onde cada elemento é um objeto. Isto permite-nos representar listas de dados complexos, como um catálogo de produtos.",
+                code: `const produtos = [
+  { id: 1, nome: "Portátil", preco: 1200 },
+  { id: 2, nome: "Rato", preco: 25 },
+  { id: 3, nome: "Teclado", preco: 80 }
+];
+
+// Aceder ao segundo produto na lista
+const segundoProduto = produtos[1];
+console.log("O segundo produto é:", segundoProduto.nome);
+console.log("O seu preço é:", segundoProduto.preco);`
+              },
+              {
+                title: "Exemplo 3: A Nuance - Notação de Ponto vs. Parênteses Retos",
+                description: "Podes aceder a propriedades de objetos com `objeto.propriedade` ou `objeto['propriedade']`. A segunda forma é útil quando o nome da propriedade está numa variável ou contém caracteres especiais.",
+                code: `const carro = {
+  marca: "Ford",
+  "ano de fabrico": 2021
+};
+
+// Notação de ponto funciona para nomes simples
+console.log("Marca:", carro.marca);
+
+// Para propriedades com espaços, temos de usar parênteses retos
+console.log("Ano:", carro["ano de fabrico"]);
+
+// Também funciona com variáveis
+const propriedadeAProcurar = "marca";
+console.log("Acedido via variável:", carro[propriedadeAProcurar]);`
+              }
+            ]
           },
           quiz: [
             {
@@ -427,6 +653,28 @@ console.log("A segunda tarefa é:", utilizador.tarefas[1]); // Acesso direto`
               ],
               correctAnswerIndex: 2,
               explanation: "Correto! Arrays em JavaScript usam índices numéricos que começam em 0. Para aceder ao segundo elemento ('verde'), usamos o índice 1 com parênteses retos: `cores[1]`."
+            },
+            {
+              question: "Dado o objeto `const user = { nome: 'Rui' };`, como acedes ao seu nome?",
+              options: [
+                'user[0]',
+                'user.get("nome")',
+                'user["nome"]',
+                'user(nome)'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "Tanto `user.nome` como `user['nome']` funcionariam. A notação de parênteses retos é uma das formas corretas de aceder a propriedades de um objeto."
+            },
+            {
+              question: 'Qual é o índice do primeiro elemento de um array?',
+              options: [
+                '1',
+                'primeiro',
+                'A',
+                '0'
+              ],
+              correctAnswerIndex: 3,
+              explanation: 'Em JavaScript, como na maioria das linguagens de programação, a contagem dos índices de arrays começa em 0. O primeiro elemento está sempre no índice 0.'
             }
           ]
         },
@@ -477,19 +725,42 @@ console.log("A segunda tarefa é:", utilizador.tarefas[1]); // Acesso direto`
             )
           ),
           practice: {
-            description: 'Vamos fazer umas contas simples e ver os atalhos de atribuição em ação.',
-            code: `let a = 10;
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Calculadora Simples",
+                description: 'Vamos fazer umas contas simples e ver os atalhos de atribuição em ação.',
+                code: `let a = 10;
 let b = 3;
 
 console.log("Soma:", a + b);       // 13
-console.log("Resto:", a % b);      // 1 (10 a dividir por 3 dá 3 e sobra 1)
+console.log("Resto da divisão (módulo):", a % b); // 1
 
 let pontuacao = 100;
 pontuacao += 50; // Adiciona 50 à pontuação
-console.log("Nova pontuação:", pontuacao); // 150
+console.log("Nova pontuação:", pontuacao); // 150`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Ordem das Operações",
+                description: "O JavaScript respeita a ordem matemática das operações (primeiro multiplicação/divisão, depois soma/subtração). Podes usar parênteses `()` para forçar uma ordem diferente.",
+                code: `let resultado1 = 5 + 3 * 2; // 5 + 6
+console.log("Sem parênteses:", resultado1); // 11
 
-pontuacao -= 25; // Remove 25
-console.log("Pontuação final:", pontuacao); // 125`
+let resultado2 = (5 + 3) * 2; // 8 * 2
+console.log("Com parênteses:", resultado2); // 16`
+              },
+              {
+                title: "Exemplo 3: A Nuance - Incremento e Decremento",
+                description: "Existem atalhos ainda mais curtos para adicionar ou subtrair 1: `++` (incremento) e `--` (decremento). São muito comuns em ciclos (loops).",
+                code: `let vidas = 3;
+console.log("Vidas iniciais:", vidas);
+
+vidas--; // O jogador perdeu uma vida
+console.log("Vidas restantes:", vidas); // 2
+
+vidas++; // O jogador ganhou uma vida
+console.log("Vidas agora:", vidas); // 3`
+              }
+            ]
           },
           quiz: [
             {
@@ -502,6 +773,28 @@ console.log("Pontuação final:", pontuacao); // 125`
               ],
               correctAnswerIndex: 3,
               explanation: "`pontos -= 10;` é um atalho para `pontos = pontos - 10;`. Logo, o cálculo é 50 - 10, que resulta em 40."
+            },
+            {
+              question: "Qual o resultado de `10 % 3`?",
+              options: [
+                '1',
+                '3',
+                '3.33',
+                '0'
+              ],
+              correctAnswerIndex: 0,
+              explanation: "O operador módulo (`%`) devolve o resto de uma divisão. 10 a dividir por 3 é 3, com um resto de 1."
+            },
+            {
+              question: "Qual o valor final de `x`? `let x = 5; x++;`",
+              options: [
+                '5',
+                '4',
+                '6',
+                'undefined'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "O operador de incremento `++` adiciona 1 ao valor da variável. Assim, `x` passa de 5 para 6."
             }
           ]
         },
@@ -556,22 +849,36 @@ console.log("Pontuação final:", pontuacao); // 125`
             )
           ),
           practice: {
-            description: 'Vamos testar algumas condições. Repara bem na diferença entre `===` e `==`.',
-            code: `const idade = 20;
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Controlo de Acesso",
+                description: 'Vamos testar se um utilizador tem idade para entrar num local e se tem bilhete.',
+                code: `const idade = 20;
 const temBilhete = true;
 
-console.log("É maior de idade?", idade > 18); // true
-
-console.log("Comparação estrita (certa):", 5 === "5"); // false
-console.log("Comparação lassa (errada):", 5 == "5");  // true
-
-// Pode entrar na festa?
 const podeEntrar = idade >= 18 && temBilhete;
-console.log("Pode entrar na festa?", podeEntrar); // true
+console.log("Pode entrar na festa?", podeEntrar); // true`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Descontos",
+                description: 'Um cinema dá desconto a crianças (menores de 12) ou a idosos (maiores de 65). O operador OU (`||`) é perfeito para isto.',
+                code: `const idadeCliente = 70;
 
-// Tem desconto? (Menor de 12 OU maior de 65)
-const temDesconto = idade < 12 || idade > 65;
-console.log("Tem desconto?", temDesconto); // false`
+const temDesconto = idadeCliente < 12 || idadeCliente > 65;
+console.log("Cliente tem direito a desconto?", temDesconto); // true`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - Igualdade Estrita (`===`) vs. Lassa (`==`)",
+                description: "Este é um dos erros mais comuns em iniciantes. `==` tenta converter os tipos, o que pode levar a resultados inesperados. `===` é mais seguro porque compara o valor E o tipo.",
+                code: `console.log("5 === 5:", 5 === 5);       // true (number === number)
+console.log("5 === '5':", 5 === '5');   // false (number !== string)
+
+console.log("-----");
+
+console.log("5 == 5:", 5 == 5);         // true
+console.log("5 == '5':", 5 == '5');     // true (perigoso! '5' é convertido para 5)`
+              }
+            ]
           },
           quiz: [
             {
@@ -584,6 +891,39 @@ console.log("Tem desconto?", temDesconto); // false`
               ],
               correctAnswerIndex: 1,
               explanation: "A primeira parte, `(10 > 5)`, é `true`. A segunda parte, `(\"a\" === \"b\")`, é `false`. A expressão final torna-se `true && false`, e o operador `&&` (E) só retorna `true` se ambos os lados forem `true`. Portanto, o resultado é `false`."
+            },
+            {
+              question: "Qual o resultado de `true || false`?",
+              options: [
+                'true',
+                'false',
+                'undefined',
+                'true false'
+              ],
+              correctAnswerIndex: 0,
+              explanation: "O operador OU (`||`) retorna `true` se pelo menos um dos seus operandos for `true`. Como o primeiro já é `true`, o resultado é `true`."
+            },
+            {
+              question: "Qual operador de igualdade é recomendado usar e porquê?",
+              options: [
+                '`==`, porque é mais flexível.',
+                '`===`, porque compara valor e tipo, evitando conversões inesperadas.',
+                'Ambos são iguais, não faz diferença.',
+                '`!=`, porque é mais rápido.'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "A igualdade estrita (`===`) é a escolha mais segura e previsível. Evita a coerção de tipo, uma fonte comum de bugs, garantindo que estás a comparar exatamente o que pretendes."
+            },
+             {
+              question: "O que faz o operador `!` (NÃO)?",
+              options: [
+                'Compara se dois valores são diferentes.',
+                'Inverte um valor booleano.',
+                'Causa um erro.',
+                'Verifica se um valor é nulo.'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "O operador `!` é o operador de negação lógica. Ele inverte o valor booleano: `!true` torna-se `false`, e `!false` torna-se `true`."
             }
           ]
         },
@@ -602,9 +942,11 @@ console.log("Tem desconto?", temDesconto); // false`
             )
           ),
           practice: {
-            description: 'Vamos ver o hoisting em ação. Presta atenção às diferenças entre `var`, `let` e as funções.',
-            code: `// Hoisting com 'var'
-console.log(nome); // Output: undefined
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - Hoisting com `var`",
+                description: 'Vamos ver o hoisting em ação. Presta atenção como `nome` é `undefined` na primeira linha, mas não dá erro.',
+                code: `console.log(nome); // Output: undefined
 var nome = "Ana";
 console.log(nome); // Output: "Ana"
 
@@ -613,19 +955,33 @@ var nome;
 console.log(nome);
 nome = "Ana";
 console.log(nome);
-*/
+*/`
+              },
+              {
+                title: "Exemplo 2: O Caso Seguro - `let` e a Temporal Dead Zone",
+                description: "Tentar fazer o mesmo com `let` resulta num erro. Isto é bom! O JavaScript está a proteger-nos de usar uma variável antes de ela ser devidamente declarada.",
+                code: `// A linha abaixo está comentada porque causaria um erro.
+// console.log(idade); // ReferenceError: Cannot access 'idade' before initialization
 
-// Hoisting com 'let' (Temporal Dead Zone)
-// A linha abaixo causaria um erro: ReferenceError
-// console.log(idade);
 let idade = 30;
+console.log("Idade é:", idade);`
+              },
+              {
+                title: "Exemplo 3: A Magia - Hoisting de Funções",
+                description: "As declarações de função (`function nome() {}`) são totalmente içadas. Isto permite-nos organizar o código de forma mais legível, com as funções de mais alto nível no início e os detalhes da implementação mais abaixo.",
+                code: `// Podemos chamar a função antes de a declarar
+iniciarPrograma();
 
-// Hoisting de Funções
-saudar(); // Funciona!
+function iniciarPrograma() {
+  console.log("Programa iniciado!");
+  saudar();
+}
 
 function saudar() {
-  console.log("Olá!");
+  console.log("Olá, mundo!");
 }`
+              }
+            ]
           },
           quiz: [
             {
@@ -638,6 +994,28 @@ function saudar() {
               ],
               correctAnswerIndex: 2,
               explanation: 'Devido ao hoisting, a declaração `var minhaVar` é movida para o topo do escopo, mas a atribuição ` = \'Olá\'` não. A variável existe quando `console.log` é chamado, mas o seu valor é `undefined`.'
+            },
+            {
+              question: "O que é a Temporal Dead Zone (TDZ)?",
+              options: [
+                'Um erro que acontece quando usas `var`.',
+                'O período entre o início de um escopo e a declaração de uma variável `let` ou `const`, onde a variável não pode ser acedida.',
+                'Uma funcionalidade que atrasa a execução do código.',
+                'Um nome antigo para o escopo global.'
+              ],
+              correctAnswerIndex: 1,
+              explanation: 'A TDZ é a razão pela qual `let` e `const` são mais seguros. Elas forçam-nos a declarar uma variável antes de a podermos usar, evitando erros relacionados com o hoisting.'
+            },
+            {
+              question: "O que acontece com as arrow functions atribuídas a uma variável (`const fn = () => {}`) em relação ao hoisting?",
+              options: [
+                'São totalmente içadas, como as declarações de função.',
+                'Não são içadas de todo.',
+                'A variável é içada, mas o seu valor (a função) é `undefined` até à atribuição.',
+                'Causam sempre um erro.'
+              ],
+              correctAnswerIndex: 2,
+              explanation: 'Excelente pergunta! Elas seguem as regras da variável (`let`/`const`/`var`). Se usares `const fn = ...`, a variável `fn` será içada mas ficará na TDZ. Se usares `var fn = ...`, `fn` será `undefined` até à linha da atribuição. Só `function fn() {}` é que é içada por completo.'
             }
           ]
         },
@@ -689,31 +1067,51 @@ function saudar() {
             )
           ),
           practice: {
-            description: 'Vamos ver a diferença na prática. Primeiro, com um número (primitivo) e depois com um objeto. Repara como o original se comporta de forma diferente em cada caso.',
-            code: `// Exemplo com Valor (Primitivo)
-let pontuacao = 100;
+            examples: [
+              {
+                title: "Exemplo 1: O Básico - A Diferença na Prática",
+                description: 'Vamos ver a diferença na prática. Primeiro, com um número (primitivo) e depois com um objeto. Repara como o original se comporta de forma diferente em cada caso.',
+                code: `// Exemplo com Valor (Primitivo)
+let a = 10;
+let b = a; // 'b' é uma cópia de 'a'
+b = 20;
 
-function tentarMudar(pontos) {
-  pontos = 200; // 'pontos' é uma cópia local
-  console.log("Dentro da função:", pontos); // 200
-}
-
-tentarMudar(pontuacao);
-console.log("Fora da função:", pontuacao); // 100 - O original não mudou!
-
-console.log("\\n--------------------\\n");
+console.log("a:", a); // 10 (não foi afetado)
+console.log("b:", b); // 20
 
 // Exemplo com Referência (Objeto)
-const utilizador = { nome: "Alex", hobbies: ["jogar"] };
+const obj1 = { valor: 10 };
+const obj2 = obj1; // 'obj2' aponta para o MESMO objeto que 'obj1'
+obj2.valor = 20;
 
-function adicionarHobby(user) {
+console.log("obj1.valor:", obj1.valor); // 20 (foi afetado!)
+console.log("obj2.valor:", obj2.valor); // 20`
+              },
+              {
+                title: "Exemplo 2: O Caso Comum - Funções que Modificam Objetos",
+                description: 'Este comportamento é muito importante ao passar dados para funções. Uma função pode modificar um objeto ou array que lhe é passado.',
+                code: `const utilizador = { nome: "Alex", hobbies: ["jogar"] };
+
+function adicionarHobby(user, novoHobby) {
   // 'user' aponta para o MESMO objeto que 'utilizador'
-  user.hobbies.push("ler");
+  user.hobbies.push(novoHobby);
 }
 
-adicionarHobby(utilizador);
-console.log("Fora da função, hobbies:", utilizador.hobbies);
+adicionarHobby(utilizador, "ler");
+console.log("Hobbies do utilizador:", utilizador.hobbies);
 // O original foi modificado! O output será ['jogar', 'ler']`
+              },
+              {
+                title: "Exemplo 3: A Armadilha - Comparar Objetos",
+                description: "Como as variáveis de objetos guardam referências, compará-las com `===` verifica se apontam para o mesmo local na memória, não se têm as mesmas propriedades. Dois objetos podem parecer idênticos, mas se forem criados separadamente, não são `===`.",
+                code: `const pessoa1 = { nome: "Ana" };
+const pessoa2 = { nome: "Ana" };
+const pessoa3 = pessoa1;
+
+console.log("pessoa1 === pessoa2:", pessoa1 === pessoa2); // false
+console.log("pessoa1 === pessoa3:", pessoa1 === pessoa3); // true`
+              }
+            ]
           },
           quiz: [
             {
@@ -726,6 +1124,28 @@ console.log("Fora da função, hobbies:", utilizador.hobbies);
               ],
               correctAnswerIndex: 1,
               explanation: "Quando `meuCarro` é passado para a função `pintar`, é a referência (o 'endereço') do objeto que é passada. A função usa essa referência para modificar a propriedade `cor` do objeto original. Por isso, a mudança é visível fora da função."
+            },
+            {
+              question: "Qual o output? `let x = 50; let y = x; y = 100; console.log(x);`",
+              options: [
+                '100',
+                '50',
+                'undefined',
+                'Vai dar erro'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "`Number` é um tipo primitivo. Quando `y = x` é executado, `y` recebe uma cópia do valor de `x`. Alterar `y` mais tarde não tem qualquer efeito sobre a variável original `x`."
+            },
+            {
+              question: "Qual o output? `const arr1 = [1, 2]; const arr2 = arr1; arr2.push(3); console.log(arr1);`",
+              options: [
+                '[1, 2]',
+                '[1, 2, 3]',
+                '[3]',
+                'Vai dar erro'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "Arrays são objetos (passados por referência). `arr2` e `arr1` apontam para o mesmo array na memória. Quando `arr2.push(3)` modifica o array, a mudança é visível através de ambas as variáveis."
             }
           ]
         }
@@ -765,25 +1185,7 @@ console.log("Fora da função, hobbies:", utilizador.hobbies);
             )
           ),
           practice: {
-            description: 'Vamos criar um programa que dá uma mensagem diferente com base na idade de uma pessoa, e outro que avalia uma nota escolar.',
-            code: `const idade = 17;
-
-if (idade >= 18) {
-  console.log("És maior de idade. Podes votar.");
-} else {
-  console.log("Ainda és menor de idade.");
-}
-
-// Exemplo com else if
-const nota = 8;
-
-if (nota >= 10) {
-  console.log("Resultado: Aprovado!");
-} else if (nota >= 8) {
-  console.log("Resultado: Em recuperação.");
-} else {
-  console.log("Resultado: Reprovado.");
-}`
+            examples: []
           },
           quiz: [
             {
@@ -822,26 +1224,7 @@ if (nota >= 10) {
             )
           ),
           practice: {
-            description: 'Vamos usar um `switch` para determinar a mensagem a mostrar com base no dia da semana, representado por um número.',
-            code: `const diaSemana = 3; // 1 = Domingo, 2 = Segunda, etc.
-let mensagem = "";
-
-switch (diaSemana) {
-  case 1:
-    mensagem = "Hoje é Domingo. Dia de descanso!";
-    break;
-  case 7:
-    mensagem = "Hoje é Sábado. Bom fim de semana!";
-    break;
-  case 6:
-    mensagem = "Sexta-feira! O fim de semana está a chegar!";
-    break;
-  default:
-    mensagem = "É um dia de semana. Força no trabalho!";
-    break;
-}
-
-console.log(mensagem);`
+            examples: []
           },
           quiz: [
             {
@@ -887,19 +1270,7 @@ console.log(mensagem);`
             )
           ),
           practice: {
-            description: 'Vamos usar um ciclo `for` para contar de 1 a 5. Depois, vamos usar outro para percorrer um array de frutas e imprimir cada uma.',
-            code: `// Contar de 1 a 5
-console.log("A contar até 5:");
-for (let i = 1; i <= 5; i++) {
-  console.log(i);
-}
-
-// Percorrer um array
-const frutas = ["Maçã", "Banana", "Morango"];
-console.log("\\nAs minhas frutas favoritas:");
-for (let i = 0; i < frutas.length; i++) {
-  console.log(frutas[i]);
-}`
+            examples: []
           },
           quiz: [
             {
@@ -953,22 +1324,7 @@ for (let i = 0; i < frutas.length; i++) {
             )
           ),
           practice: {
-            description: 'Vamos simular uma contagem decrescente com `while` e mostrar como `do...while` executa sempre pelo menos uma vez.',
-            code: `// Exemplo com while
-let contagem = 3;
-console.log("Contagem decrescente para o lançamento!");
-while (contagem > 0) {
-  console.log(contagem);
-  contagem--; // Essencial para evitar um ciclo infinito!
-}
-console.log("Lançar!");
-
-// Exemplo com do...while
-let tentativas = 5;
-do {
-  console.log("\\nTentativa número:", tentativas);
-  // O código aqui executa mesmo que a condição 'tentativas < 5' seja falsa de início.
-} while (tentativas < 5);`
+            examples: []
           },
           quiz: [
             {
@@ -998,26 +1354,7 @@ do {
             )
           ),
           practice: {
-            description: 'Vamos ver as três formas de percorrer o mesmo array para comparar a sintaxe.',
-            code: `const planetas = ['Mercúrio', 'Vénus', 'Terra'];
-
-// 1. Clássico 'for'
-console.log("--- Com 'for' clássico ---");
-for (let i = 0; i < planetas.length; i++) {
-  console.log(planetas[i]);
-}
-
-// 2. Método '.forEach()'
-console.log("\\n--- Com '.forEach()' ---");
-planetas.forEach(planeta => {
-  console.log(planeta);
-});
-
-// 3. Moderno 'for...of'
-console.log("\\n--- Com 'for...of' ---");
-for (const planeta of planetas) {
-  console.log(planeta);
-}`
+            examples: []
           },
           quiz: [
             {
@@ -1049,35 +1386,7 @@ for (const planeta of planetas) {
               )
             ),
             practice: {
-              description: 'Vamos usar um objeto que representa um carro e ver as diferentes formas de extrair e listar as suas propriedades.',
-              code: `const carro = {
-  marca: "Tesla",
-  modelo: "Model S",
-  ano: 2022,
-  eEletrico: true
-};
-
-// 1. Moderno (recomendado): Object.keys()
-console.log("--- Chaves com Object.keys() ---");
-const chaves = Object.keys(carro);
-chaves.forEach(chave => {
-  console.log(\`\${chave}: \${carro[chave]}\`);
-});
-
-// 2. A forma mais poderosa: Object.entries()
-console.log("\\n--- Pares com Object.entries() ---");
-for (const [chave, valor] of Object.entries(carro)) {
-  console.log(\`\${chave}: \${valor}\`);
-}
-
-// 3. Antigo: for...in (usar com cautela)
-console.log("\\n--- Chaves com for...in ---");
-for (const chave in carro) {
-  // É boa prática verificar se a propriedade pertence mesmo ao objeto
-  if (Object.hasOwn(carro, chave)) {
-      console.log(\`\${chave}: \${carro[chave]}\`);
-  }
-}`
+              examples: []
             },
             quiz: [
               {
@@ -1137,24 +1446,7 @@ for (const chave in carro) {
             )
           ),
           practice: {
-            description: 'Vamos criar uma função simples para saudar uma pessoa e outra para somar dois números e devolver o resultado.',
-            code: `// 1. Declarar a função 'saudar' com um parâmetro 'nome'
-function saudar(nome) {
-  console.log("Olá, " + nome + "! Bem-vindo(a).");
-}
-
-// 2. Chamar a função com diferentes argumentos
-saudar("Ana");
-saudar("Carlos");
-
-// 3. Declarar uma função que retorna um valor
-function somar(a, b) {
-  return a + b;
-}
-
-// 4. Chamar a função e guardar o resultado numa variável
-const resultado = somar(5, 10);
-console.log("O resultado da soma é:", resultado); // 15`
+            examples: []
           },
           quiz: [
             {
@@ -1213,22 +1505,7 @@ console.log("O resultado da soma é:", resultado); // 15`
             )
           ),
           practice: {
-            description: 'Vamos reescrever uma função tradicional como uma arrow function para ver a diferença na prática. Depois, criamos uma que recebe um único parâmetro, onde a sintaxe é ainda mais simples.',
-            code: `// Função tradicional
-function calcularPrecoComIVA(preco) {
-  return preco * 1.23;
-}
-console.log("Tradicional:", calcularPrecoComIVA(100));
-
-// A mesma função como Arrow Function
-const calcularPrecoComIVAArrow = (preco) => {
-  return preco * 1.23;
-};
-console.log("Arrow (com corpo):", calcularPrecoComIVAArrow(100));
-
-// Arrow Function simplificada (retorno implícito)
-const calcularPrecoComIVAConcisa = preco => preco * 1.23;
-console.log("Arrow (concisa):", calcularPrecoComIVAConcisa(100));`
+            examples: []
           },
           quiz: [
             {
@@ -1280,30 +1557,7 @@ console.log("Arrow (concisa):", calcularPrecoComIVAConcisa(100));`
             )
           ),
           practice: {
-            description: 'Vamos criar uma função de saudação com um nome padrão. Depois, uma função que verifica se um número é positivo e pára a execução assim que encontra o `return`.',
-            code: `// Parâmetros padrão
-function saudar(nome = "visitante") {
-  console.log(\`Olá, \${nome}!\`);
-}
-
-saudar("Maria"); // Olá, Maria!
-saudar();        // Olá, visitante!
-
-// A importância do 'return'
-function getClassificacao(nota) {
-  if (nota < 0 || nota > 20) {
-    return "Nota inválida"; // A função pára aqui
-  }
-  
-  if (nota >= 10) {
-    return "Aprovado";
-  } else {
-    return "Reprovado";
-  }
-}
-
-console.log(getClassificacao(15));  // Aprovado
-console.log(getClassificacao(25));  // Nota inválida`
+            examples: []
           },
           quiz: [
             {
@@ -1359,26 +1613,7 @@ console.log(getClassificacao(25));  // Nota inválida`
             )
           ),
           practice: {
-            description: 'Vamos observar o escopo em ação. Declaramos variáveis em diferentes escopos e tentamos acedê-las de vários locais para ver o que funciona e o que causa erros.',
-            code: `const variavelGlobal = "Estou no jardim";
-
-function meuQuarto() {
-  const variavelDoQuarto = "Estou no meu quarto";
-  console.log(variavelGlobal); // Consigo ver o jardim daqui
-
-  if (true) {
-    let variavelDaGaveta = "Estou na gaveta";
-    console.log(variavelDaGaveta); // Funciona
-  }
-  
-  // A linha abaixo daria um erro, porque a gaveta está fechada.
-  // console.log(variavelDaGaveta); 
-}
-
-meuQuarto();
-
-// A linha abaixo daria um erro, porque não conseguimos ver para dentro do quarto.
-// console.log(variavelDoQuarto);`
+            examples: []
           },
           quiz: [
             {
@@ -1426,35 +1661,7 @@ meuQuarto();
             )
           ),
           practice: {
-            description: 'Vamos demonstrar estes três super-poderes das funções em JavaScript.',
-            code: `// 1. Guardar uma função numa variável
-const saudar = function(nome) {
-  console.log(\`Olá, \${nome}!\`);
-};
-saudar("Mundo");
-
-// 2. Passar uma função como argumento (Callback)
-function processarArray(array, acao) { // 'acao' é o callback
-  for (const item of array) {
-    acao(item); // Executa a ação para cada item
-  }
-}
-const numeros = [1, 2, 3];
-processarArray(numeros, (numero) => {
-  console.log(\`O dobro é \${numero * 2}\`);
-});
-
-// 3. Retornar uma função (Higher-Order Function)
-function criarMultiplicador(fator) {
-  return function(numero) {
-    return numero * fator;
-  };
-}
-const duplicar = criarMultiplicador(2);
-const triplicar = criarMultiplicador(3);
-
-console.log("Duplicado:", duplicar(10));   // 20
-console.log("Triplicado:", triplicar(10));  // 30`
+            examples: []
           },
           quiz: [
             {
@@ -1516,20 +1723,7 @@ console.log("Triplicado:", triplicar(10));  // 30`
             )
           ),
           practice: {
-            description: 'Para interagir com o DOM, primeiro precisamos de selecionar um elemento. O método mais comum para começar é `document.getElementById()`, que seleciona um elemento pelo seu atributo `id` único. Vamos usá-lo para encontrar um parágrafo e alterar o seu texto.',
-            code: `<!-- No teu ficheiro HTML: -->
-<!-- <p id="mensagem">Este é o texto original.</p> -->
-
-// No teu ficheiro JavaScript:
-
-// 1. Selecionar o elemento com o id "mensagem"
-const paragrafo = document.getElementById("mensagem");
-
-// 2. Mudar o seu conteúdo de texto
-paragrafo.textContent = "Olá, DOM! O texto foi alterado.";
-
-// 3. Mudar o seu estilo (cor do texto)
-paragrafo.style.color = "#64ffda"; // A nossa cor 'green'`
+            examples: []
           },
           quiz: [
             {
@@ -1574,30 +1768,7 @@ paragrafo.style.color = "#64ffda"; // A nossa cor 'green'`
             )
           ),
           practice: {
-            description: 'Vamos usar `querySelector` para apanhar o primeiro parágrafo com uma classe específica e `querySelectorAll` para apanhar todos os itens de uma lista.',
-            code: `<!-- No teu HTML:
-<h1 id="titulo">Título Principal</h1>
-<p class="texto">Primeiro parágrafo.</p>
-<p class="texto">Segundo parágrafo.</p>
-<ul>
-  <li class="item">Item 1</li>
-  <li class="item">Item 2</li>
-</ul>
--->
-
-// No teu JS:
-
-// Selecionar o primeiro elemento com a classe 'texto'
-const primeiroParagrafo = document.querySelector('.texto');
-console.log(primeiroParagrafo.textContent); // "Primeiro parágrafo."
-
-// Selecionar todos os elementos com a classe 'item'
-const todosOsItens = document.querySelectorAll('.item');
-
-// Percorrer a lista de itens e imprimir o seu texto
-todosOsItens.forEach(item => {
-  console.log("Item da lista:", item.textContent);
-});`
+            examples: []
           },
           quiz: [
             {
@@ -1633,23 +1804,7 @@ todosOsItens.forEach(item => {
             )
           ),
           practice: {
-            description: 'Vamos selecionar uma imagem, alterar a sua fonte (o atributo `src`), o seu texto alternativo (`alt`), e depois adicionar uma classe que lhe mete uma borda bonita.',
-            code: `<!-- No HTML:
-<img id="avatar" src="imagem_original.png" alt="Avatar antigo">
-<style>.borda-verde { border: 3px solid #64ffda; }</style>
--->
-
-// No JS:
-const imagem = document.getElementById('avatar');
-
-// Mudar atributos
-imagem.setAttribute('src', 'imagem_nova.png');
-imagem.alt = 'Avatar novo e melhorado'; // Acesso direto também funciona para muitos atributos
-
-// Adicionar uma classe
-imagem.classList.add('borda-verde');
-
-console.log("A imagem agora tem a classe:", imagem.className);`
+            examples: []
           },
           quiz: [
             {
@@ -1695,23 +1850,7 @@ console.log("A imagem agora tem a classe:", imagem.className);`
             )
           ),
           practice: {
-            description: 'Vamos criar um botão que, ao ser clicado, muda o texto de um parágrafo. Isto liga a seleção de elementos, a modificação do DOM e a manipulação de eventos numa única tarefa.',
-            code: `<!-- No HTML:
-<button id="meuBotao">Clica em mim!</button>
-<p id="mensagem">Olá!</p>
--->
-
-// No JS:
-const botao = document.getElementById('meuBotao');
-const paragrafo = document.getElementById('mensagem');
-
-function alterarMensagem() {
-  paragrafo.textContent = "Obrigado por clicares!";
-  paragrafo.style.color = '#64ffda';
-}
-
-// Adicionar o "ouvinte de evento" ao botão
-botao.addEventListener('click', alterarMensagem);`
+            examples: []
           },
           quiz: [
             {
@@ -1756,34 +1895,7 @@ botao.addEventListener('click', alterarMensagem);`
             )
           ),
           practice: {
-            description: 'Vamos adicionar itens a uma lista de tarefas. Cada vez que um botão é clicado, um novo `<li>` é criado e adicionado à `<ul>`.',
-            code: `<!-- No HTML:
-<input id="novaTarefa" type="text" placeholder="Nova tarefa...">
-<button id="adicionar">Adicionar</button>
-<ul id="listaTarefas"></ul>
--->
-
-// No JS:
-const botaoAdicionar = document.getElementById('adicionar');
-const lista = document.getElementById('listaTarefas');
-const input = document.getElementById('novaTarefa');
-
-botaoAdicionar.addEventListener('click', () => {
-  const textoTarefa = input.value;
-  if (textoTarefa === "") return; // Não adicionar se estiver vazio
-
-  // 1. Criar o novo elemento <li>
-  const novoItem = document.createElement('li');
-
-  // 2. Definir o seu conteúdo
-  novoItem.textContent = textoTarefa;
-
-  // 3. Adicioná-lo à lista <ul>
-  lista.appendChild(novoItem);
-  
-  // 4. Limpar o input
-  input.value = "";
-});`
+            examples: []
           },
           quiz: [
             {
@@ -1839,23 +1951,7 @@ botaoAdicionar.addEventListener('click', () => {
             )
           ),
           practice: {
-            description: 'Vamos ver a diferença entre síncrono e assíncrono. Usamos `setTimeout` para agendar uma mensagem, e vemos como as outras mensagens aparecem primeiro, mesmo que o tempo de espera seja 0 milissegundos.',
-            code: `console.log("Pedido 1: Pedir o café.");
-
-// Tarefa assíncrona: o café demora 2 segundos a ser feito.
-// O 'pager' (callback) será chamado quando estiver pronto.
-setTimeout(() => {
-  console.log("Callback: O teu café está pronto!");
-}, 2000); // 2000 milissegundos = 2 segundos
-
-console.log("Pedido 2: Sentar à mesa e ler o jornal.");
-
-// Experiência com 0ms:
-console.log("\\n--- Experiência com 0ms ---");
-console.log("A");
-setTimeout(() => { console.log("B"); }, 0);
-console.log("C");
-// Output: A, C, B`
+            examples: []
           },
           quiz: [
             {
@@ -1905,30 +2001,7 @@ console.log("C");
             )
           ),
           practice: {
-            description: 'A função `fetch` (que busca dados de um URL) retorna uma Promise. Vamos usá-la para ir buscar dados de uma API pública e ver como lidamos com o sucesso e o erro.',
-            code: `const url = 'https://jsonplaceholder.typicode.com/todos/1';
-
-console.log("A ir buscar dados...");
-
-fetch(url)
-  .then(response => {
-    // .then() é chamado quando o servidor responde.
-    // Verificamos se a resposta foi bem-sucedida.
-    if (!response.ok) {
-      throw new Error('Erro na rede!');
-    }
-    return response.json(); // .json() também retorna uma Promise!
-  })
-  .then(data => {
-    // Este .then() lida com o resultado da Promise de .json().
-    console.log("Dados recebidos:", data);
-  })
-  .catch(error => {
-    // .catch() é chamado se houver qualquer erro na cadeia.
-    console.error("Ups, algo correu mal:", error);
-  });
-
-console.log("Pedido feito. A aguardar resposta...");`
+            examples: []
           },
           quiz: [
             {
@@ -1973,34 +2046,7 @@ console.log("Pedido feito. A aguardar resposta...");`
             )
           ),
           practice: {
-            description: 'Vamos reescrever o exemplo da lição anterior usando `async/await`. Repara como o código fica mais limpo e linear, sem a necessidade de encadear `.then()`.',
-            code: `const url = 'https://jsonplaceholder.typicode.com/todos/1';
-
-// A função tem de ser marcada como 'async'
-async function buscarDados() {
-  console.log("A ir buscar dados...");
-  
-  // Usamos um bloco try...catch para lidar com erros
-  try {
-    // 'await' pausa a função até a Promise do fetch resolver
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error('Erro na rede!');
-    }
-    
-    // 'await' pausa novamente até a Promise do .json() resolver
-    const data = await response.json();
-    
-    console.log("Dados recebidos:", data);
-  } catch (error) {
-    console.error("Ups, algo correu mal:", error);
-  }
-  
-  console.log("Busca de dados terminada.");
-}
-
-buscarDados();`
+            examples: []
           },
           quiz: [
             {
@@ -2054,28 +2100,7 @@ buscarDados();`
             )
           ),
           practice: {
-            description: 'Vamos usar a `fetch` API para ir buscar uma lista de utilizadores de uma API pública. Depois, vamos percorrer essa lista (que virá em formato JSON e será convertida para um array) e mostrar os nomes na consola.',
-            code: `async function buscarUtilizadores() {
-  try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users');
-    
-    if (!response.ok) {
-      throw new Error(\`HTTP error! status: \${response.status}\`);
-    }
-    
-    const utilizadores = await response.json(); // Converte a resposta JSON para um array JS
-    
-    console.log("Lista de Utilizadores:");
-    utilizadores.forEach(user => {
-      console.log(\`- \${user.name} (\${user.email})\`);
-    });
-    
-  } catch (error) {
-    console.error('Não foi possível buscar os utilizadores:', error);
-  }
-}
-
-buscarUtilizadores();`
+            examples: []
           },
           quiz: [
             {
@@ -2127,26 +2152,7 @@ buscarUtilizadores();`
             )
           ),
           practice: {
-            description: 'Este código clássico demonstra o Event Loop em ação. Tenta prever a ordem do output antes de o veres. Presta atenção à Promise, que usa uma "fila prioritária" (Microtask Queue) e por isso "passa à frente" do setTimeout.',
-            code: `console.log("Início do script (Chef começa a trabalhar)");
-
-// O Chef entrega esta tarefa a um Ajudante (Web API) e continua.
-setTimeout(() => {
-  console.log("setTimeout: Tarefa do Ajudante terminada (da Fila normal)");
-}, 0);
-
-// As Promises têm uma fila especial de alta prioridade (Microtask Queue).
-Promise.resolve().then(() => {
-  console.log("Promise: Tarefa da Fila Prioritária");
-});
-
-console.log("Fim do script (Chef terminou o trabalho síncrono)");
-
-// Output esperado:
-// 1. Início do script
-// 2. Fim do script
-// 3. Promise: Tarefa da Fila Prioritária
-// 4. setTimeout: Tarefa do Ajudante terminada`
+            examples: []
           },
           quiz: [
             {
@@ -2188,20 +2194,7 @@ console.log("Fim do script (Chef terminou o trabalho síncrono)");
             )
           ),
           practice: {
-            description: 'Vamos usar um array de números para demonstrar o poder destes três métodos.',
-            code: `const numeros = [1, 2, 3, 4, 5, 6];
-
-// .map() para criar um novo array com o dobro de cada número
-const dobrados = numeros.map(num => num * 2);
-console.log("Dobrados:", dobrados); // [2, 4, 6, 8, 10, 12]
-
-// .filter() para criar um novo array apenas com os números pares
-const pares = numeros.filter(num => num % 2 === 0);
-console.log("Pares:", pares); // [2, 4, 6]
-
-// .reduce() para calcular a soma de todos os números
-const soma = numeros.reduce((acumulador, num) => acumulador + num, 0);
-console.log("Soma:", soma); // 21`
+            examples: []
           },
           quiz: [
             {
@@ -2256,23 +2249,7 @@ console.log("Soma:", soma); // 21`
             )
           ),
           practice: {
-            description: 'Vamos ver estes operadores em ação para extrair dados de um objeto e manipular arrays de forma limpa.',
-            code: `// Destructuring
-const pessoa = { nome: 'Joana', idade: 29, cidade: 'Porto' };
-const { nome, idade } = pessoa;
-console.log(\`\${nome} tem \${idade} anos.\`);
-
-// Spread
-const frutas1 = ['maçã', 'banana'];
-const frutas2 = ['laranja', 'morango'];
-const todasAsFrutas = [...frutas1, ...frutas2];
-console.log("Todas as frutas:", todasAsFrutas);
-
-// Rest
-function somar(...numeros) {
-  return numeros.reduce((total, num) => total + num, 0);
-}
-console.log("Soma com Rest:", somar(10, 20, 30)); // 60`
+            examples: []
           },
           quiz: [
             {
@@ -2315,27 +2292,7 @@ console.log("Soma com Rest:", somar(10, 20, 30)); // 60`
             )
           ),
           practice: {
-            description: 'Vamos simular dois ficheiros. Um `matematica.js` que exporta funções, e um `app.js` que as importa para as usar. (Nota: para isto funcionar num navegador, o teu ficheiro HTML precisaria de `<script type="module">`).',
-            code: `// Ficheiro: matematica.js
-export const PI = 3.14159;
-
-export function somar(a, b) {
-  return a + b;
-}
-
-export function subtrair(a, b) {
-  return a - b;
-}
-
-// ------------------------------------
-
-// Ficheiro: app.js
-import { somar, PI } from './matematica.js';
-// Podes importar tudo de uma vez: import * as Mat from './matematica.js';
-
-const resultado = somar(5, 3);
-console.log(\`Resultado: \${resultado}\`);
-console.log(\`Valor de PI: \${PI}\`);`
+            examples: []
           },
           quiz: [
             {
@@ -2394,8 +2351,11 @@ console.log(\`Valor de PI: \${PI}\`);`
             )
           ),
           practice: {
-            description: 'Não há código a executar aqui. Em vez disso, aqui ficam alguns recursos fantásticos para continuares a tua jornada:',
-            code: `// Documentação de referência (essencial):
+            examples: [
+                {
+                    title: "Recursos para Continuar",
+                    description: 'Não há código a executar aqui. Em vez disso, aqui ficam alguns recursos fantásticos para continuares a tua jornada:',
+                    code: `// Documentação de referência (essencial):
 // MDN Web Docs: https://developer.mozilla.org/
 
 // Para praticar com desafios de código:
@@ -2409,6 +2369,8 @@ console.log(\`Valor de PI: \${PI}\`);`
 
 // Para aprender sobre JavaScript no backend:
 // Node.js: https://nodejs.org/`
+                }
+            ]
           },
           quiz: [
             {
