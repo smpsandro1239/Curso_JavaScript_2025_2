@@ -181,7 +181,10 @@ console.log("A minha cidade é Lisboa.");`
   <h1>O meu site</h1>
 
   <script src="o_meu_script.js"></script>
-</body>`
+</body>
+
+<!-- No teu ficheiro o_meu_script.js -->
+console.log("Olá do ficheiro externo!");`
               },
               {
                 title: "Exemplo 2: O Caso Comum - Script Interno",
@@ -191,6 +194,8 @@ console.log("A minha cidade é Lisboa.");`
   <p id="mensagem">Olá!</p>
 
   <script>
+    // Este código não vai funcionar aqui, mas é para exemplificar.
+    // Veremos como manipular elementos no Módulo 5!
     const paragrafo = document.getElementById('mensagem');
     paragrafo.textContent = 'Olá diretamente do script interno!';
   </script>
@@ -237,7 +242,26 @@ console.log("A minha cidade é Lisboa.");`
                 correctAnswerIndex: 2,
                 explanation: 'Um script inline é quando o código JavaScript é colocado diretamente dentro de um atributo de um elemento HTML, como `onclick`, `onmouseover`, etc. É uma prática geralmente desaconselhada.'
             }
-          ]
+          ],
+          challenge: {
+            description: "Imagina que tens um ficheiro HTML. Adiciona uma tag `<script>` no final do `<body>` que imprima a mensagem 'Página carregada com sucesso!' na consola.",
+            starterCode: `<!DOCTYPE html>
+<html>
+<head>
+  <title>A Minha Página</title>
+</head>
+<body>
+
+  <h1>Bem-vindo!</h1>
+
+  <!-- Adiciona o teu script aqui -->
+
+</body>
+</html>`,
+            solution: `<script>
+  console.log('Página carregada com sucesso!');
+</script>`
+          }
         }
       ]
     },
@@ -248,7 +272,6 @@ console.log("A minha cidade é Lisboa.");`
         {
           id: '2.1',
           title: 'Variáveis: var, let e const',
-          // FIX: Converted JSX to React.createElement calls to be valid in a .ts file.
           theory: React.createElement(
             'div',
             null,
@@ -337,14 +360,16 @@ let totalFinal = totalCarrinho + valorIva;
 console.log("Total com IVA:", totalFinal);`
               },
               {
-                title: "Exemplo 3: A Armadilha - O Erro com `const`",
-                description: "Tentar reatribuir o valor a uma variável `const` resulta num erro. Isto é uma salvaguarda importante para evitar que valores que deveriam ser fixos mudem acidentalmente.",
-                code: `const dataNascimento = "1990-01-15";
-console.log("Nascido em:", dataNascimento);
+                title: "Exemplo 3: A Armadilha - `const` com Objetos",
+                description: "Uma fonte de confusão comum: `const` não torna um objeto imutável. Apenas impede que a variável seja reatribuída para OUTRO objeto. Podes perfeitamente alterar as propriedades do objeto original.",
+                code: `const utilizador = { nome: "Ana", idade: 28 };
 
-// A linha abaixo está comentada porque causaria um erro e pararia o script.
-// Tenta descomentá-la para ver o que acontece na consola!
-// dataNascimento = "1991-02-20"; // TypeError: Assignment to constant variable.`
+// Isto funciona perfeitamente!
+utilizador.idade = 29;
+console.log(utilizador.idade); // 29
+
+// Isto causaria um erro. Descomenta para ver!
+// utilizador = { nome: "Rui", idade: 40 }; // TypeError`
               }
             ]
           },
@@ -393,12 +418,25 @@ console.log("Nascido em:", dataNascimento);
               correctAnswerIndex: 2,
               explanation: "Devido ao seu comportamento com hoisting e escopo, `var` pode levar a bugs difíceis de encontrar. A convenção moderna é usar `let` para variáveis que mudam e `const` para as que não mudam, evitando `var` por completo."
             }
-          ]
+          ],
+          challenge: {
+            description: "Cria um pequeno programa que calcula o preço final de um produto. Declara o preço base (ex: 50) e a taxa de IVA (ex: 0.23) usando o tipo de variável mais apropriado para cada valor. Depois, calcula e imprime o preço final na consola.",
+            starterCode: `// Declara as tuas variáveis aqui
+
+// Calcula o preço final
+
+// Imprime o resultado`,
+            solution: `const precoBase = 50;
+const taxaIva = 0.23;
+
+const precoFinal = precoBase * (1 + taxaIva);
+
+console.log("O preço final é:", precoFinal);`
+          }
         },
         {
           id: '2.2',
           title: 'Tipos de Dados Primitivos',
-          // FIX: Converted JSX to React.createElement calls to be valid in a .ts file.
           theory: React.createElement(
             'div',
             null,
@@ -491,14 +529,17 @@ console.log('Tipo de morada:', typeof morada);`
               },
               {
                 title: "Exemplo 2: O Caso Comum - Concatenação de Strings",
-                description: "O operador `+` comporta-se de forma diferente com strings e números. Quando usado com uma string, ele 'concatena' (junta) os valores.",
+                description: "O operador `+` comporta-se de forma diferente com strings e números. Quando usado com uma string, ele 'concatena' (junta) os valores. As crases (``) permitem uma forma mais moderna e legível de o fazer, chamada 'template literals'.",
                 code: `const nome = "Alex";
+const idade = 30;
+
+// Forma antiga
 const bemVindo = "Bem-vindo, " + nome + "!";
 console.log(bemVindo);
 
-const numeroString = "10";
-const numeroReal = 5;
-console.log("Juntar string e número:", numeroString + numeroReal); // "105"`
+// Forma moderna (Template Literals)
+const perfil = \`O utilizador \${nome} tem \${idade} anos.\`;
+console.log(perfil);`
               },
               {
                 title: "Exemplo 3: A Armadilha - A Peculiaridade do `typeof null`",
@@ -541,8 +582,36 @@ console.log(typeof valorNulo); // Output: "object"`
               ],
               correctAnswerIndex: 1,
               explanation: "Quando o operador `+` é usado e um dos operandos é uma string, o JavaScript converte o outro operando para uma string e concatena-os. Assim, 3 torna-se '3', e '5' + '3' resulta em '53'."
+            },
+            {
+                question: "Qual a melhor descrição para a diferença entre `null` e `undefined`?",
+                options: [
+                    "São a mesma coisa.",
+                    "`null` é um erro, `undefined` não.",
+                    "`undefined` significa que um valor não foi atribuído, enquanto `null` é uma atribuição intencional de 'nenhum valor'.",
+                    "`null` é para números e `undefined` para texto."
+                ],
+                correctAnswerIndex: 2,
+                explanation: "Exato. `undefined` é o estado 'padrão' de uma variável vazia. `null` é um valor que o programador atribui para indicar a ausência intencional de um valor de objeto."
             }
-          ]
+          ],
+          challenge: {
+            description: "Declara 5 variáveis, cada uma com um tipo de dado primitivo diferente: String, Number, Boolean, Null e Undefined. De seguida, usa `console.log()` e o operador `typeof` para imprimir o tipo de cada uma na consola.",
+            starterCode: `// Declara as tuas 5 variáveis aqui
+
+// Imprime o tipo de cada uma`,
+            solution: `const nome = "JavaScript";
+const versao = 2023;
+const eDivertido = true;
+const valorNulo = null;
+let valorIndefinido;
+
+console.log("Tipo de nome:", typeof nome);
+console.log("Tipo de versao:", typeof versao);
+console.log("Tipo de eDivertido:", typeof eDivertido);
+console.log("Tipo de valorNulo:", typeof valorNulo); // Lembra-te da peculiaridade!
+console.log("Tipo de valorIndefinido:", typeof valorIndefinido);`
+          }
         },
         {
           id: '2.3',
@@ -675,8 +744,34 @@ console.log("Acedido via variável:", carro[propriedadeAProcurar]);`
               ],
               correctAnswerIndex: 3,
               explanation: 'Em JavaScript, como na maioria das linguagens de programação, a contagem dos índices de arrays começa em 0. O primeiro elemento está sempre no índice 0.'
+            },
+            {
+              question: "Como adicionarias o número 4 ao final do array `const nums = [1, 2, 3];`?",
+              options: [
+                'nums.add(4);',
+                'nums.push(4);',
+                'nums[4] = 4;',
+                'nums += 4;'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "O método `.push()` é usado para adicionar um ou mais elementos ao final de um array."
             }
-          ]
+          ],
+          challenge: {
+            description: "Cria um objeto chamado `livro`. Este objeto deve ter as seguintes propriedades: `titulo` (string), `autor` (string), `anoPublicacao` (number), e `generos` (um array de strings com pelo menos dois géneros). Depois, imprime o título do livro e o primeiro género da lista na consola.",
+            starterCode: `// Cria o teu objeto 'livro' aqui
+
+// Imprime a informação pedida`,
+            solution: `const livro = {
+  titulo: "A Descoberta do JavaScript",
+  autor: "Alex Coder",
+  anoPublicacao: 2024,
+  generos: ["Técnico", "Aventura"]
+};
+
+console.log("Título:", livro.titulo);
+console.log("Primeiro Género:", livro.generos[0]);`
+          }
         },
         {
           id: '2.4',
@@ -705,7 +800,8 @@ console.log("Acedido via variável:", carro[propriedadeAProcurar]);`
               React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '-'), ' (Subtração)'),
               React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '*'), ' (Multiplicação)'),
               React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '/'), ' (Divisão)'),
-              React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '%'), ' (Módulo - o resto de uma divisão)')
+              React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '%'), ' (Módulo - o resto de uma divisão)'),
+              React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '**'), ' (Exponenciação - ex: 2 ** 3 é 8)')
             ),
              React.createElement(
               'h3',
@@ -721,7 +817,7 @@ console.log("Acedido via variável:", carro[propriedadeAProcurar]);`
               { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
               React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, 'x += y'), ' é o mesmo que ', React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, 'x = x + y')),
               React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, 'x -= y'), ' é o mesmo que ', React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, 'x = x - y')),
-              React.createElement('li', null, '(e assim por diante para *, / e %)')
+              React.createElement('li', null, '(e assim por diante para *, /, % e **)')
             )
           ),
           practice: {
@@ -741,7 +837,7 @@ console.log("Nova pontuação:", pontuacao); // 150`
               },
               {
                 title: "Exemplo 2: O Caso Comum - Ordem das Operações",
-                description: "O JavaScript respeita a ordem matemática das operações (primeiro multiplicação/divisão, depois soma/subtração). Podes usar parênteses `()` para forçar uma ordem diferente.",
+                description: "O JavaScript respeita a ordem matemática das operações (primeiro exponenciação, depois multiplicação/divisão, depois soma/subtração). Podes usar parênteses `()` para forçar uma ordem diferente.",
                 code: `let resultado1 = 5 + 3 * 2; // 5 + 6
 console.log("Sem parênteses:", resultado1); // 11
 
@@ -795,8 +891,35 @@ console.log("Vidas agora:", vidas); // 3`
               ],
               correctAnswerIndex: 2,
               explanation: "O operador de incremento `++` adiciona 1 ao valor da variável. Assim, `x` passa de 5 para 6."
+            },
+            {
+              question: "Qual o valor final de `total`? `let total = 15; total %= 4;`",
+              options: [
+                '3.75',
+                '4',
+                '3',
+                '1'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "O operador `%=` calcula o resto da divisão de `total` por 4 e atribui o resultado de volta a `total`. 15 dividido por 4 dá 3, com um resto de 3."
             }
-          ]
+          ],
+          challenge: {
+            description: "Calcula a área de um círculo. Guarda o valor de PI (3.14159) numa constante e o raio (ex: 5) noutra. A fórmula é `Área = PI * raio²`. Imprime o resultado na consola. (Dica: `raio²` pode ser escrito como `raio * raio` ou `raio ** 2`).",
+            starterCode: `const PI = 3.14159;
+const raio = 5;
+
+// Calcula a área aqui
+let area;
+
+console.log("A área do círculo é:", area);`,
+            solution: `const PI = 3.14159;
+const raio = 5;
+
+const area = PI * raio ** 2;
+
+console.log("A área do círculo é:", area);`
+          }
         },
          {
           id: '2.5',
@@ -925,7 +1048,23 @@ console.log("5 == '5':", 5 == '5');     // true (perigoso! '5' é convertido par
               correctAnswerIndex: 1,
               explanation: "O operador `!` é o operador de negação lógica. Ele inverte o valor booleano: `!true` torna-se `false`, e `!false` torna-se `true`."
             }
-          ]
+          ],
+          challenge: {
+            description: "Uma loja online oferece portes grátis se o valor da compra for superior a 50€ OU se o cliente for um membro 'Premium'. Cria variáveis para `valorCompra` e `eMembroPremium` (booleano). Escreve uma única expressão lógica que resulte em `true` se o cliente tiver portes grátis e `false` caso contrário. Testa com diferentes valores.",
+            starterCode: `const valorCompra = 60;
+const eMembroPremium = false;
+
+// Escreve a tua expressão lógica aqui
+const portesGratis = /* a tua condição */;
+
+console.log("Portes grátis?", portesGratis);`,
+            solution: `const valorCompra = 60;
+const eMembroPremium = false;
+
+const portesGratis = valorCompra > 50 || eMembroPremium;
+
+console.log("Portes grátis?", portesGratis);`
+          }
         },
         {
           id: '2.6',
@@ -1011,13 +1150,51 @@ function saudar() {
               options: [
                 'São totalmente içadas, como as declarações de função.',
                 'Não são içadas de todo.',
-                'A variável é içada, mas o seu valor (a função) é `undefined` até à atribuição.',
+                'A variável é içada, mas o seu valor (a função) é `undefined` até à atribuição (no caso de `var`) ou inacessível (no caso de `let`/`const`).',
                 'Causam sempre um erro.'
               ],
               correctAnswerIndex: 2,
-              explanation: 'Excelente pergunta! Elas seguem as regras da variável (`let`/`const`/`var`). Se usares `const fn = ...`, a variável `fn` será içada mas ficará na TDZ. Se usares `var fn = ...`, `fn` será `undefined` até à linha da atribuição. Só `function fn() {}` é que é içada por completo.'
+              explanation: 'Excelente pergunta! Elas seguem as regras da variável (`let`/`const`/`var`). Se usares `const fn = ...`, a variável `fn` será içada mas ficará na TDZ, dando um `ReferenceError`. Se usares `var fn = ...`, `fn` será `undefined` até à linha da atribuição, dando um `TypeError` se tentares chamá-la. Só `function fn() {}` é que é içada por completo.'
+            },
+            {
+              question: "O que será impresso? `dizerAdeus(); const dizerAdeus = () => { console.log('Adeus'); };`",
+              options: [
+                "`Adeus`",
+                "`undefined`",
+                "`ReferenceError`",
+                "`TypeError`"
+              ],
+              correctAnswerIndex: 2,
+              explanation: "A variável `dizerAdeus` foi declarada com `const`, por isso ela é içada mas permanece na Temporal Dead Zone (TDZ) até à sua linha de declaração. Tentar chamá-la antes disso resulta num `ReferenceError`."
             }
-          ]
+          ],
+          challenge: {
+            description: "O código abaixo não funciona por causa do hoisting. Reorganiza o código para que ele imprima a mensagem 'O meu animal favorito é o cão.' sem alterar a lógica fundamental.",
+            starterCode: `imprimirAnimalFavorito();
+
+const animal = "cão";
+
+const imprimirAnimalFavorito = () => {
+  console.log("O meu animal favorito é o " + animal);
+};`,
+            solution: `// Solução 1: Mover a chamada para o fim
+const animal = "cão";
+
+const imprimirAnimalFavorito = () => {
+  console.log("O meu animal favorito é o " + animal);
+};
+
+imprimirAnimalFavorito();
+
+// Solução 2: Mudar para uma declaração de função (que é içada)
+const animal2 = "gato";
+
+imprimirAnimalFavorito2();
+
+function imprimirAnimalFavorito2() {
+  console.log("O meu animal favorito é o " + animal2);
+}`
+          }
         },
         {
           id: '2.7',
@@ -1146,8 +1323,37 @@ console.log("pessoa1 === pessoa3:", pessoa1 === pessoa3); // true`
               ],
               correctAnswerIndex: 1,
               explanation: "Arrays são objetos (passados por referência). `arr2` e `arr1` apontam para o mesmo array na memória. Quando `arr2.push(3)` modifica o array, a mudança é visível através de ambas as variáveis."
+            },
+            {
+              question: "O que será impresso? `let idade = 30; function celebrarAniversario(num) { num += 1; } celebrarAniversario(idade); console.log(idade);`",
+              options: [
+                "`31`",
+                "`30`",
+                "`undefined`",
+                "Vai dar erro"
+              ],
+              correctAnswerIndex: 1,
+              explanation: "`idade` é um tipo primitivo (Number). Quando é passada para `celebrarAniversario`, o seu valor é copiado para o parâmetro `num`. A alteração `num += 1` afeta apenas a cópia local, não a variável original `idade`."
             }
-          ]
+          ],
+          challenge: {
+            description: "Dado o array `original`, cria uma cópia exata chamada `copia` que seja independente do original. Depois, adiciona um novo item à `copia`. Finalmente, imprime ambos os arrays na consola para provar que o `original` não foi modificado. (Dica: o operador spread `...` é ótimo para isto).",
+            starterCode: `const original = ["maçã", "banana"];
+
+// Cria a cópia aqui
+
+// Modifica a cópia aqui
+
+// Imprime os dois arrays`,
+            solution: `const original = ["maçã", "banana"];
+
+const copia = [...original];
+
+copia.push("laranja");
+
+console.log("Original:", original); // ["maçã", "banana"]
+console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
+          }
         }
       ]
     },
@@ -2261,7 +2467,6 @@ console.log("pessoa1 === pessoa3:", pessoa1 === pessoa3); // true`
                 'Vai dar um erro.'
               ],
               correctAnswerIndex: 1,
-              // FIX: Replaced incorrect shorthand property 'espalha' with the correct 'explanation' property and its value.
               explanation: "O operador spread `...array1` \"espalha\" os elementos de `array1` dentro do novo array. Assim, em vez de inserir o array `[1, 2]` como um único elemento, ele insere os seus elementos individuais, 1 e 2, resultando em `[1, 2, 3, 4]`."
             }
           ]
