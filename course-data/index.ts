@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { CourseData } from '../types';
 
@@ -639,6 +638,94 @@ function saudar() {
               ],
               correctAnswerIndex: 2,
               explanation: 'Devido ao hoisting, a declaração `var minhaVar` é movida para o topo do escopo, mas a atribuição ` = \'Olá\'` não. A variável existe quando `console.log` é chamado, mas o seu valor é `undefined`.'
+            }
+          ]
+        },
+        {
+          id: '2.7',
+          title: 'Aprofundando: Valor vs. Referência',
+          theory: React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'Este é um dos conceitos mais importantes e que mais confusão causa no início. A forma como o JavaScript lida com variáveis depende do seu tipo.'
+            ),
+            React.createElement('h3', { className: 'text-xl font-bold text-lightest-slate mb-2' }, 'Tipos Primitivos (Passagem por Valor)'),
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'Quando atribuis um tipo primitivo (`String`, `Number`, `Boolean`, etc.) a outra variável, o JavaScript cria uma ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'cópia do valor'),
+              '. As duas variáveis ficam completamente independentes.'
+            ),
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              React.createElement('strong', { className: 'text-green' }, 'Analogia:'), ' É como dar a alguém uma ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'fotocópia de um documento'),
+              '. Eles podem rabiscar à vontade na sua cópia que o teu documento original permanece intacto.'
+            ),
+            React.createElement('h3', { className: 'text-xl font-bold text-lightest-slate mb-2 mt-6' }, 'Tipos Complexos (Passagem por Referência)'),
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'Quando trabalhas com `Objetos` ou `Arrays`, as coisas mudam. Ao atribuir um objeto/array a outra variável, não estás a criar uma cópia. Estás a copiar a ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'referência'),
+              ' — o "endereço" na memória onde o objeto/array original está guardado.'
+            ),
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              React.createElement('strong', { className: 'text-green' }, 'Analogia:'), ' É como partilhar um ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'link para um Google Doc'),
+              '. Ambas as pessoas (variáveis) estão a olhar e a editar o mesmo documento. Uma alteração feita por uma é imediatamente visível pela outra.'
+            ),
+            React.createElement(
+              'p',
+              null,
+              'Isto é especialmente crucial quando passas objetos ou arrays como argumentos para funções.'
+            )
+          ),
+          practice: {
+            description: 'Vamos ver a diferença na prática. Primeiro, com um número (primitivo) e depois com um objeto. Repara como o original se comporta de forma diferente em cada caso.',
+            code: `// Exemplo com Valor (Primitivo)
+let pontuacao = 100;
+
+function tentarMudar(pontos) {
+  pontos = 200; // 'pontos' é uma cópia local
+  console.log("Dentro da função:", pontos); // 200
+}
+
+tentarMudar(pontuacao);
+console.log("Fora da função:", pontuacao); // 100 - O original não mudou!
+
+console.log("\\n--------------------\\n");
+
+// Exemplo com Referência (Objeto)
+const utilizador = { nome: "Alex", hobbies: ["jogar"] };
+
+function adicionarHobby(user) {
+  // 'user' aponta para o MESMO objeto que 'utilizador'
+  user.hobbies.push("ler");
+}
+
+adicionarHobby(utilizador);
+console.log("Fora da função, hobbies:", utilizador.hobbies);
+// O original foi modificado! O output será ['jogar', 'ler']`
+          },
+          quiz: [
+            {
+              question: "O que será impresso na consola no final? `const meuCarro = { cor: 'azul' }; function pintar(carro) { carro.cor = 'vermelho'; } pintar(meuCarro); console.log(meuCarro.cor);`",
+              options: [
+                "'azul'",
+                "'vermelho'",
+                'undefined',
+                'Vai dar erro'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "Quando `meuCarro` é passado para a função `pintar`, é a referência (o 'endereço') do objeto que é passada. A função usa essa referência para modificar a propriedade `cor` do objeto original. Por isso, a mudança é visível fora da função."
             }
           ]
         }
