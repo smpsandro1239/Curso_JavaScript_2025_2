@@ -983,7 +983,116 @@ do {
               explanation: 'Correto! Como `do...while` verifica a condição no final, o bloco de código é sempre executado pelo menos uma vez. `while` verifica a condição no início, por isso o seu bloco de código pode nunca ser executado se a condição for inicialmente falsa.'
             }
           ]
-        }
+        },
+        {
+          id: '3.5',
+          title: 'Aprofundando: Como Percorrer um Array',
+          theory: React.createElement(
+            'div',
+            null,
+            React.createElement('p', { className: 'mb-4' }, 'Já vimos o ciclo `for` para percorrer arrays. Funciona, mas muitas vezes pode ser verboso e propenso a pequenos erros (ex: `i <=` em vez de `i <`). O JavaScript moderno oferece formas mais limpas e expressivas.'),
+            React.createElement('ul', { className: 'list-disc list-inside mb-4 pl-4 space-y-4' },
+              React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Ciclo `for` clássico'), ': O "manual". Dá-te controlo total sobre o índice (`i`), o que é útil se precisares dele ou se quiseres percorrer o array de trás para a frente.'),
+              React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Método `.forEach()`'), ': É como dizer ao array: "Para cada um dos teus itens, executa esta ação". É muito legível, mas não podes usar `break` ou `continue` para sair do ciclo a meio.'),
+              React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Ciclo `for...of`'), ': A forma mais moderna e recomendada na maioria dos casos. É como pegar em cada item de uma passadeira rolante, um de cada vez. Dá-te diretamente o valor de cada elemento, de forma limpa e simples. É a combinação perfeita de legibilidade e poder (podes usar `break` e `continue`).')
+            )
+          ),
+          practice: {
+            description: 'Vamos ver as três formas de percorrer o mesmo array para comparar a sintaxe.',
+            code: `const planetas = ['Mercúrio', 'Vénus', 'Terra'];
+
+// 1. Clássico 'for'
+console.log("--- Com 'for' clássico ---");
+for (let i = 0; i < planetas.length; i++) {
+  console.log(planetas[i]);
+}
+
+// 2. Método '.forEach()'
+console.log("\\n--- Com '.forEach()' ---");
+planetas.forEach(planeta => {
+  console.log(planeta);
+});
+
+// 3. Moderno 'for...of'
+console.log("\\n--- Com 'for...of' ---");
+for (const planeta of planetas) {
+  console.log(planeta);
+}`
+          },
+          quiz: [
+            {
+              question: "Qual é a forma mais moderna e legível de simplesmente aceder a cada valor de um array, um por um?",
+              options: [
+                'for (let i = 0; i < arr.length; i++)',
+                'arr.forEach(item => { /* ... */ })',
+                'for (const item of arr)',
+                'while (arr.length > 0)'
+              ],
+              correctAnswerIndex: 2,
+              explanation: "`for...of` é a escolha ideal para uma simples iteração. É mais conciso que o ciclo `for` clássico e mais direto que o `forEach`, pois não necessita de uma função de callback. Dá-te diretamente o valor de cada item."
+            }
+          ]
+        },
+        {
+            id: '3.6',
+            title: 'Aprofundando: Como Percorrer um Objeto',
+            theory: React.createElement(
+              'div',
+              null,
+              React.createElement('p', { className: 'mb-4' }, 'Percorrer as propriedades de um objeto é uma tarefa comum, mas diferente de percorrer um array. Objetos não têm uma ordem garantida e não podem ser percorridos diretamente com um `for...of`.'),
+              React.createElement('p', { className: 'mb-4' }, 'Pensa num objeto como um dicionário. Não o lês do início ao fim; procuras as palavras (chaves) que te interessam.'),
+              React.createElement('ul', { className: 'list-disc list-inside mb-4 pl-4 space-y-4' },
+                React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Ciclo `for...in`'), ': A forma mais antiga. Percorre as chaves (propriedades) do objeto. É útil, mas tem uma desvantagem: pode percorrer também propriedades herdadas (do "protótipo"), o que nem sempre é desejável.'),
+                React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Método `Object.keys()`'), ': A forma moderna e segura. Devolve um array contendo apenas as próprias chaves do objeto. Depois, podes usar `forEach` ou `for...of` nesse array para fazer o que quiseres.'),
+                React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Método `Object.values()`'), ': Similar ao anterior, mas devolve um array com os valores do objeto.'),
+                React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Método `Object.entries()`'), ': O mais poderoso. Devolve um array de pequenos arrays, onde cada um contém um par `[chave, valor]`. É perfeito para quando precisas de ambos ao mesmo tempo.')
+              )
+            ),
+            practice: {
+              description: 'Vamos usar um objeto que representa um carro e ver as diferentes formas de extrair e listar as suas propriedades.',
+              code: `const carro = {
+  marca: "Tesla",
+  modelo: "Model S",
+  ano: 2022,
+  eEletrico: true
+};
+
+// 1. Moderno (recomendado): Object.keys()
+console.log("--- Chaves com Object.keys() ---");
+const chaves = Object.keys(carro);
+chaves.forEach(chave => {
+  console.log(\`\${chave}: \${carro[chave]}\`);
+});
+
+// 2. A forma mais poderosa: Object.entries()
+console.log("\\n--- Pares com Object.entries() ---");
+for (const [chave, valor] of Object.entries(carro)) {
+  console.log(\`\${chave}: \${valor}\`);
+}
+
+// 3. Antigo: for...in (usar com cautela)
+console.log("\\n--- Chaves com for...in ---");
+for (const chave in carro) {
+  // É boa prática verificar se a propriedade pertence mesmo ao objeto
+  if (Object.hasOwn(carro, chave)) {
+      console.log(\`\${chave}: \${carro[chave]}\`);
+  }
+}`
+            },
+            quiz: [
+              {
+                question: "Qual método usarias para obter um array com todos os valores de um objeto?",
+                options: [
+                  'Object.keys(obj)',
+                  'Object.values(obj)',
+                  'Object.entries(obj)',
+                  'for...in'
+                ],
+                correctAnswerIndex: 1,
+                explanation: "`Object.values()` é o método desenhado especificamente para esta tarefa. Ele extrai todos os valores das propriedades de um objeto e devolve-os num novo array."
+              }
+            ]
+          }
       ]
     },
     {
@@ -1282,6 +1391,82 @@ meuQuarto();
               ],
               correctAnswerIndex: 1,
               explanation: 'A função `teste()` é chamada primeiro. Dentro dela, uma nova variável `a` com escopo de função é criada e tem o valor 2, que é impresso. Esta variável não afeta a variável `a` do escopo global. Depois da função executar, o segundo `console.log(a)` imprime o valor da variável global `a`, que ainda é 1.'
+            }
+          ]
+        },
+        {
+          id: '4.5',
+          title: 'Aprofundando: Funções como Cidadãos de Primeira Classe',
+          theory: React.createElement(
+            'div',
+            null,
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'Em JavaScript, as funções têm um estatuto especial: são "cidadãos de primeira classe". Isto não é apenas um nome pomposo; significa que uma função é tratada como qualquer outro valor (como um número, uma string ou um objeto).'
+            ),
+            React.createElement(
+              'p',
+              { className: 'mb-4' },
+              'A analogia é pensar numa função como uma ',
+              React.createElement('strong', { className: 'text-lightest-slate' }, 'ferramenta especializada'),
+              ' (ex: uma batedeira). Como qualquer outra ferramenta, tu podes:'
+            ),
+            React.createElement(
+              'ul',
+              { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+              React.createElement('li', null, '1. ', React.createElement('strong', { className: 'text-green' }, 'Guardá-la numa caixa'), ' (Atribuir a uma variável).'),
+              React.createElement('li', null, '2. ', React.createElement('strong', { className: 'text-green' }, 'Entregá-la a um chef para ele usar'), ' (Passar como argumento para outra função - isto é um ', React.createElement('strong', { className: 'text-lightest-slate' }, 'Callback'), ').'),
+              React.createElement('li', null, '3. ', React.createElement('strong', { className: 'text-green' }, 'Usar uma máquina que constrói uma ferramenta personalizada para ti'), ' (Retornar uma função de outra função - isto é uma ', React.createElement('strong', { className: 'text-lightest-slate' }, 'Higher-Order Function'), ').')
+            ),
+            React.createElement(
+              'p',
+              { className: 'mt-4' },
+              'Esta flexibilidade é um dos aspetos mais poderosos do JavaScript e é a base para muitos padrões de programação avançados, incluindo os métodos de array como `map` e `filter` que já vimos.'
+            )
+          ),
+          practice: {
+            description: 'Vamos demonstrar estes três super-poderes das funções em JavaScript.',
+            code: `// 1. Guardar uma função numa variável
+const saudar = function(nome) {
+  console.log(\`Olá, \${nome}!\`);
+};
+saudar("Mundo");
+
+// 2. Passar uma função como argumento (Callback)
+function processarArray(array, acao) { // 'acao' é o callback
+  for (const item of array) {
+    acao(item); // Executa a ação para cada item
+  }
+}
+const numeros = [1, 2, 3];
+processarArray(numeros, (numero) => {
+  console.log(\`O dobro é \${numero * 2}\`);
+});
+
+// 3. Retornar uma função (Higher-Order Function)
+function criarMultiplicador(fator) {
+  return function(numero) {
+    return numero * fator;
+  };
+}
+const duplicar = criarMultiplicador(2);
+const triplicar = criarMultiplicador(3);
+
+console.log("Duplicado:", duplicar(10));   // 20
+console.log("Triplicado:", triplicar(10));  // 30`
+          },
+          quiz: [
+            {
+              question: "No código `setTimeout(minhaFuncao, 1000);`, o que é `minhaFuncao`?",
+              options: [
+                'Uma variável que será executada imediatamente.',
+                'Uma função de callback, que será executada após 1000ms.',
+                'Uma Higher-Order Function.',
+                'Um erro de sintaxe.'
+              ],
+              correctAnswerIndex: 1,
+              explanation: "Correto! `minhaFuncao` é uma função de callback. Estamos a passá-la como um argumento para `setTimeout` com a instrução de que ela deve ser \"chamada de volta\" (executed) após o tempo especificado ter decorrido."
             }
           ]
         }
