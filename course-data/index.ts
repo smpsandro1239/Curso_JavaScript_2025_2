@@ -1,3 +1,4 @@
+
 import React from 'react';
 import type { CourseData } from '../types';
 
@@ -584,6 +585,60 @@ console.log("Tem desconto?", temDesconto); // false`
               ],
               correctAnswerIndex: 1,
               explanation: "A primeira parte, `(10 > 5)`, é `true`. A segunda parte, `(\"a\" === \"b\")`, é `false`. A expressão final torna-se `true && false`, e o operador `&&` (E) só retorna `true` se ambos os lados forem `true`. Portanto, o resultado é `false`."
+            }
+          ]
+        },
+        {
+          id: '2.6',
+          title: 'Aprofundando: Hoisting',
+          theory: React.createElement(
+            'div',
+            null,
+            React.createElement('p', { className: 'mb-4' }, 'Hoisting (içamento) é um comportamento do JavaScript que pode parecer estranho no início, mas é crucial para entender como o código é executado. É um dos motivos pelos quais preferimos `let` e `const` em vez de `var`.'),
+            React.createElement('p', { className: 'mb-4' }, 'Imagine que o interpretador de JavaScript lê o teu código em duas passagens. Na primeira, ele "iça" (hoists) todas as declarações de variáveis com `var` e declarações de funções para o topo do seu escopo (seja global ou de uma função).'),
+            React.createElement('ul', { className: 'list-disc list-inside mb-4 pl-4 space-y-4' },
+              React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Com `var`'), ': Apenas a ', React.createElement('strong', { className: 'text-lightest-slate' }, 'declaração'), ' da variável é içada, não a sua atribuição de valor. A variável é inicializada com `undefined` por defeito. É como se o JS dissesse: "Eu sei que esta caixa existe, mas ainda não sei o que tem dentro".'),
+              React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Com `let` e `const`'), ': Estas variáveis também são "içadas", mas de forma diferente. Elas não são inicializadas. Tentar acedê-las antes da sua declaração resulta num erro (`ReferenceError`). A zona entre o início do escopo e a declaração da variável é chamada de ', React.createElement('strong', { className: 'text-lightest-slate' }, 'Temporal Dead Zone (TDZ)'), '.'),
+              React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Declarações de Funções'), ': São içadas por completo, tanto o nome como o corpo da função. Podes chamar uma função antes de a teres escrito no código.')
+            )
+          ),
+          practice: {
+            description: 'Vamos ver o hoisting em ação. Presta atenção às diferenças entre `var`, `let` e as funções.',
+            code: `// Hoisting com 'var'
+console.log(nome); // Output: undefined
+var nome = "Ana";
+console.log(nome); // Output: "Ana"
+
+/* O que o JS "vê" é algo como isto:
+var nome;
+console.log(nome);
+nome = "Ana";
+console.log(nome);
+*/
+
+// Hoisting com 'let' (Temporal Dead Zone)
+// A linha abaixo causaria um erro: ReferenceError
+// console.log(idade);
+let idade = 30;
+
+// Hoisting de Funções
+saudar(); // Funciona!
+
+function saudar() {
+  console.log("Olá!");
+}`
+          },
+          quiz: [
+            {
+              question: "Qual será o output do código: `console.log(minhaVar); var minhaVar = 'Olá';`?",
+              options: [
+                "'Olá'",
+                'ReferenceError: minhaVar is not defined',
+                'undefined',
+                'null'
+              ],
+              correctAnswerIndex: 2,
+              explanation: 'Devido ao hoisting, a declaração `var minhaVar` é movida para o topo do escopo, mas a atribuição ` = \'Olá\'` não. A variável existe quando `console.log` é chamado, mas o seu valor é `undefined`.'
             }
           ]
         }
