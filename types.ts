@@ -1,4 +1,3 @@
-
 import type React from 'react';
 
 export interface Question {
@@ -8,15 +7,27 @@ export interface Question {
   explanation: string;
 }
 
+export interface PracticeExample {
+  title: string;
+  description: string;
+  code: string;
+}
+
+export interface Challenge {
+  description: string;
+  starterCode: string;
+  solution: string;
+}
+
 export interface Lesson {
   id: string;
   title: string;
   theory: React.ReactNode;
   practice: {
-    description: string;
-    code: string;
+    examples: PracticeExample[];
   };
   quiz: Question[];
+  challenge?: Challenge;
 }
 
 export interface Module {
