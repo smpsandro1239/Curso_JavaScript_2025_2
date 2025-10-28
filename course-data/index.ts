@@ -1519,7 +1519,111 @@ copia.push("laranja");
 console.log("Original:", original); // ["maçã", "banana"]
 console.log("Cópia:", copia); // ["maçã", "banana", "laranja"]`
           }
-        }
+        },
+        {
+          id: '2.8',
+          title: 'Aprofundando: Coerção de Tipos',
+          theory: React.createElement(
+              'div',
+              null,
+              React.createElement('p', { className: 'mb-4' }, 'A coerção de tipos (Type Coercion) é um dos comportamentos mais "mágicos" e, ao mesmo tempo, perigosos do JavaScript. Acontece quando a linguagem tenta converter automaticamente um tipo de dado noutro para que uma operação faça sentido.'),
+              React.createElement('p', { className: 'mb-4' }, 'Imagina que pedes a um chef para "juntar 5 e maçã". Ele pode ficar confuso. O JavaScript, em vez de parar, tenta adivinhar o que queres dizer. Neste caso, ele transforma o 5 num texto e junta-o, resultando em "5maçã".'),
+              React.createElement('h3', { className: 'text-xl font-bold text-lightest-slate mb-2 mt-6' }, 'Igualdade Lassa (`==`) vs. Estrita (`===`)'),
+              React.createElement('p', { className: 'mb-4' }, 'Esta é a área onde a coerção mais causa problemas. O operador `==` (igualdade lassa) permite a coerção de tipos, enquanto o `===` (igualdade estrita) não. Ele verifica se o valor E o tipo são idênticos.'),
+              React.createElement('ul', { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+                React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '5 == "5"'), ' é `true` (o JS converte a string "5" para o número 5).'),
+                React.createElement('li', null, React.createElement('code', { className: 'bg-lightest-navy text-green rounded px-1' }, '5 === "5"'), ' é `false` (o JS vê que um é `number` e o outro é `string`).')
+              ),
+              React.createElement('p', { className: 'p-4 bg-lightest-navy rounded-md text-sm text-light-slate border-l-4 border-yellow-400' },
+                React.createElement('strong', { className: 'font-bold text-yellow-300' }, 'Regra de Ouro: '), 'Usa sempre `===` e `!==`. Evita `==` e `!=` a todo o custo para escreveres código mais previsível e seguro.')
+          ),
+          practice: {
+              examples: [
+                  {
+                      title: "Exemplo 1: O Básico - O Problema do `==`",
+                      description: 'Vamos ver lado a lado a diferença entre a igualdade lassa e a estrita. Repara como `==` pode dar resultados que não esperas, especialmente com `true`, `1`, `0` e `false`.',
+                      code: `console.log("5 == '5':", 5 == '5');     // true
+console.log("5 === '5':", 5 === '5');   // false
+
+console.log("1 == true:", 1 == true);     // true
+console.log("1 === true:", 1 === true);   // false
+
+console.log("0 == false:", 0 == false);   // true
+console.log("0 === false:", 0 === false); // false`
+                  },
+                  {
+                      title: "Exemplo 2: O Caso Comum - Coerção com Operadores",
+                      description: "A coerção não acontece só com `==`. O operador `+` tende a converter para string, enquanto outros operadores matemáticos (`-`, `*`, `/`) tendem a converter para número.",
+                      code: `// O '+' favorece a string
+console.log('O ano é ' + 2024); // "O ano é 2024"
+
+// Outros operadores favorecem o número
+console.log('10' - 5);   // 5
+console.log('10' * 2);   // 20
+console.log('10' / 2);   // 5`
+                  },
+                  {
+                      title: "Exemplo 3: A Armadilha - Casos Estranhos",
+                      description: "O JavaScript tem alguns resultados de coerção que se tornaram famosos (e são ótimas perguntas de entrevista). Não precisas de os decorar, apenas de entender que a coerção pode ser imprevisível.",
+                      code: `console.log("[] + []:", [] + []); // "" (string vazia)
+console.log("[] + {}:", [] + {}); // "[object Object]"
+console.log("{} + []:", {} + []); // 0 (em alguns ambientes)
+
+console.log("null == undefined:", null == undefined); // true (único caso onde \`==\` é por vezes útil)
+console.log("null === undefined:", null === undefined); // false`
+                  }
+              ]
+          },
+          quiz: [
+              {
+                  question: "Qual será o resultado de `true + false`?",
+                  options: [
+                      '`true`',
+                      '`false`',
+                      '`1`',
+                      'Vai dar erro'
+                  ],
+                  correctAnswerIndex: 2,
+                  explanation: 'Ao usar o operador `+`, o JavaScript coage os booleanos para números: `true` torna-se `1` e `false` torna-se `0`. Portanto, a operação é `1 + 0`, que resulta em `1`.'
+              },
+              {
+                  question: "Qual o output de `if (' ') { console.log('Olá'); }`?",
+                  options: [
+                      "'Olá'",
+                      "Nada",
+                      "Vai dar erro",
+                      "false"
+                  ],
+                  correctAnswerIndex: 0,
+                  explanation: "Uma string que contém apenas um espaço não é uma string vazia. Portanto, é 'truthy'. A condição do `if` é verdadeira e 'Olá' é impresso."
+              },
+              {
+                  question: "Qual o resultado de `'5' - 3`?",
+                  options: [
+                      "'53'",
+                      "2",
+                      "8",
+                      "NaN (Not a Number)"
+                  ],
+                  correctAnswerIndex: 1,
+                  explanation: "O operador de subtração `-` força a coerção de ambos os operandos para o tipo `Number`. A string '5' é convertida para o número 5, e a operação `5 - 3` resulta em 2."
+              }
+          ],
+          challenge: {
+              description: "Prevê o resultado booleano (`true` ou `false`) de cada uma das seguintes comparações. Escreve a tua previsão e depois corre o código para verificar. Tenta explicar o porquê de cada resultado.",
+              starterCode: `console.log("[] == 0:", [] == 0);             // Previsão: ?
+console.log("[] === 0:", [] === 0);            // Previsão: ?
+console.log("'\\n' == 0:", '\\n' == 0);       // Previsão: ? (\\n é uma nova linha)
+console.log("true == '1':", true == '1');     // Previsão: ?
+console.log("false == '0':", false == '0');   // Previsão: ?`,
+              solution: `// Resultados e Explicações:
+// [] == 0:             -> true. O array vazio é coagido para a string vazia "", que é coagida para o número 0.
+// [] === 0:            -> false. O tipo 'object' (array) não é o mesmo que 'number'.
+// '\\n' == 0:         -> true. A string de nova linha '\\n' é coagida para 0.
+// true == '1':       -> true. \`true\` é coagido para 1, '1' é coagido para 1.
+// false == '0':      -> true. \`false\` é coagido para 0, '0' é coagido para 0.`
+          }
+      }
       ]
     },
     {
@@ -4799,133 +4903,8 @@ export function dividir(a, b) {
 // Ficheiro: app.js
 import { multiplicar, dividir } from './matematica.js';
 
-console.log("5 x 10 =", multiplicar(5, 10));
-console.log("20 / 4 =", dividir(20, 4));`
-          }
-        },
-        {
-          id: '7.4',
-          title: 'E agora? Próximos Passos',
-          theory: React.createElement(
-            'div',
-            null,
-            React.createElement(
-              'p',
-              { className: 'mb-4 font-bold text-lightest-slate' },
-              'Parabéns por chegares até aqui! Já tens uma base sólida de JavaScript.'
-            ),
-             React.createElement(
-              'p',
-              { className: 'mb-4' },
-              'Aprender a programar é uma jornada, não um destino. Se o JavaScript que aprendeste aqui são as ferramentas individuais (martelo, serrote, chave de fendas), os próximos passos envolvem aprender a usar "kits pré-fabricados" e ferramentas mais especializadas para construir coisas maiores e mais depressa.'
-            ),
-            React.createElement(
-              'h3',
-              { className: 'text-xl font-bold text-lightest-slate mb-2 mt-6' }, 'Frameworks e Bibliotecas'
-            ),
-            React.createElement(
-              'p',
-              { className: 'mb-4' },
-              'Estas são as "plantas e kits" do mundo do desenvolvimento. Em vez de construíres cada componente da tua interface do zero, usas sistemas como ', React.createElement('strong', { className: 'text-green' }, 'React'), ', ', React.createElement('strong', { className: 'text-green' }, 'Vue'), ', ou ', React.createElement('strong', { className: 'text-green' }, 'Angular'), ' para criar interfaces complexas, interativas e eficientes. A aplicação que estás a usar foi construída com React!'
-            ),
-            React.createElement(
-              'h3',
-              { className: 'text-xl font-bold text-lightest-slate mb-2 mt-6' }, 'Node.js (JavaScript no Servidor)'
-            ),
-            React.createElement(
-              'p',
-              { className: 'mb-4' },
-              'E se pudesses usar as tuas habilidades de JavaScript para construir a "cozinha" do restaurante em vez de apenas a "sala de jantar"? O Node.js permite-te fazer exatamente isso. Podes criar servidores, interagir com bases de dados e construir o backend completo das tuas aplicações, tudo com JavaScript.'
-            ),
-             React.createElement(
-              'p',
-              { className: 'mb-4' },
-              'O mais importante é ',
-              React.createElement('strong', { className: 'text-lightest-slate' }, 'continuar a praticar'),
-              '. Cria pequenos projetos, tenta recriar websites que gostas, e nunca pares de aprender. A comunidade de desenvolvimento é vasta e cheia de recursos.'
-            )
-          ),
-          practice: {
-            examples: [
-                {
-                    title: "Recursos para Continuar",
-                    description: 'Não há código a executar aqui. Em vez disso, aqui ficam alguns recursos fantásticos e estruturados para continuares a tua jornada:',
-                    code: `/*
-== Documentação de Referência (Essencial) ==
-MDN Web Docs: A fonte de verdade para tudo o que é web.
-URL: https://developer.mozilla.org/
-
-== Praticar com Desafios de Código ==
-freeCodeCamp: Cursos completos e interativos.
-URL: https://www.freecodecamp.org/
-
-Codewars: Desafios de programação ("kata") para todos os níveis.
-URL: https://www.codewars.com/
-
-== Aprender Frameworks (Depois de dominares JS) ==
-React: O mais popular para construir interfaces.
-URL: https://react.dev/
-
-Vue: Conhecido pela sua curva de aprendizagem mais suave.
-URL: https://vuejs.org/
-
-== Aprender JavaScript no Backend ==
-Node.js: Documentação oficial e guias.
-URL: https://nodejs.org/
-*/`
-                }
-            ]
-          },
-          quiz: [
-            {
-              question: "Qual é o principal benefício de usar um framework como o React ou o Vue?",
-              options: [
-                'Substituem a necessidade de saber HTML e CSS.',
-                'Permitem-te escrever JavaScript que corre diretamente no hardware do computador.',
-                'Fornecem uma estrutura e componentes reutilizáveis para construir interfaces de utilizador complexas de forma mais eficiente.',
-                'São a única forma de fazer pedidos a APIs.'
-              ],
-              correctAnswerIndex: 2,
-              explanation: "Exatamente! Frameworks dão-te super-poderes para o frontend. Eles gerem o estado da aplicação, atualizam o DOM de forma otimizada e permitem-te construir a tua UI em pequenos blocos reutilizáveis (componentes), acelerando drasticamente o desenvolvimento."
-            },
-            {
-                question: "O que é o Node.js?",
-                options: [
-                  "Um framework de frontend, como o React.",
-                  "Uma base de dados escrita em JavaScript.",
-                  "Uma versão especial do navegador Chrome.",
-                  "Um ambiente de execução que permite correr código JavaScript fora do navegador, no lado do servidor."
-                ],
-                correctAnswerIndex: 3,
-                explanation: "O Node.js abriu as portas para o desenvolvimento 'full-stack' com uma única linguagem. Permite usar JavaScript para criar servidores web, APIs, ferramentas de linha de comando, e muito mais."
-            },
-            {
-                question: "Qual é a atitude mais importante para te tornares um bom programador?",
-                options: [
-                  "Decorar toda a sintaxe da linguagem.",
-                  "Aprender a usar o máximo de ferramentas possível.",
-                  "Manter a curiosidade, praticar consistentemente e aprender a pesquisar soluções.",
-                  "Trabalhar sempre sozinho para não teres más influências."
-                ],
-                correctAnswerIndex: 2,
-                explanation: "Sem dúvida! A programação é menos sobre saber tudo de cor e mais sobre saber como encontrar as respostas e resolver problemas. A prática constante e a curiosidade são os teus melhores aliados."
-            }
-          ],
-          challenge: {
-              description: "O teu desafio final não envolve escrever código aqui, mas sim dar o próximo passo. Escolhe um dos recursos listados na secção 'Prática' (como o freeCodeCamp ou o MDN) e dedica a próxima hora a explorar um tópico que te interesse. Depois, pensa num pequeno projeto pessoal que gostarias de construir. Pode ser uma calculadora, uma galeria de fotos interativa, ou uma página que mostra a meteorologia da tua cidade usando uma API. Escreve a ideia principal do teu projeto.",
-              starterCode: `/*
-A minha ideia de projeto é:
-(Escreve aqui a tua ideia)
-*/`,
-              solution: `/*
-Exemplo de uma ideia:
-
-A minha ideia de projeto é:
-Criar uma "Pokédex" simples. Vou usar a PokéAPI (pokeapi.co)
-para ir buscar dados de um Pokémon quando o utilizador escreve
-o nome ou número num input. Depois, vou mostrar a imagem, o nome
-e os tipos do Pokémon na página.
-*/`
+console.log('5 * 10 =', multiplicar(5, 10));
+console.log('20 / 4 =', dividir(20, 4));`
           }
         }
       ]
