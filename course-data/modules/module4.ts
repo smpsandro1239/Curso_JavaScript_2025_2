@@ -674,6 +674,131 @@ operacaoComArray(numeros, duplicar);
 console.log("\\nA elevar ao quadrado:");
 operacaoComArray(numeros, quadrado);`
       }
+    },
+    {
+      id: '4.6',
+      title: 'O Superpoder das Funções: Closures',
+      theory: React.createElement(
+        'div',
+        null,
+        React.createElement('p', { className: 'mb-4' }, 'Um closure (ou fechamento) é um dos conceitos mais poderosos do JavaScript. É a combinação de uma função com o seu "ambiente lexical" — ou seja, as variáveis que estavam acessíveis no local onde a função foi criada.'),
+        React.createElement('p', { className: 'mb-4' }, 'A melhor analogia é a de uma ', React.createElement('strong', { className: 'text-lightest-slate' }, 'mochila'), '. Quando uma função é criada, ela "arruma na mochila" todas as variáveis que consegue ver à sua volta. Se essa função for depois passada para outro local (ex: retornada de outra função), ela leva a mochila consigo e pode sempre aceder às variáveis que guardou, mesmo que o local original onde foi criada já não exista.'),
+        React.createElement('p', { className: 'mb-4' }, 'Isto permite-nos criar variáveis "privadas", que só podem ser acedidas pela função que as "fechou" na sua mochila, um padrão fundamental para a encapsulação de dados.')
+      ),
+      practice: {
+        examples: [
+          {
+            title: "Exemplo 1: O Básico - A 'Mochila'",
+            description: "A função `funcaoInterna` é retornada de `funcaoExterna`. Mesmo sendo chamada fora, ela ainda se lembra da `variavelExterna` porque a guardou na sua 'mochila' (closure).",
+            code: `function funcaoExterna() {
+  const variavelExterna = "Sou do lado de fora!";
+  
+  function funcaoInterna() {
+    console.log(variavelExterna); // Acede à 'mochila'
+  }
+  
+  return funcaoInterna;
+}
+
+const minhaFuncao = funcaoExterna();
+minhaFuncao(); // "Sou do lado de fora!"`
+          },
+          {
+            title: "Exemplo 2: O Caso Comum - Contador Privado",
+            description: "Este é o exemplo clássico de um closure. A variável `contagem` é privada; não pode ser acedida ou modificada de fora. Apenas a função que retornámos tem acesso a ela, agindo como uma interface controlada.",
+            code: `function criarContador() {
+  let contagem = 0;
+  
+  return function() {
+    contagem++;
+    console.log(contagem);
+  };
+}
+
+const contador1 = criarContador();
+contador1(); // 1
+contador1(); // 2
+
+const contador2 = criarContador(); // Tem a sua própria 'mochila'
+contador2(); // 1`
+          },
+          {
+            title: "Exemplo 3: A Armadilha Clássica - Loops com `var`",
+            description: "Este é um famoso problema de entrevista. Com `var`, existe apenas uma variável `i` para todo o ciclo. Quando os `setTimeout` executam (após o ciclo terminar), todos eles veem o valor final de `i` (que é 3). Com `let`, é criado um novo escopo de bloco para cada iteração, então cada `setTimeout` tem o seu próprio `i` no seu closure.",
+            code: `// O problema com 'var'
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => {
+    console.log(\`var i: \${i}\`); // Imprime 'var i: 3' três vezes!
+  }, 100);
+}
+
+// A solução com 'let'
+for (let j = 0; j < 3; j++) {
+  setTimeout(() => {
+    console.log(\`let j: \${j}\`); // Imprime 'let j: 0', 'let j: 1', 'let j: 2'
+  }, 100);
+}`
+          }
+        ]
+      },
+      quiz: [
+        {
+          question: "O que é um closure em JavaScript?",
+          options: [
+            'Uma forma de fechar a página do navegador.',
+            'Uma função que não tem acesso a variáveis externas.',
+            'A combinação de uma função e o seu ambiente lexical, que lhe permite "lembrar-se" de variáveis do seu escopo de criação.',
+            'Um erro que acontece quando uma variável não é encontrada.'
+          ],
+          correctAnswerIndex: 2,
+          explanation: 'Exato. Um closure dá a uma função acesso ao seu escopo de criação, mesmo quando a função é executada fora desse escopo.'
+        },
+        {
+          question: "No exemplo do contador privado, porque é que a variável `contagem` não pode ser acedida de fora?",
+          options: [
+            "Porque é uma `const`.",
+            "Porque está 'presa' dentro do closure da função retornada, sendo efetivamente privada.",
+            "Porque `contagem` é uma palavra reservada.",
+            "Pode ser acedida com `contador1.contagem`."
+          ],
+          correctAnswerIndex: 1,
+          explanation: "A variável `contagem` existe apenas dentro do escopo da função `criarContador`. A única forma de interagir com ela é através da função anónima que foi retornada, que a 'fechou' no seu closure."
+        },
+        {
+          question: "Qual o output? `function criarSaudacao(saudacao) { return function(nome) { console.log(saudacao + ', ' + nome); } } const saudarOla = criarSaudacao('Olá'); saudarOla('Mundo');`",
+          options: [
+            "Olá, Mundo",
+            "undefined, Mundo",
+            "saudacao, nome",
+            "Vai dar erro"
+          ],
+          correctAnswerIndex: 0,
+          explanation: "A função `saudarOla` é um closure. Ela 'lembra-se' do argumento `saudacao` ('Olá') da sua função criadora. Quando `saudarOla` é chamada com 'Mundo', ela combina os dois valores."
+        }
+      ],
+      challenge: {
+        description: "Cria uma função `criarCofre(senha)` que retorna outra função. A função retornada recebe uma tentativa de senha. Se a tentativa for igual à senha original, ela retorna 'Cofre aberto!'. Caso contrário, retorna 'Senha incorreta!'. A senha original deve ser privada e inacessível de fora.",
+        starterCode: `function criarCofre(senha) {
+  // Retorna a função que verifica a tentativa
+}
+
+const meuCofre = criarCofre("1234");
+console.log(meuCofre("1111")); // "Senha incorreta!"
+console.log(meuCofre("1234")); // "Cofre aberto!"`,
+        solution: `function criarCofre(senha) {
+  return function(tentativa) {
+    if (tentativa === senha) {
+      return "Cofre aberto!";
+    } else {
+      return "Senha incorreta!";
+    }
+  };
+}
+
+const meuCofre = criarCofre("1234");
+console.log(meuCofre("1111"));
+console.log(meuCofre("1234"));`
+      }
     }
   ]
 };
