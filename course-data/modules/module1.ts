@@ -1,6 +1,42 @@
 import * as React from 'react';
 import type { Module } from '../../types';
 
+// FIX: Converted from JSX to React.createElement to be valid in a .ts file.
+const HouseAnalogyIllustration = () => React.createElement(
+  'svg',
+  { viewBox: "0 0 300 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-xl h-auto text-lightest-slate" },
+  // Panel 1: HTML
+  React.createElement(
+    'g',
+    { transform: "translate(10, 10)" },
+    React.createElement('rect', { width: "80", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('path', { d: "M 20 70 L 20 40 L 40 20 L 60 40 L 60 70 M 15 45 L 40 25 L 65 45", fill: "none", stroke: "#64ffda", strokeWidth: "2" }),
+    React.createElement('circle', { cx: "40", cy: "55", r: "5", fill: "none", stroke: "#64ffda", strokeWidth: "2" }),
+    React.createElement('text', { x: "40", y: "90", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "HTML (Estrutura)")
+  ),
+  // Panel 2: CSS
+  React.createElement(
+    'g',
+    { transform: "translate(110, 10)" },
+    React.createElement('rect', { width: "80", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('path', { d: "M 20 70 L 20 40 L 40 20 L 60 40 L 60 70 L 20 70 Z", fill: "#64ffda", fillOpacity: "0.2", stroke: "#64ffda", strokeWidth: "2" }),
+    React.createElement('rect', { x: "35", y: "50", width: "10", height: "20", fill: "#a8b2d1" }),
+    React.createElement('text', { x: "40", y: "90", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "CSS (Estilo)")
+  ),
+  // Panel 3: JS
+  React.createElement(
+    'g',
+    { transform: "translate(210, 10)" },
+    React.createElement('rect', { width: "80", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('path', { d: "M 20 70 L 20 40 L 40 20 L 60 40 L 60 70 L 20 70 Z", fill: "#64ffda", fillOpacity: "0.2", stroke: "#64ffda", strokeWidth: "2" }),
+    React.createElement('rect', { x: "35", y: "50", width: "10", height: "20", fill: "#a8b2d1" }),
+    React.createElement('circle', { cx: "40", cy: "30", r: "5", fill: "yellow" }),
+    React.createElement('path', { d: "M 40 35 L 40 45", stroke: "yellow", strokeWidth: "1" }),
+    React.createElement('text', { x: "40", y: "90", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "JS (Funcionalidade)")
+  )
+);
+
+
 export const module1: Module = {
   id: '1',
   title: 'Módulo 1: Introdução ao JavaScript',
@@ -8,6 +44,7 @@ export const module1: Module = {
     {
       id: '1.1',
       title: 'O que é JavaScript?',
+      illustration: React.createElement(HouseAnalogyIllustration),
       theory: React.createElement(
         'div',
         null,
