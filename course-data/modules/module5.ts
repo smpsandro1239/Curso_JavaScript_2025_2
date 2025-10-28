@@ -663,6 +663,250 @@ addButton.addEventListener('click', () => {
   }
 });`
       }
+    },
+    {
+      id: '5.6',
+      title: 'Propagação de Eventos: Bubbling e Capturing',
+      theory: React.createElement(
+        'div',
+        null,
+        React.createElement('p', { className: 'mb-4' }, 'Quando um evento acontece num elemento, como um clique, ele não acontece apenas nesse elemento. Por defeito, os eventos "borbulham" (bubble up) na árvore do DOM, do elemento alvo até ao elemento `<html>`.'),
+        React.createElement('p', { className: 'mb-4' }, 'A analogia é atirar uma pedra a um lago. O clique é a pedra a bater na água (o elemento alvo). As ondas que se espalham para fora são o evento a "borbulhar" para os elementos pais (o `div` que o contém, o `body`, etc.).'),
+        React.createElement('p', { className: 'mb-4' }, 'Isto pode ser muito útil (deixando-nos colocar um único "ouvinte" num elemento pai para gerir eventos de muitos filhos), mas por vezes queremos parar esta propagação. Para isso, usamos `event.stopPropagation()` dentro da nossa função de callback.'),
+        React.createElement('p', { className: 'mt-2 mb-4 p-4 bg-lightest-navy rounded-md text-sm text-light-slate' },
+          'Existe também uma fase de "capturing" que acontece antes, onde o evento desce a árvore, mas o "bubbling" é o comportamento padrão e o mais usado no dia a dia.'
+        )
+      ),
+      practice: {
+        examples: [
+          {
+            title: "Exemplo 1: O Básico - Ver o Bubbling em Ação",
+            description: 'Temos três `divs` aninhados. Cada um tem um ouvinte de clique. Clica no `div` mais interior ("Filho") e observa a ordem em que as mensagens aparecem na consola.',
+            code: `// HTML:
+// <div id="avo"><div id="pai"><div id="filho">Clica-me</div></div></div>
+
+const avo = document.getElementById('avo');
+const pai = document.getElementById('pai');
+const filho = document.getElementById('filho');
+
+avo.addEventListener('click', () => console.log('Avo foi clicado'));
+pai.addEventListener('click', () => console.log('Pai foi clicado'));
+filho.addEventListener('click', () => console.log('Filho foi clicado'));
+
+// Output ao clicar no filho: Filho, Pai, Avo`
+          },
+          {
+            title: "Exemplo 2: O Caso Comum - Parar a Propagação",
+            description: 'Agora, vamos adicionar `event.stopPropagation()` ao ouvinte do elemento "Pai". Clica no filho outra vez. O evento vai borbulhar até ao pai, mas será parado aí e nunca chegará ao avô.',
+            code: `// ... (mesmo HTML e seleção de elementos do exemplo 1)
+
+avo.addEventListener('click', () => console.log('Avo foi clicado'));
+
+pai.addEventListener('click', (event) => {
+  event.stopPropagation(); // O evento para aqui!
+  console.log('Pai foi clicado');
+});
+
+filho.addEventListener('click', () => console.log('Filho foi clicado'));
+
+// Output ao clicar no filho: Filho, Pai`
+          },
+          {
+            title: "Exemplo 3: A Nuance - `event.target` vs `event.currentTarget`",
+            description: 'Dentro de um evento que borbulhou, `event.target` refere-se sempre ao elemento onde o evento começou (onde a "pedra" caiu). `event.currentTarget` refere-se ao elemento onde o "ouvinte" está atualmente a ser executado.',
+            code: `// ... (mesmo HTML e seleção, sem stopPropagation)
+
+function handleClick(event) {
+  console.log(\`Target: \${event.target.id}, CurrentTarget: \${event.currentTarget.id}\`);
+}
+
+avo.addEventListener('click', handleClick);
+pai.addEventListener('click', handleClick);
+filho.addEventListener('click', handleClick);
+
+// Ao clicar no filho, o output será:
+// Target: filho, CurrentTarget: filho
+// Target: filho, CurrentTarget: pai
+// Target: filho, CurrentTarget: avo`
+          }
+        ]
+      },
+      quiz: [
+        {
+          question: 'O que é "event bubbling"?',
+          options: [
+            'Um erro que faz com que os eventos se repitam.',
+            'O processo de um evento se propagar do elemento alvo para cima na árvore do DOM até aos seus pais.',
+            'A criação de eventos com JavaScript.',
+            'A fase em que um evento desce a árvore do DOM.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'Exato! O bubbling é o comportamento padrão onde um evento "borbulha" de dentro para fora, do elemento mais específico para o mais geral.'
+        },
+        {
+          question: "Que método usas para impedir que um evento continue a borbulhar para os seus elementos pais?",
+          options: ['event.preventDefault()', 'event.stopImmediatePropagation()', 'event.stopPropagation()', 'event.cancelBubble()'],
+          correctAnswerIndex: 2,
+          explanation: '`event.stopPropagation()` é a ferramenta padrão para parar o "borbulhar", garantindo que o evento não seja capturado por ouvintes em elementos ancestrais.'
+        }
+      ],
+      challenge: {
+        description: "Cria um `div` que contém um botão. Adiciona um ouvinte de clique ao `div` que muda a cor de fundo do `div` para azul. Adiciona outro ouvinte de clique ao botão que imprime 'Botão clicado!' na consola. O que acontece quando clicas no botão? Agora, modifica o código para que, ao clicar no botão, SÓ a mensagem seja impressa e a cor do `div` não mude.",
+        starterCode: `// HTML: <div id="container"><button id="btn">Clica</button></div>
+
+const container = document.getElementById('container');
+const btn = document.getElementById('btn');
+
+container.addEventListener('click', () => {
+  container.style.backgroundColor = 'blue';
+});
+
+btn.addEventListener('click', () => {
+  console.log('Botão clicado!');
+});`,
+        solution: `const container = document.getElementById('container');
+const btn = document.getElementById('btn');
+
+container.addEventListener('click', () => {
+  container.style.backgroundColor = 'blue';
+});
+
+btn.addEventListener('click', (event) => {
+  event.stopPropagation(); // Adicionar esta linha
+  console.log('Botão clicado!');
+});`
+      }
+    },
+    {
+      id: '5.7',
+      title: 'Trabalhar com Formulários',
+      theory: React.createElement(
+        'div',
+        null,
+        React.createElement('p', { className: 'mb-4' }, 'Os formulários são uma das formas mais fundamentais de interação do utilizador com um website. O JavaScript permite-nos intercetar o envio de formulários para validar os dados, enviá-los para um servidor sem recarregar a página (AJAX), e muito mais.'),
+        React.createElement('p', { className: 'mb-4' }, 'Os dois conceitos chave são:'),
+        React.createElement('ul', { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'O Evento `submit`'), ': Este evento é despoletado no próprio elemento `<form>`, não no botão de submissão. Ouve-se este evento para saber quando o utilizador tentou enviar o formulário.'),
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`event.preventDefault()`'), ': Por defeito, quando um formulário é submetido, o navegador tenta enviar os dados para um servidor e recarrega a página. `event.preventDefault()` é um método crucial que impede este comportamento padrão, permitindo-nos controlar todo o processo com JavaScript.')
+        ),
+        React.createElement('p', { className: 'mt-4' }, 'Para aceder aos valores dos campos (`<input>`, `<textarea>`, etc.), basta selecionar o elemento e ler a sua propriedade `.value`.')
+      ),
+      practice: {
+        examples: [
+          {
+            title: "Exemplo 1: O Básico - Impedir o Recarregamento",
+            description: 'Vamos criar um formulário simples e adicionar um ouvinte de evento para impedir que a página recarregue ao ser submetido.',
+            code: `// HTML:
+// <form id="meu-form">
+//   <button type="submit">Enviar</button>
+// </form>
+
+const form = document.getElementById('meu-form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault(); // A linha mais importante!
+  console.log("Formulário submetido sem recarregar a página!");
+});`
+          },
+          {
+            title: "Exemplo 2: O Caso Comum - Obter Valores dos Inputs",
+            description: 'Vamos expandir o exemplo anterior para ler o valor de um campo de texto quando o formulário é submetido.',
+            code: `// HTML:
+// <form id="login-form">
+//   <input type="text" id="username" placeholder="Nome de utilizador">
+//   <button type="submit">Entrar</button>
+// </form>
+
+const loginForm = document.getElementById('login-form');
+const usernameInput = document.getElementById('username');
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const username = usernameInput.value;
+  alert(\`Bem-vindo, \${username}!\`);
+});`
+          },
+          {
+            title: "Exemplo 3: A Nuance - Validação Simples",
+            description: 'Podemos usar JavaScript para fazer uma validação básica antes de "enviar" os dados. Aqui, verificamos se o campo não está vazio.',
+            code: `// ... (mesmo HTML do exemplo 2)
+
+const loginForm = document.getElementById('login-form');
+const usernameInput = document.getElementById('username');
+
+loginForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const username = usernameInput.value;
+  
+  if (username.trim() === '') {
+    alert("O nome de utilizador não pode estar vazio!");
+  } else {
+    alert(\`Bem-vindo, \${username}!\`);
+  }
+});`
+          }
+        ]
+      },
+      quiz: [
+        {
+          question: "Para que serve `event.preventDefault()` no contexto de um formulário?",
+          options: [
+            'Para validar os campos do formulário.',
+            'Para limpar todos os campos do formulário.',
+            'Para impedir o comportamento padrão do navegador de recarregar a página ao submeter.',
+            'Para submeter o formulário para um servidor diferente.'
+          ],
+          correctAnswerIndex: 2,
+          explanation: 'Exato! `preventDefault()` é a chave para transformar um formulário estático numa experiência de aplicação web dinâmica, permitindo-nos processar os dados sem interromper a sessão do utilizador com um recarregamento.'
+        },
+        {
+          question: "Em que elemento deves colocar o 'ouvinte' para o evento `submit`?",
+          options: ['No botão de submissão', 'No elemento `<form>`', 'No elemento `<body>`', 'No elemento `<input>`'],
+          correctAnswerIndex: 1,
+          explanation: 'O evento `submit` pertence ao formulário como um todo. Colocar o ouvinte no elemento `<form>` garante que apanhas a submissão, quer ela seja acionada por um clique no botão ou pela tecla Enter num campo de texto.'
+        },
+        {
+            question: "Como obténs o texto que um utilizador escreveu num campo `<input type='text'>` guardado na variável `meuInput`?",
+            options: ["`meuInput.textContent`", "`meuInput.innerHTML`", "`meuInput.value`", "`meuInput.text`"],
+            correctAnswerIndex: 2,
+            explanation: "A propriedade `.value` é usada para obter (e também para definir) o valor atual de elementos de formulário como `<input>`, `<textarea>` e `<select>`."
+        }
+      ],
+      challenge: {
+        description: "Cria um formulário de registo simples com campos para email e senha. Ao submeter, previne o comportamento padrão. Faz uma validação: a senha deve ter pelo menos 8 caracteres. Se não tiver, mostra um alerta. Se for válida, imprime o email e a senha na consola.",
+        starterCode: `// HTML:
+// <form id="registo-form">
+//   <input id="email" type="email" placeholder="Email">
+//   <input id="senha" type="password" placeholder="Senha">
+//   <button type="submit">Registar</button>
+// </form>
+
+const form = document.getElementById('registo-form');
+const emailInput = document.getElementById('email');
+const senhaInput = document.getElementById('senha');
+
+form.addEventListener('submit', (event) => {
+  // O teu código aqui
+});`,
+        solution: `const form = document.getElementById('registo-form');
+const emailInput = document.getElementById('email');
+const senhaInput = document.getElementById('senha');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  
+  const email = emailInput.value;
+  const senha = senhaInput.value;
+  
+  if (senha.length < 8) {
+    alert("A senha deve ter pelo menos 8 caracteres.");
+  } else {
+    console.log("Registo bem sucedido!");
+    console.log("Email:", email);
+    console.log("Senha:", senha);
+  }
+});`
+      }
     }
   ]
 };
