@@ -1,5 +1,29 @@
+
 import * as React from 'react';
 import type { Module } from '../../types';
+
+const FunctionsIllustration = () => React.createElement(
+  'svg',
+  { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+  // Inputs
+  React.createElement('text', { x: "10", y: "30", fontSize: "10", fill: "#a8b2d1" }, "Input A"),
+  React.createElement('rect', { x: "10", y: "35", width: "10", height: "10", fill: "#a8b2d1" }),
+  React.createElement('path', { d: "M 20 40 H 40", stroke: "#a8b2d1", strokeWidth: "1" }),
+  
+  React.createElement('text', { x: "10", y: "60", fontSize: "10", fill: "#a8b2d1" }, "Input B"),
+  React.createElement('rect', { x: "10", y: "65", width: "10", height: "10", fill: "#a8b2d1" }),
+  React.createElement('path', { d: "M 20 70 H 40", stroke: "#a8b2d1", strokeWidth: "1" }),
+
+  // Function box
+  React.createElement('rect', { x: "40", y: "20", width: "120", height: "60", fill: "#112240", stroke: "#233554", rx: "5" }),
+  React.createElement('text', { x: "100", y: "15", textAnchor: "middle", fontSize: "10", fill: "#64ffda", fontWeight: "bold" }, "Função (Receita)"),
+  React.createElement('path', { d: "M 60 40 L 70 50 L 90 30 L 100 60 L 110 45", stroke: "#64ffda", strokeWidth: "2", fill: "none" }),
+
+  // Output
+  React.createElement('path', { d: "M 160 50 H 180", stroke: "#64ffda", strokeWidth: "2" }),
+  React.createElement('rect', { x: "180", y: "45", width: "10", height: "10", fill: "#64ffda" }),
+  React.createElement('text', { x: "185", y: "40", fontSize: "10", fill: "#64ffda", textAnchor: "middle" }, "Output")
+);
 
 export const module4: Module = {
   id: '4',
@@ -8,797 +32,239 @@ export const module4: Module = {
     {
       id: '4.1',
       title: 'Declarar e Chamar Funções',
+      illustration: React.createElement(FunctionsIllustration),
       theory: React.createElement(
         'div',
         null,
+        React.createElement('p', { className: 'mb-4' }, 'Funções são um dos blocos de construção mais fundamentais em JavaScript. Uma função é um bloco de código reutilizável que realiza uma tarefa específica.'),
+        React.createElement('p', { className: 'mb-4' }, 'A analogia perfeita é uma receita de cozinha. Tu defines a receita (a função) uma vez, com todos os passos. Depois, sempre que quiseres fazer o prato, tu "chamas" a receita, em vez de reescrever todos os passos.'),
         React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'As funções são um dos blocos de construção mais importantes em JavaScript. São blocos de código reutilizáveis que podes "chamar" para executar uma tarefa específica. Isto ajuda a manter o teu código organizado, eficiente e fácil de ler (princípio DRY - Don\'t Repeat Yourself).'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Pensa numa função como uma ',
-          React.createElement('strong', { className: 'text-lightest-slate' }, 'receita para um bolo'),
-          '. A receita em si é a ',
-          React.createElement('strong', { className: 'text-green' }, 'declaração da função'),
-          '. Ela define os ',
-          React.createElement('strong', { className: 'text-lightest-slate' }, 'parâmetros'),
-          ' (os ingredientes genéricos, como "açúcar", "farinha") e os passos a seguir.'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Quando queres efetivamente fazer o bolo, tu ',
-          React.createElement('strong', { className: 'text-green' }, 'chamas a função'),
-          ' e forneces os ',
-          React.createElement('strong', { className: 'text-lightest-slate' }, 'argumentos'),
-          ' (os ingredientes específicos, como "200g de açúcar", "500g de farinha").'
-        ),
-         React.createElement(
-          'p',
-          null,
-          'Muitas funções também devolvem um resultado usando a palavra-chave `return`. Na nossa analogia, `return` seria o bolo pronto a sair do forno.'
+          'ul',
+          { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Declaração:'), ' É o ato de criar a função, usando a palavra-chave `function`.'),
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Chamada (ou Invocação):'), ' É o ato de executar o código dentro da função. Fazes isto usando o nome da função seguido de parêntesis `()`.')
         )
       ),
       practice: {
         examples: [
           {
-            title: "Exemplo 1: O Básico - Uma Função Simples",
-            description: "Vamos criar uma função que simplesmente diz 'Olá'. Ela não tem parâmetros e não retorna nenhum valor.",
-            code: `// Declaração da função
-function saudar() {
-  console.log("Olá, bem-vindo ao mundo das funções!");
+            title: 'Exemplo 1: Declarar e Chamar',
+            description: 'Primeiro, declaramos uma função chamada `dizerOla`. Ela não faz nada até ser chamada. Depois, chamamo-la duas vezes.',
+            code: `// 1. Declarar a função
+function dizerOla() {
+  console.log("Olá, bem-vindo ao JavaScript!");
 }
 
-// Chamada da função
-saudar();`
+// 2. Chamar a função
+dizerOla();
+dizerOla();`
           },
           {
-            title: "Exemplo 2: O Caso Comum - Com Parâmetros e Retorno",
-            description: "Esta é a forma mais comum de função: recebe dados (parâmetros), processa-os, e devolve um resultado (`return`).",
-            code: `function calcularAreaRetangulo(largura, altura) {
+            title: 'Exemplo 2: Expressão de Função',
+            description: 'Também podes atribuir uma função a uma variável. Isto é chamado de "expressão de função". O resultado é o mesmo, mas a sintaxe é ligeiramente diferente. A chamada é feita através do nome da variável.',
+            code: `const mostrarMensagem = function() {
+  console.log("Esta é uma mensagem de uma expressão de função.");
+};
+
+mostrarMensagem();`
+          }
+        ]
+      },
+      quiz: [
+        {
+          question: 'Qual é a palavra-chave usada para declarar uma função da forma mais tradicional?',
+          options: ['`func`', '`def`', '`function`', '`procedure`'],
+          correctAnswerIndex: 2,
+          explanation: 'A palavra-chave `function` é usada para iniciar uma declaração de função em JavaScript.'
+        },
+        {
+          question: 'Como se chama o código `minhaFuncao()`?',
+          options: ['Declaração de função', 'Atribuição de função', 'Chamada de função', 'Definição de função'],
+          correctAnswerIndex: 2,
+          explanation: 'Usar o nome da função seguido de parêntesis `()` é a forma de a invocar ou chamar, ou seja, de executar o seu código.'
+        }
+      ]
+    },
+    {
+      id: '4.2',
+      title: 'Parâmetros e Retorno',
+      theory: React.createElement(
+        'div',
+        null,
+        React.createElement('p', { className: 'mb-4' }, 'Funções tornam-se verdadeiramente poderosas quando podem aceitar dados (parâmetros) e devolver um resultado (retorno).'),
+        React.createElement('p', { className: 'mb-4' }, 'Continuando a analogia da receita:'),
+        React.createElement(
+          'ul',
+          { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Parâmetros (ou Argumentos):'), ' São os ingredientes que a tua receita precisa. São variáveis listadas na definição da função.'),
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`return` (Retorno):'), ' É o prato final. A palavra-chave `return` pára a execução da função e devolve um valor para onde a função foi chamada.')
+        ),
+        React.createElement('p', { className: 'mt-4' }, 'Uma função que não tem uma declaração `return` devolve `undefined` por defeito.')
+      ),
+      practice: {
+        examples: [
+          {
+            title: 'Exemplo 1: Função com Parâmetros',
+            description: 'Esta função aceita um parâmetro `nome`. O valor passado quando a função é chamada ("Ana" ou "Pedro") é atribuído a `nome` dentro da função.',
+            code: `function cumprimentar(nome) {
+  console.log(\`Olá, \${nome}!\`);
+}
+
+cumprimentar("Ana");
+cumprimentar("Pedro");`
+          },
+          {
+            title: 'Exemplo 2: Função com Retorno',
+            description: 'A função `somar` aceita dois números, calcula a soma, e `return`a o resultado. Podemos guardar esse resultado numa variável.',
+            code: `function somar(a, b) {
+  return a + b;
+}
+
+const resultado = somar(5, 3);
+console.log("O resultado é:", resultado); // 8`
+          },
+          {
+            title: 'Exemplo 3: Juntando Tudo',
+            description: 'Uma função pode ter parâmetros e um valor de retorno. Esta função calcula a área de um retângulo.',
+            code: `function calcularArea(largura, altura) {
   const area = largura * altura;
   return area;
 }
 
-const areaCalculada = calcularAreaRetangulo(10, 5); // 10 e 5 são os argumentos
-console.log("A área é:", areaCalculada); // A área é: 50`
-          },
-          {
-            title: "Exemplo 3: A Armadilha - Chamar vs. Referenciar",
-            description: "Um erro comum é esquecer os parênteses `()` ao chamar uma função. Se o fizeres, não estás a executar a função; estás apenas a referenciar a própria função, como se fosse uma variável.",
-            code: `function dizerAdeus() {
-  return "Adeus!";
-}
-
-// Chamada correta (executa a função)
-const mensagem1 = dizerAdeus();
-console.log(mensagem1); // "Adeus!"
-
-// Referência incorreta (não executa a função)
-const mensagem2 = dizerAdeus;
-console.log(mensagem2); // Imprime a definição da própria função`
+const areaDaSala = calcularArea(10, 5);
+console.log(\`A área da sala é \${areaDaSala} metros quadrados.\`);`
           }
         ]
       },
       quiz: [
         {
-          question: "No código `function multiplicar(x, y) { return x * y; }`, o que são `x` e `y`?",
-          options: [
-            'Argumentos',
-            'Variáveis globais',
-            'Parâmetros',
-            'Constantes'
-          ],
-          correctAnswerIndex: 2,
-          explanation: '`x` e `y` são os parâmetros da função. São como "espaços reservados" para os valores que serão fornecidos quando a função for chamada. Os valores reais passados (ex: em `multiplicar(3, 4)`) são os argumentos.'
+          question: 'O que a palavra-chave `return` faz numa função?',
+          options: ['Imprime um valor na consola.', 'Pára a execução da função e devolve um valor.', 'Define um parâmetro.', 'Cria um loop.'],
+          correctAnswerIndex: 1,
+          explanation: '`return` tem duas funções: termina a execução da função imediatamente e envia um valor de volta para o código que a chamou.'
         },
         {
-          question: "Qual o output do código? `function somar(a, b) { return a + b; } console.log(somar(5, 3));`",
-          options: [
-            '5',
-            '3',
-            '8',
-            'undefined'
-          ],
-          correctAnswerIndex: 2,
-          explanation: 'A função `somar` é chamada com os argumentos 5 e 3. Ela retorna a sua soma, que é 8. O `console.log` imprime esse valor retornado.'
-        },
-        {
-          question: "O que acontece se uma função não tiver uma declaração `return`?",
-          options: [
-            'Dá um erro.',
-            'Retorna `null`.',
-            'Retorna `0`.',
-            'Retorna `undefined` por defeito.'
-          ],
-          correctAnswerIndex: 3,
-          explanation: 'Se a execução de uma função terminar sem encontrar uma instrução `return`, ela devolve automaticamente o valor `undefined`.'
+          question: 'Na chamada `minhaFunc(10)`, o que é `10`?',
+          options: ['Um parâmetro', 'Um argumento', 'Uma variável', 'Um retorno'],
+          correctAnswerIndex: 1,
+          explanation: 'Tecnicamente, a variável na definição da função é o "parâmetro" (`function minhaFunc(num)`), e o valor real passado na chamada é o "argumento" (`minhaFunc(10)`). No dia-a-dia, os termos são usados de forma intercambiável.'
         }
-      ],
-      challenge: {
-        description: "Escreve uma função chamada `converterCelsiusParaFahrenheit` que recebe uma temperatura em Celsius como parâmetro. A função deve calcular e retornar a temperatura equivalente em Fahrenheit. A fórmula é: `F = C * 1.8 + 32`.",
-        starterCode: `function converterCelsiusParaFahrenheit(celsius) {
-  // O teu código de conversão aqui
-}
-
-const tempCelsius = 20;
-const tempFahrenheit = converterCelsiusParaFahrenheit(tempCelsius);
-console.log(\`\${tempCelsius}°C é igual a \${tempFahrenheit}°F\`); // Deve ser 68°F`,
-        solution: `function converterCelsiusParaFahrenheit(celsius) {
-  const fahrenheit = celsius * 1.8 + 32;
-  return fahrenheit;
-}
-
-const tempCelsius = 20;
-const tempFahrenheit = converterCelsiusParaFahrenheit(tempCelsius);
-console.log(\`\${tempCelsius}°C é igual a \${tempFahrenheit}°F\`);`
-      }
-    },
-    {
-      id: '4.2',
-      title: 'Funções Seta (Arrow Functions)',
-      theory: React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'As Arrow Functions (Funções Seta) são uma forma mais concisa e moderna de escrever funções em JavaScript, introduzida no ES6. São especialmente úteis para funções pequenas e anónimas.'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Imagina que a declaração de função tradicional é uma carta formal:'
-        ),
-        React.createElement(
-          'code',
-          { className: 'block bg-lightest-navy p-2 rounded mb-4 text-sm' },
-          'const somar = function(a, b) {\n  return a + b;\n};'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Uma Arrow Function é como enviar uma mensagem de texto rápida para dizer o mesmo:'
-        ),
-         React.createElement(
-          'code',
-          { className: 'block bg-lightest-navy p-2 rounded mb-4 text-sm' },
-          'const somar = (a, b) => a + b;'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'As principais diferenças são a sintaxe mais curta. A palavra `function` desaparece, e se a função tiver apenas uma linha que retorna um valor, podes omitir as chavetas `{}` e a palavra `return`.'
-        ),
-         React.createElement(
-          'p',
-          { className: 'mt-2 mb-4 p-4 bg-lightest-navy rounded-md text-sm text-light-slate border-l-4 border-yellow-400' },
-           React.createElement('strong', { className: 'font-bold text-yellow-300' }, 'Nota avançada: '), 'As Arrow Functions também se comportam de forma diferente em relação à palavra-chave `this`, algo que se tornará muito importante quando trabalhares com classes e manipulação de eventos. Por agora, foca-te na sintaxe mais limpa.'
-        )
-      ),
-      practice: {
-        examples: [
-          {
-            title: "Exemplo 1: O Básico - Conversão de Sintaxe",
-            description: "Vamos converter uma função tradicional numa arrow function. Repara como fica mais limpa.",
-            code: `// Função tradicional
-function duplicar(n) {
-  return n * 2;
-}
-
-// Arrow function equivalente
-const duplicarArrow = n => n * 2;
-
-console.log(duplicar(5));       // 10
-console.log(duplicarArrow(5)); // 10`
-          },
-          {
-            title: "Exemplo 2: O Caso Comum - Com Métodos de Array",
-            description: "As arrow functions brilham quando usadas como callbacks em métodos de array como `.map` ou `.filter`, tornando o código muito mais legível.",
-            code: `const numeros = [1, 2, 3, 4];
-
-// Mapear para o dobro de cada número
-const dobrados = numeros.map(n => n * 2);
-
-console.log(dobrados); // [2, 4, 6, 8]`
-          },
-          {
-            title: "Exemplo 3: A Armadilha - Retornar um Objeto",
-            description: "Se quiseres retornar um objeto literal numa única linha, tens de o envolver em parênteses `()`. Se usares apenas `{}` o JavaScript pensa que é o início de um bloco de função com várias linhas, e não um objeto.",
-            code: `// Errado! Isto retorna 'undefined'
-const criarPessoaErrado = (nome) => { nome: nome };
-
-// Correto! Envolve o objeto em parênteses
-const criarPessoaCerto = (nome) => ({ nome: nome });
-
-console.log(criarPessoaErrado("Ana")); // undefined
-console.log(criarPessoaCerto("Rui"));  // { nome: 'Rui' }`
-          }
-        ]
-      },
-      quiz: [
-        {
-          question: "Qual das seguintes opções é uma Arrow Function válida que duplica um número 'n'?",
-          options: [
-            'const duplicar = function(n) => n * 2;',
-            'const duplicar = n => n * 2;',
-            'const duplicar = (n) { return n * 2; }',
-            'const duplicar => n * 2;'
-          ],
-          correctAnswerIndex: 1,
-          explanation: 'A opção correta usa a sintaxe concisa de uma arrow function. `n` é o parâmetro, `=>` separa os parâmetros do corpo da função, e `n * 2` é o valor de retorno implícito.'
-        },
-        {
-          question: "O que está errado nesta arrow function? `const somar = (a, b) => { a + b; }`",
-          options: [
-            "Faltam os parênteses nos parâmetros.",
-            "Falta a palavra-chave `return`.",
-            "Deveria usar a palavra `function`.",
-            "Não há nada de errado."
-          ],
-          correctAnswerIndex: 1,
-          explanation: "Quando usas chavetas `{}` numa arrow function, estás a criar um bloco de função. Dentro de um bloco, o retorno não é implícito. Precisas de usar explicitamente a palavra `return`. A versão correta seria `=> { return a + b; }` ou, de forma mais concisa, `=> a + b`."
-        },
-        {
-          question: "Como se escreve uma arrow function sem parâmetros que retorna a string 'Olá'?",
-          options: [
-            "=> 'Olá'",
-            "() => 'Olá'",
-            "function => 'Olá'",
-            "() 'Olá'"
-          ],
-          correctAnswerIndex: 1,
-          explanation: "Mesmo que uma arrow function não tenha parâmetros, os parênteses `()` são obrigatórios para indicar a lista de parâmetros vazia."
-        }
-      ],
-      challenge: {
-        description: "Dado o array de palavras, usa o método `.filter()` com uma arrow function para criar um novo array que contenha apenas as palavras com 5 ou mais letras.",
-        starterCode: `const palavras = ["carro", "sol", "javascript", "oi", "computador"];
-
-// O teu código aqui
-const palavrasLongas = palavras.filter(/* a tua arrow function aqui */);
-
-console.log(palavrasLongas); // ["carro", "javascript", "computador"]`,
-        solution: `const palavras = ["carro", "sol", "javascript", "oi", "computador"];
-
-const palavrasLongas = palavras.filter(palavra => palavra.length >= 5);
-
-console.log(palavrasLongas);`
-      }
+      ]
     },
     {
       id: '4.3',
-      title: 'Parâmetros Padrão e Retorno',
+      title: 'Arrow Functions',
       theory: React.createElement(
         'div',
         null,
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Vamos aprofundar dois conceitos chave: o que entra numa função (parâmetros) e o que sai dela (retorno).'
-        ),
-        React.createElement(
-          'h3',
-          { className: 'text-xl font-bold text-lightest-slate mb-2' }, 'Parâmetros Padrão'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Às vezes, queres que uma função tenha um comportamento "padrão" se não lhe for fornecida toda a informação. É como pedir um café: se não disseres nada, recebes um café simples. Se especificares "com leite", o barista usa esse ingrediente extra. Os parâmetros padrão funcionam da mesma forma.'
-        ),
-         React.createElement(
-          'h3',
-          { className: 'text-xl font-bold text-lightest-slate mb-2 mt-6' }, 'O Valor de Retorno'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'A palavra-chave `return` faz duas coisas: 1) especifica o valor que a função "devolve" para o local onde foi chamada e 2) pára imediatamente a execução da função. É como um funcionário que te entrega um documento (`return valor`) e diz "o meu trabalho aqui acabou". Qualquer instrução após o `return` dentro da função não será executada.'
-        ),
-        React.createElement(
-          'p',
-          null,
-          'Se uma função não tiver uma declaração `return`, ela devolve automaticamente o valor `undefined`.'
-        )
-      ),
-      practice: {
-        examples: [
-          {
-            title: "Exemplo 1: O Básico - Parâmetro Padrão",
-            description: "Vamos criar uma função que saúda um utilizador. Se nenhum nome for fornecido, ela usa 'visitante' como padrão.",
-            code: `function saudar(nome = "visitante") {
-  console.log(\`Olá, \${nome}!\`);
-}
-
-saudar("Ana");     // Olá, Ana!
-saudar();          // Olá, visitante!`
-          },
-          {
-            title: "Exemplo 2: O Caso Comum - Função de Cálculo",
-            description: "Uma função que calcula o preço final, aplicando um desconto opcional. Se o desconto não for passado, o seu valor padrão é 0.",
-            code: `function calcularPrecoFinal(preco, desconto = 0) {
-  const precoComDesconto = preco * (1 - desconto);
-  return precoComDesconto;
-}
-
-console.log(calcularPrecoFinal(100, 0.10)); // 90 (com 10% de desconto)
-console.log(calcularPrecoFinal(100));       // 100 (sem desconto)`
-          },
-          {
-            title: "Exemplo 3: A Armadilha - O Efeito do `return`",
-            description: "Vê como a palavra `return` pára a execução da função imediatamente. O `console.log` dentro da função nunca é alcançado.",
-            code: `function verificarIdade(idade) {
-  if (idade < 18) {
-    return "Menor de idade";
-    // Esta linha nunca será executada
-    console.log("Este código é inalcançável.");
-  }
-  return "Maior de idade";
-}
-
-console.log(verificarIdade(15)); // Menor de idade`
-          }
-        ]
-      },
-      quiz: [
-        {
-          question: 'O que é que a função `teste()` vai imprimir na consola? `function teste() { let a = 10; return a; a = 20; console.log(a); } teste();`',
-          options: [
-            '10',
-            '20',
-            'undefined',
-            'Nada. A chamada da função não imprime nada.'
-          ],
-          correctAnswerIndex: 3,
-          explanation: 'A função `teste()` retorna o valor 10. A linha `console.log(a)` nunca é executada porque vem depois da declaração `return`. A chamada `teste()` em si não está dentro de um `console.log`, por isso nada é impresso na consola.'
-        },
-        {
-          question: "Qual será o output? `function cumprimentar(msg = 'Oi') { console.log(msg); } cumprimentar('Olá');`",
-          options: [
-            "'Oi'",
-            "'Olá'",
-            "undefined",
-            "Vai dar erro"
-          ],
-          correctAnswerIndex: 1,
-          explanation: "Apesar de a função ter um parâmetro padrão ('Oi'), nós fornecemos um argumento ('Olá') na chamada. O argumento fornecido tem sempre prioridade sobre o valor padrão."
-        },
-        {
-          question: "Qual o valor de `resultado`? `function calcular() { let x = 5; } const resultado = calcular();`",
-          options: [
-            "5",
-            "null",
-            "undefined",
-            "Vai dar erro"
-          ],
-          correctAnswerIndex: 2,
-          explanation: "A função `calcular` não tem uma instrução `return`. Portanto, ela executa o seu código, mas no final retorna `undefined` por defeito. A variável `resultado` recebe este valor."
-        }
-      ],
-      challenge: {
-        description: "Cria uma função `criarPerfil` que recebe dois parâmetros: `nome` e `cidade`. O parâmetro `cidade` deve ter um valor padrão de 'Desconhecida'. A função deve retornar uma string no formato: 'Perfil: [nome] de [cidade]'.",
-        starterCode: `function criarPerfil(nome, cidade = "Desconhecida") {
-  // Retorna a string formatada
-}
-
-console.log(criarPerfil("Rui", "Lisboa")); // "Perfil: Rui de Lisboa"
-console.log(criarPerfil("Ana"));          // "Perfil: Ana de Desconhecida"`,
-        solution: `function criarPerfil(nome, cidade = "Desconhecida") {
-  return \`Perfil: \${nome} de \${cidade}\`;
-}
-
-console.log(criarPerfil("Rui", "Lisboa"));
-console.log(criarPerfil("Ana"));`
-      }
-    },
-    {
-      id: '4.4',
-      title: 'Escopo (Scope) de Variáveis',
-      theory: React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Escopo (ou "scope" em inglês) é um conceito fundamental que determina a acessibilidade de variáveis em diferentes partes do teu código. É o que impede que variáveis de uma parte do programa interfiram com outras.'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Imagina o teu código como uma casa grande:'
-        ),
-        React.createElement(
-          'ul',
-          { className: 'list-disc list-inside mb-4 pl-4 space-y-4' },
-          React.createElement(
-            'li',
-            null,
-            React.createElement('strong', { className: 'text-green' }, 'Escopo Global'),
-            ': É o jardim à volta da casa. Qualquer variável declarada aqui está visível de qualquer janela, em qualquer quarto. É útil, mas poluir o jardim com muitas coisas pode criar confusão.'
-          ),
-          React.createElement(
-            'li',
-            null,
-            React.createElement('strong', { className: 'text-green' }, 'Escopo de Função'),
-            ': Cada função é como um quarto na casa. Variáveis declaradas dentro de um quarto (`let`, `const`, `var`) só são visíveis dentro desse quarto. Podes ver o jardim (escopo global) da janela do quarto, mas quem está no jardim não consegue ver o que está dentro do teu quarto.'
-          ),
-          React.createElement(
-            'li',
-            null,
-            React.createElement('strong', { className: 'text-green' }, 'Escopo de Bloco'),
-            ': Introduzido com `let` e `const`. É como uma gaveta dentro de um quarto. Se declarares uma variável dentro de um ciclo `for` ou de um `if`, ela só existe dentro dessa "gaveta" (o bloco de código `{...}`).'
-          )
-        )
-      ),
-      practice: {
-        examples: [
-          {
-            title: "Exemplo 1: O Básico - Global vs. Função",
-            description: "Vamos ver como uma variável global pode ser acedida de qualquer lado, mas uma variável de função está 'presa' dentro da sua função.",
-            code: `const variavelGlobal = "Estou em todo o lado!";
-
-function minhaFuncao() {
-  const variavelLocal = "Estou só aqui dentro.";
-  console.log(variavelGlobal); // Funciona!
-  console.log(variavelLocal);  // Funciona!
-}
-
-minhaFuncao();
-// console.log(variavelLocal); // Erro! variavelLocal is not defined`
-          },
-          {
-            title: "Exemplo 2: O Caso Comum - Escopo de Bloco com `let`",
-            description: "O escopo de bloco é muito útil em ciclos. A variável `i` do ciclo `for` só existe dentro do ciclo e não 'polui' o escopo exterior.",
-            code: `const numeros = [1, 2, 3];
-for (let i = 0; i < numeros.length; i++) {
-  console.log("Dentro do ciclo:", i);
-}
-
-// console.log("Fora do ciclo:", i); // Erro! i is not defined`
-          },
-          {
-            title: "Exemplo 3: A Armadilha - Shadowing (Sombreado)",
-            description: "Se declarares uma variável num escopo interior com o mesmo nome de uma variável num escopo exterior, a interior 'faz sombra' à exterior. Dentro desse escopo, só a variável interior será usada.",
-            code: `const nome = "Global";
-
-function mostrarNome() {
-  const nome = "Local"; // Esta variável "faz sombra" à global
-  console.log("Dentro da função:", nome); // Local
-}
-
-mostrarNome();
-console.log("Fora da função:", nome); // Global`
-          }
-        ]
-      },
-      quiz: [
-        {
-          question: "Qual será o output do código? `let a = 1; function teste() { let a = 2; console.log(a); } teste(); console.log(a);`",
-          options: [
-            '1, depois 2',
-            '2, depois 1',
-            '2, depois 2',
-            '1, depois 1'
-          ],
-          correctAnswerIndex: 1,
-          explanation: 'A função `teste()` é chamada primeiro. Dentro dela, uma nova variável `a` com escopo de função é criada e tem o valor 2, que é impresso. Esta variável não afeta a variável `a` do escopo global. Depois da função executar, o segundo `console.log(a)` imprime o valor da variável global `a`, que ainda é 1.'
-        },
-        {
-          question: "O código `if (true) { const segredo = '123'; } console.log(segredo);` vai funcionar?",
-          options: [
-            "Sim, vai imprimir '123'.",
-            "Não, vai dar um erro porque `segredo` não está definido no escopo global.",
-            "Sim, mas vai imprimir `undefined`.",
-            "Não, vai dar um erro de sintaxe."
-          ],
-          correctAnswerIndex: 1,
-          explanation: "`const` e `let` têm escopo de bloco. A variável `segredo` só existe dentro das chavetas `{}` do `if`. Tentar acedê-la fora desse bloco resulta num `ReferenceError`."
-        },
-        {
-          question: "No escopo global, podes aceder a uma variável declarada dentro de uma função?",
-          options: [
-            "Sim, sempre.",
-            "Apenas se a variável for declarada com `var`.",
-            "Não, nunca.",
-            "Apenas se a função já tiver sido executada."
-          ],
-          correctAnswerIndex: 2,
-          explanation: "O escopo de função funciona como uma barreira unidirecional. O código dentro da função pode 'ver' o que está fora (no escopo global), mas o código fora não pode 'ver' o que está dentro."
-        }
-      ],
-      challenge: {
-        description: "Analisa o seguinte código e prevê, linha por linha, o que será impresso na consola. Anota a tua previsão e depois corre o código para ver se acertaste.",
-        starterCode: `const livro = "Global";
-
-function descobrirLivro() {
-  const livro = "Função";
-  console.log(livro); // Previsão 1: ?
-
-  if (true) {
-    const livro = "Bloco";
-    console.log(livro); // Previsão 2: ?
-  }
-
-  console.log(livro); // Previsão 3: ?
-}
-
-descobrirLivro();
-console.log(livro); // Previsão 4: ?`,
-        solution: `/*
-Previsão 1: "Função" (Usa a variável do escopo da função)
-Previsão 2: "Bloco" (Usa a variável do escopo do bloco, que faz sombra às outras)
-Previsão 3: "Função" (A variável do bloco já não existe, volta a usar a da função)
-Previsão 4: "Global" (Usa a variável do escopo global)
-*/`
-      }
-    },
-    {
-      id: '4.5',
-      title: 'Aprofundando: Funções como Cidadãos de Primeira Classe',
-      theory: React.createElement(
-        'div',
-        null,
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'Em JavaScript, as funções têm um estatuto especial: são "cidadãos de primeira classe". Isto não é apenas um nome pomposo; significa que uma função é tratada como qualquer outro valor (como um número, uma string ou um objeto).'
-        ),
-        React.createElement(
-          'p',
-          { className: 'mb-4' },
-          'A analogia é pensar numa função como uma ',
-          React.createElement('strong', { className: 'text-lightest-slate' }, 'ferramenta especializada'),
-          ' (ex: uma batedeira). Como qualquer outra ferramenta, tu podes:'
-        ),
+        React.createElement('p', { className: 'mb-4' }, 'O ES6 (uma versão mais moderna do JavaScript) introduziu uma nova sintaxe para escrever funções, chamada "Arrow Function" (Função Seta). Elas são mais concisas e têm um comportamento ligeiramente diferente em cenários avançados (relacionado com a palavra-chave `this`).'),
+        React.createElement('p', { className: 'mb-4' }, 'A sintaxe básica é `(parametros) => { corpo da função }`.'),
         React.createElement(
           'ul',
           { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
-          React.createElement('li', null, '1. ', React.createElement('strong', { className: 'text-green' }, 'Guardá-la numa caixa'), ' (Atribuir a uma variável).'),
-          React.createElement('li', null, '2. ', React.createElement('strong', { className: 'text-green' }, 'Entregá-la a um chef para ele usar'), ' (Passar como argumento para outra função - isto é um ', React.createElement('strong', { className: 'text-lightest-slate' }, 'Callback'), ').'),
-          React.createElement('li', null, '3. ', React.createElement('strong', { className: 'text-green' }, 'Usar uma máquina que constrói uma ferramenta personalizada para ti'), ' (Retornar uma função de outra função - isto é uma ', React.createElement('strong', { className: 'text-lightest-slate' }, 'Higher-Order Function'), ').')
-        ),
-        React.createElement(
-          'p',
-          { className: 'mt-4' },
-          'Esta flexibilidade é um dos aspetos mais poderosos do JavaScript e é a base para muitos padrões de programação avançados, incluindo os métodos de array como `map` e `filter` que já vimos.'
+          React.createElement('li', null, 'Se a função tiver apenas uma linha e essa linha for um `return`, podes omitir as chaves `{}` e a palavra-chave `return`. A isto chama-se "retorno implícito".'),
+          React.createElement('li', null, 'Se tiver apenas um parâmetro, podes omitir os parêntesis `()`.')
         )
       ),
       practice: {
         examples: [
           {
-            title: "Exemplo 1: O Básico - Atribuir a uma Variável",
-            description: "Aqui, guardamos uma função numa constante. A constante `saudacao` agora 'contém' a função, e podemos usá-la para chamar o código.",
-            code: `const saudacao = function() {
-  console.log("Olá!");
+            title: 'Exemplo 1: Conversão Simples',
+            description: 'Aqui está uma função tradicional e a sua conversão para uma arrow function. São funcionalmente equivalentes.',
+            code: `// Função tradicional
+function somar(a, b) {
+  return a + b;
+}
+
+// Arrow function equivalente
+const somarArrow = (a, b) => {
+  return a + b;
 };
 
-saudacao(); // "Olá!"`
+console.log(somarArrow(2, 3)); // 5`
           },
           {
-            title: "Exemplo 2: O Caso Comum - Funções de Callback",
-            description: "Vimos isto com métodos de array. `forEach` é uma função que aceita outra função (um callback) como argumento e executa-a para cada item.",
-            code: `const nomes = ["Ana", "Rui"];
+            title: 'Exemplo 2: Retorno Implícito',
+            description: 'Como a nossa função `somarArrow` só tem uma linha que é um `return`, podemos simplificá-la ainda mais.',
+            code: `const somarSimplificada = (a, b) => a + b;
 
-function imprimirNome(nome) {
-  console.log(\`Nome: \${nome}\`);
-}
-
-// Passamos a função 'imprimirNome' como um argumento.
-nomes.forEach(imprimirNome);`
+console.log(somarSimplificada(10, 5)); // 15`
           },
           {
-            title: "Exemplo 3: A Nuance - Higher-Order Functions",
-            description: "Uma Higher-Order Function é uma função que retorna outra função. `criarMultiplicador` não faz a multiplicação; ela 'cria' uma nova função que está pré-configurada para multiplicar por um certo número.",
-            code: `function criarMultiplicador(fator) {
-  return function(numero) {
-    return numero * fator;
-  };
-}
+            title: 'Exemplo 3: Um Único Parâmetro',
+            description: 'Quando temos apenas um parâmetro, os parêntesis à volta dele são opcionais.',
+            code: `const duplicar = numero => numero * 2;
 
-const duplicar = criarMultiplicador(2);
-const triplicar = criarMultiplicador(3);
-
-console.log(duplicar(5));  // 10
-console.log(triplicar(5));  // 15`
+console.log(duplicar(7)); // 14`
           }
         ]
       },
       quiz: [
         {
-          question: "No código `setTimeout(minhaFuncao, 1000);`, o que é `minhaFuncao`?",
-          options: [
-            'Uma variável que será executada imediatamente.',
-            'Uma função de callback, que será executada após 1000ms.',
-            'Uma Higher-Order Function.',
-            'Um erro de sintaxe.'
-          ],
-          correctAnswerIndex: 1,
-          explanation: "Correto! `minhaFuncao` é uma função de callback. Estamos a passá-la como um argumento para `setTimeout` com a instrução de que ela deve ser \"chamada de volta\" (executed) após o tempo especificado ter decorrido."
+          question: 'Qual é a sintaxe correta para uma arrow function que recebe `x` e retorna `x + 1`?',
+          options: ['`x => x + 1;`', '`function(x) { x + 1; }`', '`=> x { return x + 1; }`', '`x -> x + 1;`'],
+          correctAnswerIndex: 0,
+          explanation: 'Com um único parâmetro, os parêntesis são opcionais. Com um retorno implícito, as chaves e a palavra `return` são omitidas.'
         },
         {
-          question: "O que é uma Higher-Order Function?",
-          options: [
-            "Uma função que usa letras maiúsculas.",
-            "Uma função que é muito rápida.",
-            "Uma função que aceita outra função como argumento, ou que retorna uma função.",
-            "Uma função que só pode ser chamada uma vez."
-          ],
-          correctAnswerIndex: 2,
-          explanation: "Esta é a definição exata. `setTimeout`, `forEach`, `map` são exemplos de funções que aceitam outras funções. O nosso `criarMultiplicador` é um exemplo de uma função que retorna outra."
-        },
-        {
-          question: "O que será impresso? `const nums = [1, 2]; const dobrar = n => n * 2; const resultado = nums.map(dobrar); console.log(resultado);`",
-          options: [
-            "[1, 2]",
-            "[2, 4]",
-            "undefined",
-            "Vai dar erro"
-          ],
+          question: 'Arrow functions são mais usadas em que contexto?',
+          options: ['Apenas para matemática.', 'Como "callbacks" para métodos de array como `.map()` e `.filter()`.', 'Para substituir todas as outras funções.', 'Apenas em ficheiros antigos.'],
           correctAnswerIndex: 1,
-          explanation: "`map` é uma higher-order function que aceita `dobrar` como callback. Ele aplica a função `dobrar` a cada elemento do array `nums` e retorna um novo array com os resultados."
+          explanation: 'A sintaxe concisa das arrow functions torna-as perfeitas para serem passadas como funções anónimas (callbacks) para outros métodos, tornando o código muito mais limpo.'
         }
-      ],
-      challenge: {
-        description: "Cria uma higher-order function chamada `operacaoComArray`. Esta função deve receber duas coisas: um array e uma função de callback. A função `operacaoComArray` deve iterar sobre o array e chamar o callback para cada elemento, imprimindo o resultado. Testa-a com duas callbacks diferentes: uma que duplica o número e outra que o eleva ao quadrado.",
-        starterCode: `const numeros = [1, 2, 3];
-
-function operacaoComArray(arr, callback) {
-  // O teu código aqui
-}
-
-const duplicar = n => n * 2;
-const quadrado = n => n * n;
-
-console.log("A duplicar:");
-operacaoComArray(numeros, duplicar);
-
-console.log("\\nA elevar ao quadrado:");
-operacaoComArray(numeros, quadrado);`,
-        solution: `const numeros = [1, 2, 3];
-
-function operacaoComArray(arr, callback) {
-  for (const item of arr) {
-    console.log(callback(item));
-  }
-}
-
-const duplicar = n => n * 2;
-const quadrado = n => n * n;
-
-console.log("A duplicar:");
-operacaoComArray(numeros, duplicar);
-
-console.log("\\nA elevar ao quadrado:");
-operacaoComArray(numeros, quadrado);`
-      }
+      ]
     },
-    {
-      id: '4.6',
-      title: 'O Superpoder das Funções: Closures',
+     {
+      id: '4.4',
+      title: 'Desafio: Conversor de Temperatura',
       theory: React.createElement(
         'div',
         null,
-        React.createElement('p', { className: 'mb-4' }, 'Um closure (ou fechamento) é um dos conceitos mais poderosos do JavaScript. É a combinação de uma função com o seu "ambiente lexical" — ou seja, as variáveis que estavam acessíveis no local onde a função foi criada.'),
-        React.createElement('p', { className: 'mb-4' }, 'A melhor analogia é a de uma ', React.createElement('strong', { className: 'text-lightest-slate' }, 'mochila'), '. Quando uma função é criada, ela "arruma na mochila" todas as variáveis que consegue ver à sua volta. Se essa função for depois passada para outro local (ex: retornada de outra função), ela leva a mochila consigo e pode sempre aceder às variáveis que guardou, mesmo que o local original onde foi criada já não exista.'),
-        React.createElement('p', { className: 'mb-4' }, 'Isto permite-nos criar variáveis "privadas", que só podem ser acedidas pela função que as "fechou" na sua mochila, um padrão fundamental para a encapsulação de dados.')
+        React.createElement('p', { className: 'mb-4' }, 'Vamos criar uma função que converte uma temperatura de Celsius para Fahrenheit. Esta é uma ótima prática para usar parâmetros e o `return`.'),
+        React.createElement('p', { className: 'mb-4' }, 'A fórmula de conversão é: Fahrenheit = (Celsius × 9/5) + 32.')
       ),
       practice: {
         examples: [
           {
-            title: "Exemplo 1: O Básico - A 'Mochila'",
-            description: "A função `funcaoInterna` é retornada de `funcaoExterna`. Mesmo sendo chamada fora, ela ainda se lembra da `variavelExterna` porque a guardou na sua 'mochila' (closure).",
-            code: `function funcaoExterna() {
-  const variavelExterna = "Sou do lado de fora!";
-  
-  function funcaoInterna() {
-    console.log(variavelExterna); // Acede à 'mochila'
-  }
-  
-  return funcaoInterna;
-}
-
-const minhaFuncao = funcaoExterna();
-minhaFuncao(); // "Sou do lado de fora!"`
-          },
-          {
-            title: "Exemplo 2: O Caso Comum - Contador Privado",
-            description: "Este é o exemplo clássico de um closure. A variável `contagem` é privada; não pode ser acedida ou modificada de fora. Apenas a função que retornámos tem acesso a ela, agindo como uma interface controlada.",
-            code: `function criarContador() {
-  let contagem = 0;
-  
-  return function() {
-    contagem++;
-    console.log(contagem);
-  };
-}
-
-const contador1 = criarContador();
-contador1(); // 1
-contador1(); // 2
-
-const contador2 = criarContador(); // Tem a sua própria 'mochila'
-contador2(); // 1`
-          },
-          {
-            title: "Exemplo 3: A Armadilha Clássica - Loops com `var`",
-            description: "Este é um famoso problema de entrevista. Com `var`, existe apenas uma variável `i` para todo o ciclo. Quando os `setTimeout` executam (após o ciclo terminar), todos eles veem o valor final de `i` (que é 3). Com `let`, é criado um novo escopo de bloco para cada iteração, então cada `setTimeout` tem o seu próprio `i` no seu closure.",
-            code: `// O problema com 'var'
-for (var i = 0; i < 3; i++) {
-  setTimeout(() => {
-    console.log(\`var i: \${i}\`); // Imprime 'var i: 3' três vezes!
-  }, 100);
-}
-
-// A solução com 'let'
-for (let j = 0; j < 3; j++) {
-  setTimeout(() => {
-    console.log(\`let j: \${j}\`); // Imprime 'let j: 0', 'let j: 1', 'let j: 2'
-  }, 100);
+            title: 'Passo 1: Criar a função',
+            description: 'Cria uma função (podes usar a sintaxe normal ou arrow function) chamada `converterParaFahrenheit` que aceita um parâmetro, `celsius`.',
+            code: `function converterParaFahrenheit(celsius) {
+  // A nossa lógica virá aqui
 }`
+          },
+          {
+            title: 'Passo 2: Implementar a fórmula e retornar o valor',
+            description: 'Dentro da função, calcula o valor em Fahrenheit usando a fórmula e usa a palavra-chave `return` para o devolver.',
+            code: `function converterParaFahrenheit(celsius) {
+  const fahrenheit = (celsius * 9/5) + 32;
+  return fahrenheit;
+}`
+          },
+          {
+            title: 'Passo 3: Testar a função',
+            description: 'Chama a tua função com diferentes valores para garantir que funciona. 0°C devem ser 32°F. 100°C devem ser 212°F.',
+            code: `const temp1 = converterParaFahrenheit(0);
+console.log(\`0°C é igual a \${temp1}°F\`); // Deve ser 32
+
+const temp2 = converterParaFahrenheit(100);
+console.log(\`100°C é igual a \${temp2}°F\`); // Deve ser 212`
           }
         ]
       },
       quiz: [
         {
-          question: "O que é um closure em JavaScript?",
-          options: [
-            'Uma forma de fechar a página do navegador.',
-            'Uma função que não tem acesso a variáveis externas.',
-            'A combinação de uma função e o seu ambiente lexical, que lhe permite "lembrar-se" de variáveis do seu escopo de criação.',
-            'Um erro que acontece quando uma variável não é encontrada.'
-          ],
+          question: 'Se a tua função não tivesse `return`, o que a variável `temp1` conteria?',
+          options: ['0', '32', '`undefined`', '`null`'],
           correctAnswerIndex: 2,
-          explanation: 'Exato. Um closure dá a uma função acesso ao seu escopo de criação, mesmo quando a função é executada fora desse escopo.'
+          explanation: 'Uma função sem uma declaração `return` explícita retorna `undefined` por defeito.'
         },
         {
-          question: "No exemplo do contador privado, porque é que a variável `contagem` não pode ser acedida de fora?",
-          options: [
-            "Porque é uma `const`.",
-            "Porque está 'presa' dentro do closure da função retornada, sendo efetivamente privada.",
-            "Porque `contagem` é uma palavra reservada.",
-            "Pode ser acedida com `contador1.contagem`."
-          ],
+          question: 'Como ficaria a função do desafio como uma arrow function com retorno implícito?',
+          options: ['`const conv = celsius => { (celsius * 9/5) + 32 }`', '`const conv = celsius => (celsius * 9/5) + 32;`', '`const conv = (celsius) => return (celsius * 9/5) + 32;`', 'Não é possível.'],
           correctAnswerIndex: 1,
-          explanation: "A variável `contagem` existe apenas dentro do escopo da função `criarContador`. A única forma de interagir com ela é através da função anónima que foi retornada, que a 'fechou' no seu closure."
-        },
-        {
-          question: "Qual o output? `function criarSaudacao(saudacao) { return function(nome) { console.log(saudacao + ', ' + nome); } } const saudarOla = criarSaudacao('Olá'); saudarOla('Mundo');`",
-          options: [
-            "Olá, Mundo",
-            "undefined, Mundo",
-            "saudacao, nome",
-            "Vai dar erro"
-          ],
-          correctAnswerIndex: 0,
-          explanation: "A função `saudarOla` é um closure. Ela 'lembra-se' do argumento `saudacao` ('Olá') da sua função criadora. Quando `saudarOla` é chamada com 'Mundo', ela combina os dois valores."
+          explanation: 'A sintaxe `parametro => expressao` é a forma mais concisa de escrever uma arrow function com um único parâmetro e um retorno implícito.'
         }
-      ],
-      challenge: {
-        description: "Cria uma função `criarCofre(senha)` que retorna outra função. A função retornada recebe uma tentativa de senha. Se a tentativa for igual à senha original, ela retorna 'Cofre aberto!'. Caso contrário, retorna 'Senha incorreta!'. A senha original deve ser privada e inacessível de fora.",
-        starterCode: `function criarCofre(senha) {
-  // Retorna a função que verifica a tentativa
-}
-
-const meuCofre = criarCofre("1234");
-console.log(meuCofre("1111")); // "Senha incorreta!"
-console.log(meuCofre("1234")); // "Cofre aberto!"`,
-        solution: `function criarCofre(senha) {
-  return function(tentativa) {
-    if (tentativa === senha) {
-      return "Cofre aberto!";
-    } else {
-      return "Senha incorreta!";
-    }
-  };
-}
-
-const meuCofre = criarCofre("1234");
-console.log(meuCofre("1111"));
-console.log(meuCofre("1234"));`
-      }
+      ]
     }
   ]
 };
