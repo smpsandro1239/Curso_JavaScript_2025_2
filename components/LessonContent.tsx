@@ -41,6 +41,12 @@ export const LessonContent: React.FC<LessonContentProps> = ({ lesson }) => {
         <h1 className="text-3xl md:text-4xl font-bold text-lightest-slate mb-2">{lesson.title}</h1>
         <div className="w-24 h-1 bg-green"></div>
       </header>
+      
+      {lesson.illustration && (
+        <div className="my-8 p-4 bg-light-navy rounded-lg flex justify-center items-center">
+          {lesson.illustration}
+        </div>
+      )}
 
       <section className="mb-12">
         <h2 className="text-2xl font-bold text-lightest-slate mb-4 border-l-4 border-green pl-4">Teoria (com Analogia)</h2>

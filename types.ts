@@ -22,6 +22,7 @@ export interface Challenge {
 export interface Lesson {
   id: string;
   title: string;
+  illustration?: ReactNode;
   // Fix: Use ReactNode directly to avoid module-level conflicts.
   theory: ReactNode;
   practice: {
