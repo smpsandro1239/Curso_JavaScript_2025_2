@@ -407,6 +407,210 @@ while (tentativa !== numeroSecreto) {
 
 console.log(\`Acertaste em \${tentativas} tentativas! O número era \${numeroSecreto}.\`);`
       }
+    },
+    {
+      id: '3.7',
+      title: 'Atalhos para Controlo de Fluxo',
+      theory: React.createElement(
+        'div',
+        null,
+        React.createElement('p', { className: 'mb-4' }, 'Para além das estruturas `if` e `switch`, o JavaScript oferece atalhos que podem tornar o teu código mais conciso e, em certos casos, mais legível.'),
+        React.createElement('h3', { className: 'text-xl font-bold text-lightest-slate mb-2' }, 'Operador Ternário (`? :`)'),
+        React.createElement('p', { className: 'mb-4' }, 'É uma forma compacta de escrever uma declaração `if/else`. A sua estrutura é: `condição ? valor_se_verdadeiro : valor_se_falso`. É extremamente útil para atribuições condicionais.'),
+        React.createElement('h3', { className: 'text-xl font-bold text-lightest-slate mb-2 mt-6' }, 'Controlo de Ciclos: `break` e `continue`'),
+        React.createElement('p', { className: 'mb-4' }, 'Estas duas palavras-chave dão-te controlo fino sobre o comportamento dos teus ciclos (`for`, `while`, etc.).'),
+        React.createElement('ul', { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'break'), ': Termina o ciclo imediatamente, independentemente da condição do ciclo. O programa continua a executar na primeira linha após o ciclo.'),
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'continue'), ': Salta a iteração atual e avança para a próxima. O código restante no bloco do ciclo para a iteração atual não é executado.')
+        )
+      ),
+      practice: {
+        examples: [
+          {
+            title: "Exemplo 1: O Básico - Operador Ternário",
+            description: 'Vamos converter uma verificação de idade simples de `if/else` para um operador ternário.',
+            code: `const idade = 20;
+// Com if/else
+let status;
+if (idade >= 18) {
+  status = "Adulto";
+} else {
+  status = "Menor";
+}
+
+// Com operador ternário
+const statusTernario = idade >= 18 ? "Adulto" : "Menor";
+
+console.log(status);
+console.log(statusTernario);`
+          },
+          {
+            title: "Exemplo 2: O Caso Comum - `break` para encontrar um item",
+            description: 'Quando procuras por um item num array, é ineficiente continuar o ciclo depois de o teres encontrado. `break` é perfeito para otimizar isto.',
+            code: `const nomes = ["Ana", "Rui", "Marta", "João"];
+let encontrado = null;
+
+for (const nome of nomes) {
+  console.log(\`A verificar: \${nome}\`);
+  if (nome === "Marta") {
+    encontrado = nome;
+    break; // Encontrámos, não é preciso continuar
+  }
+}
+console.log(\`Pessoa encontrada: \${encontrado}\`);`
+          },
+          {
+            title: "Exemplo 3: A Nuance - `continue` para ignorar itens",
+            description: 'Imagina que queres somar apenas os números positivos de uma lista. `continue` permite-te ignorar os negativos de forma elegante.',
+            code: `const numeros = [10, -5, 20, -12, 8];
+let somaPositivos = 0;
+
+for (const numero of numeros) {
+  if (numero < 0) {
+    continue; // Ignora o resto do bloco e vai para o próximo número
+  }
+  somaPositivos += numero;
+}
+console.log(\`Soma dos positivos: \${somaPositivos}\`); // 38`
+          }
+        ]
+      },
+      quiz: [
+        {
+          question: "Qual o valor de `resultado`? `const resultado = 10 < 5 ? 'Sim' : 'Não';`",
+          options: ['Sim', 'Não', 'true', 'Vai dar erro'],
+          correctAnswerIndex: 1,
+          explanation: "A condição `10 < 5` é falsa. O operador ternário devolve o valor após os dois pontos `:`, que neste caso é 'Não'."
+        },
+        {
+          question: "O que faz a palavra-chave `break` dentro de um ciclo `for`?",
+          options: ['Pausa a execução do programa.', 'Salta a iteração atual do ciclo.', 'Termina o ciclo imediatamente.', 'Causa um erro.'],
+          correctAnswerIndex: 2,
+          explanation: '`break` é usado para sair de um ciclo (ou `switch`) prematuramente. A execução continua na linha de código que se segue ao bloco do ciclo.'
+        },
+        {
+          question: "No código `for (let i = 0; i < 5; i++) { if (i === 2) { continue; } console.log(i); }`, que número não será impresso?",
+          options: ['0', '2', '4', 'Todos serão impressos'],
+          correctAnswerIndex: 1,
+          explanation: 'Quando `i` é igual a 2, a condição do `if` é verdadeira e `continue` é executado. Isto faz com que o `console.log(i)` seja ignorado nessa iteração, e o ciclo salta para `i = 3`.'
+        }
+      ],
+      challenge: {
+        description: "Dado um array de números, cria um novo array usando um ciclo. Se o número for negativo, usa `continue` para o ignorar. Se o número for 0, usa `break` para parar o ciclo. Caso contrário, adiciona o dobro do número ao novo array.",
+        starterCode: `const numeros = [5, 8, -3, 10, 0, 4, -1];
+const resultado = [];
+
+// O teu ciclo aqui
+
+console.log(resultado); // Deve ser [10, 16, 20]`,
+        solution: `const numeros = [5, 8, -3, 10, 0, 4, -1];
+const resultado = [];
+
+for (const numero of numeros) {
+  if (numero < 0) {
+    continue;
+  }
+  if (numero === 0) {
+    break;
+  }
+  resultado.push(numero * 2);
+}
+
+console.log(resultado);`
+      }
+    },
+    {
+      id: '3.8',
+      title: 'Desafio do Módulo: FizzBuzz',
+      theory: React.createElement(
+        'div',
+        null,
+        React.createElement('p', { className: 'mb-4' }, 'Parabéns por teres chegado ao final do Módulo de Controlo de Fluxo! Para testar e solidificar tudo o que aprendeste, vamos enfrentar um dos desafios de programação mais famosos: o FizzBuzz.'),
+        React.createElement('p', { className: 'mb-4' }, 'Apesar de simples, este problema é frequentemente usado em entrevistas técnicas para avaliar a compreensão básica de ciclos e condicionais. Ele testa a tua capacidade de combinar um ciclo `for`, uma estrutura `if/else if/else` e o operador módulo (`%`).'),
+        React.createElement('h3', { className: 'text-xl font-bold text-lightest-slate mb-2 mt-6' }, 'As Regras'),
+        React.createElement('ul', { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+          React.createElement('li', null, 'Escreve um programa que imprime os números de 1 a 100.'),
+          React.createElement('li', null, 'Para números múltiplos de 3, imprime "Fizz" em vez do número.'),
+          React.createElement('li', null, 'Para números múltiplos de 5, imprime "Buzz" em vez do número.'),
+          React.createElement('li', null, 'Para números que são múltiplos de 3 e de 5, imprime "FizzBuzz".')
+        )
+      ),
+      practice: {
+        examples: [
+          {
+            title: "Abordagem Passo-a-Passo",
+            description: 'A chave para resolver o FizzBuzz é a ordem das tuas verificações. Deves sempre verificar a condição mais específica primeiro.',
+            code: `// Passo 1: O ciclo base
+for (let i = 1; i <= 100; i++) {
+  // Passo 2: Verificar a condição mais específica primeiro
+  // Se verificasses i % 3 primeiro, nunca chegarias a "FizzBuzz"
+  if (i % 3 === 0 && i % 5 === 0) {
+    console.log("FizzBuzz");
+  } 
+  // Passo 3: Verificar as condições menos específicas
+  else if (i % 3 === 0) {
+    console.log("Fizz");
+  } else if (i % 5 === 0) {
+    console.log("Buzz");
+  } 
+  // Passo 4: O caso padrão
+  else {
+    console.log(i);
+  }
+}`
+          },
+          {
+            title: "Uma Solução Alternativa",
+            description: 'Existem muitas formas de resolver o FizzBuzz. Aqui está uma abordagem ligeiramente diferente que constrói uma string.',
+            code: `for (let i = 1; i <= 100; i++) {
+  let output = "";
+  if (i % 3 === 0) {
+    output += "Fizz";
+  }
+  if (i % 5 === 0) {
+    output += "Buzz";
+  }
+  
+  // Se a string ainda estiver vazia, imprime o número
+  console.log(output || i);
+}`
+          }
+        ]
+      },
+      quiz: [
+        {
+          question: "No desafio FizzBuzz, porque é que a condição `i % 3 === 0 && i % 5 === 0` deve ser verificada antes de `i % 3 === 0`?",
+          options: [
+            'É mais rápido.',
+            'Se `i % 3 === 0` fosse verificado primeiro, um número como 15 iria imprimir "Fizz" e a verificação pararia aí, nunca chegando a "FizzBuzz".',
+            'Não faz diferença a ordem.',
+            'Porque `&&` tem maior prioridade que `||`.'
+          ],
+          correctAnswerIndex: 1,
+          explanation: 'As estruturas `if/else if/else` executam o primeiro bloco cuja condição seja verdadeira e depois param. Se um número é múltiplo de 15, também é múltiplo de 3. Se a verificação do 3 viesse primeiro, ela seria sempre acionada, impedindo a verificação do 15 de ser alcançada.'
+        },
+        {
+          question: "O que devolve a expressão `10 % 5`?",
+          options: ['2', '5', '0', '1'],
+          correctAnswerIndex: 2,
+          explanation: 'O operador módulo (`%`) devolve o resto de uma divisão. 10 é perfeitamente divisível por 5, por isso o resto é 0. Esta é a forma de verificar se um número é múltiplo de outro.'
+        }
+      ],
+      challenge: {
+        description: "Agora é a tua vez! Implementa a tua própria solução para o desafio FizzBuzz. Podes usar a abordagem que preferires, mas tenta escrever o código de uma forma que seja clara e fácil de entender.",
+        starterCode: `// Escreve o teu código para o FizzBuzz aqui`,
+        solution: `for (let i = 1; i <= 100; i++) {
+  if (i % 15 === 0) { // Otimização: i % 3 === 0 && i % 5 === 0 é o mesmo que i % 15 === 0
+    console.log("FizzBuzz");
+  } else if (i % 3 === 0) {
+    console.log("Fizz");
+  } else if (i % 5 === 0) {
+    console.log("Buzz");
+  } else {
+    console.log(i);
+  }
+}`
+      }
     }
   ]
 };
