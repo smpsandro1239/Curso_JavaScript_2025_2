@@ -2,305 +2,334 @@ import * as React from 'react';
 import type { Module } from '../../types';
 
 // Illustrations
-const AsyncIllustration = () => React.createElement(
-  'svg',
-  { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
-  // Sync Path (blocking)
-  React.createElement('text', { x: "50", y: "15", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Síncrono"),
-  React.createElement('rect', { x: "10", y: "20", width: "30", height: "15", fill: "#233554" }),
-  React.createElement('rect', { x: "45", y: "20", width: "30", height: "15", fill: "#a8b2d1", stroke: "#ccd6f6" }),
-  React.createElement('rect', { x: "80", y: "20", width: "30", height: "15", fill: "#233554" }),
-  
-  // Async Path (non-blocking)
-  React.createElement('text', { x: "50", y: "65", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Assíncrono"),
-  React.createElement('rect', { x: "10", y: "70", width: "30", height: "15", fill: "#233554" }),
-  React.createElement('path', { d: "M 45 77.5 L 80 77.5", stroke: "#233554", strokeWidth: "2" }),
-  React.createElement('path', { d: "M 45 77.5 C 45 60, 80 60, 80 77.5", fill: "none", stroke: "#64ffda", strokeWidth: "1.5" }),
-  React.createElement('rect', { x: "80", y: "70", width: "30", height: "15", fill: "#233554" })
+const DestructuringIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    React.createElement('rect', { x: "10", y: "10", width: "80", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('text', { x: "50", y: "25", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Objeto"),
+    React.createElement('text', { x: "20", y: "45", fontSize: "8", fill: "#ccd6f6" }, "nome: 'Ana'"),
+    React.createElement('text', { x: "20", y: "65", fontSize: "8", fill: "#ccd6f6" }, "idade: 30"),
+    React.createElement('path', { d: "M 90 42 L 110 32", stroke: "#64ffda", strokeWidth: "1" }),
+    React.createElement('text', { x: "120", y: "35", fontSize: "8", fill: "#64ffda" }, "const nome"),
+    React.createElement('path', { d: "M 90 62 L 110 72", stroke: "#64ffda", strokeWidth: "1" }),
+    React.createElement('text', { x: "120", y: "75", fontSize: "8", fill: "#64ffda" }, "const idade")
 );
 
-const PromiseIllustration = () => React.createElement(
-  'svg',
-  { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
-  // Pending
-  React.createElement('circle', { cx: "40", cy: "50", r: "15", fill: "#112240", stroke: "#a8b2d1", strokeDasharray: "3 3" }),
-  React.createElement('text', { x: "40", y: "53", textAnchor: "middle", fontSize: "7", fill: "#a8b2d1" }, "Pendente"),
-  // Arrow to Fulfilled
-  React.createElement('path', { d: "M 55 40 L 100 25", stroke: "#64ffda", strokeWidth: "1.5" }),
-  React.createElement('text', { x: "80", y: "28", fontSize: "7", fill: "#64ffda" }, ".then()"),
-  // Fulfilled
-  React.createElement('circle', { cx: "120", cy: "25", r: "15", fill: "#112240", stroke: "#64ffda" }),
-  React.createElement('text', { x: "120", y: "28", textAnchor: "middle", fontSize: "7", fill: "#64ffda" }, "Sucesso"),
-  // Arrow to Rejected
-  React.createElement('path', { d: "M 55 60 L 100 75", stroke: "red", strokeWidth: "1.5" }),
-  React.createElement('text', { x: "80", y: "78", fontSize: "7", fill: "red" }, ".catch()"),
-  // Rejected
-  React.createElement('circle', { cx: "120", cy: "75", r: "15", fill: "#112240", stroke: "red" }),
-  React.createElement('text', { x: "120", y: "78", textAnchor: "middle", fontSize: "7", fill: "red" }, "Falha")
+const ESModulesIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    // File 1 (export)
+    React.createElement('g', { transform: "translate(10, 20)" },
+        React.createElement('rect', { x: "0", y: "0", width: "60", height: "60", fill: "#112240", stroke: "#233554", rx: "3" }),
+        React.createElement('text', { x: "30", y: "15", textAnchor: "middle", fontSize: "7", fill: "#a8b2d1" }, "utils.js"),
+        React.createElement('text', { x: "30", y: "40", textAnchor: "middle", fontSize: "8", fill: "#64ffda" }, "export"),
+        React.createElement('path', { d: "M 60 40 L 80 40", stroke: "#64ffda", strokeWidth: "1.5" })
+    ),
+    // File 2 (import)
+    React.createElement('g', { transform: "translate(130, 20)" },
+        React.createElement('rect', { x: "0", y: "0", width: "60", height: "60", fill: "#112240", stroke: "#233554", rx: "3" }),
+        React.createElement('text', { x: "30", y: "15", textAnchor: "middle", fontSize: "7", fill: "#a8b2d1" }, "main.js"),
+        React.createElement('text', { x: "30", y: "40", textAnchor: "middle", fontSize: "8", fill: "#64ffda" }, "import"),
+        React.createElement('path', { d: "M 0 40 L -20 40", stroke: "#64ffda", strokeWidth: "1.5", markerEnd: "url(#arrowhead-green)" })
+    ),
+    React.createElement('defs', null, 
+      React.createElement('marker', { id: "arrowhead-green", markerWidth: "5", markerHeight: "3.5", refX: "5", refY: "1.75", orient: "auto" },
+        React.createElement('polygon', { points: "0 0, 5 1.75, 0 3.5", fill: "#64ffda" })
+      )
+    )
 );
 
-const AsyncAwaitIllustration = () => React.createElement(
-  'svg',
-  { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-md h-auto text-lightest-slate" },
-  // .then chain
-  React.createElement('text', { x: "100", y: "15", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Promise Chain vs. Async/Await"),
-  React.createElement('rect', { x: "10", y: "25", width: "40", height: "15", fill: "#233554" }),
-  React.createElement('text', { x: "30", y: "35", textAnchor: "middle", fontSize: "7", fill: "#ccd6f6" }, "fetch()"),
-  React.createElement('path', { d: "M 50 32.5 L 60 32.5", stroke: "#a8b2d1"}),
-  React.createElement('rect', { x: "60", y: "25", width: "40", height: "15", fill: "#233554" }),
-  React.createElement('text', { x: "80", y: "35", textAnchor: "middle", fontSize: "7", fill: "#ccd6f6" }, ".then()"),
-  React.createElement('path', { d: "M 100 32.5 L 110 32.5", stroke: "#a8b2d1"}),
-  React.createElement('rect', { x: "110", y: "25", width: "40", height: "15", fill: "#233554" }),
-  React.createElement('text', { x: "130", y: "35", textAnchor: "middle", fontSize: "7", fill: "#ccd6f6" }, ".then()"),
-  // Async/await
-  React.createElement('rect', { x: "10", y: "65", width: "140", height: "20", fill: "#112240", stroke: "#64ffda", rx: "3" }),
-  React.createElement('text', { x: "20", y: "78", fontSize: "7", fill: "#64ffda" }, "async function() {"),
-  React.createElement('text', { x: "30", y: "88", fontSize: "7", fill: "#ccd6f6" }, "  const r = await fetch()"),
-  React.createElement('text', { x: "30", y: "98", fontSize: "7", fill: "#ccd6f6" }, "  const d = await r.json()"),
-  React.createElement('text', { x: "20", y: "108", fontSize: "7", fill: "#64ffda" }, "}")
+const OptionalChainingIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    React.createElement('rect', { x: "10", y: "20", width: "50", height: "20", fill: "#112240", stroke: "#233554", rx: "3" }),
+    React.createElement('text', { x: "35", y: "33", textAnchor: "middle", fontSize: "7", fill: "#ccd6f6" }, "user"),
+    React.createElement('path', { d: "M 60 30 L 80 30", stroke: "#233554" }),
+    React.createElement('text', { x: "70", y: "25", textAnchor: "middle", fontSize: "10", fill: "#64ffda" }, "?."),
+    React.createElement('rect', { x: "80", y: "20", width: "50", height: "20", fill: "#112240", stroke: "red", rx: "3", strokeDasharray: "2 2" }),
+    React.createElement('text', { x: "105", y: "33", textAnchor: "middle", fontSize: "7", fill: "#ccd6f6" }, "address"),
+    React.createElement('path', { d: "M 130 30 L 150 30", stroke: "#233554" }),
+    React.createElement('rect', { x: "150", y: "20", width: "40", height: "20", fill: "#112240", stroke: "#233554", rx: "3" }),
+    React.createElement('text', { x: "170", y: "33", textAnchor: "middle", fontSize: "7", fill: "#ccd6f6" }, "city"),
+    React.createElement('text', { x: "100", y: "70", textAnchor: "middle", fontSize: "8", fill: "red" }, "Caminho interrompido sem erro!")
 );
+
+const PokedexIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    React.createElement('rect', { x: "10", y: "10", width: "180", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('circle', { cx: "30", cy: "25", r: "5", fill: "#64ffda" }),
+    React.createElement('rect', { x: "50", y: "20", width: "120", height: "10", fill: "#233554" }),
+    React.createElement('rect', { x: "50", y: "40", width: "80", height: "40", fill: "#0a192f", stroke: "#233554" }),
+    React.createElement('text', { x: "150", y: "50", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "Nome"),
+    React.createElement('text', { x: "150", y: "70", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "Tipo")
+);
+
 
 export const module7: Module = {
   id: '7',
-  title: 'Módulo 7: JavaScript Assíncrono',
+  title: 'Módulo 7: JS Moderno e Próximos Passos',
   lessons: [
     {
       id: '7.1',
-      title: 'O que é JavaScript Assíncrono?',
-      illustration: React.createElement(AsyncIllustration),
+      title: 'Desestruturação e Spread/Rest',
+      illustration: React.createElement(DestructuringIllustration),
       theory: React.createElement(
         'div',
         null,
-        React.createElement('p', { className: 'mb-4' }, 'JavaScript é, por natureza, uma linguagem "single-threaded" (de uma só thread), o que significa que só consegue fazer uma coisa de cada vez. A isto chamamos comportamento síncrono.'),
-        React.createElement('p', { className: 'mb-4' }, 'Imagina uma fila num café: no modelo síncrono, o barista só começa a preparar a tua bebida depois de o cliente anterior ter recebido a dele. Se uma bebida demorar muito tempo, toda a gente tem de esperar.'),
-        React.createElement('p', { className: 'mb-4' }, 'O JavaScript assíncrono é como um barista mais eficiente. Ele recebe o teu pedido (uma operação demorada, como ir buscar dados a um servidor), entrega-te um pager (uma "promessa"), e começa a atender o cliente seguinte. Quando a tua bebida estiver pronta, o pager apita e podes ir buscá-la. Ninguém fica bloqueado à espera.')
+        React.createElement('p', { className: 'mb-4' }, 'A desestruturação (destructuring) é uma sintaxe do ES6 que nos permite "desempacotar" valores de arrays ou propriedades de objetos em variáveis distintas. É um atalho muito conveniente que torna o código mais limpo.'),
+        React.createElement('p', { className: 'mb-4' }, 'O operador Spread (`...`) "espalha" os elementos de um array ou as propriedades de um objeto noutro. O operador Rest (`...`) agrupa o "resto" dos elementos ou propriedades numa nova estrutura.')
       ),
       practice: {
         examples: [
           {
-            title: 'Exemplo: `setTimeout`',
-            description: '`setTimeout` é uma função assíncrona. Ela agenda a execução de uma função para depois de um certo tempo, mas não para o resto do código. Repara na ordem em que as mensagens aparecem na consola.',
-            code: `console.log("1. Pedido feito.");
+            title: 'Exemplo 1: O Básico - Desestruturação de Objetos',
+            description: 'Em vez de aceder a cada propriedade individualmente, podemos extraí-las para variáveis com o mesmo nome numa única linha.',
+            code: `const utilizador = { nome: "Bia", idade: 25 };
+const { nome, idade } = utilizador;
+console.log(nome);   // "Bia"`
+          },
+          {
+            title: 'Exemplo 2: O Caso Comum - Spread para copiar e combinar',
+            description: 'Usamos o spread para criar uma cópia superficial de um array e para combinar dois objetos.',
+            code: `const arr1 = [1, 2];
+const arr2 = [...arr1, 3, 4]; // [1, 2, 3, 4]
 
-setTimeout(() => {
-  console.log("3. Bebida pronta!"); // Executa após 2 segundos
-}, 2000);
-
-console.log("2. A atender o próximo cliente.");`
+const obj1 = { a: 1 };
+const obj2 = { ...obj1, b: 2 }; // { a: 1, b: 2 }`
+          },
+          {
+            title: 'Exemplo 3: A Nuance - Rest na desestruturação',
+            description: 'Aqui, extraímos o primeiro elemento para a variável `primeiro` e o "resto" dos elementos são agrupados num novo array chamado `outros`.',
+            code: `const numeros = [10, 20, 30, 40];
+const [primeiro, ...outros] = numeros;
+console.log(primeiro); // 10
+console.log(outros);   // [20, 30, 40]`
           }
         ]
       },
       quiz: [
         {
-          question: 'O que significa dizer que JavaScript é "single-threaded"?',
-          options: ['Só pode ser escrito por uma pessoa.', 'Só consegue executar uma operação de cada vez.', 'Só funciona com um tipo de dado.', 'Só pode ser usado no navegador.'],
+          question: 'O que `const { nome } = { nome: "Ana", idade: 30 };` faz?',
+          options: ['Cria um objeto chamado `nome`.', 'Cria uma variável `nome` com o valor "Ana".', 'Causa um erro.', 'Cria uma variável `nome` com o valor `{ nome: "Ana", idade: 30 }`.'],
           correctAnswerIndex: 1,
-          explanation: 'Ser single-threaded significa que o motor de JavaScript tem apenas uma "call stack", pelo que executa o código de forma sequencial, uma instrução após a outra.'
+          explanation: 'Esta sintaxe de desestruturação extrai a propriedade `nome` do objeto e cria uma variável com o mesmo nome e o valor correspondente.'
         }
-      ]
+      ],
+      challenge: {
+        description: "Dado o objeto `filme`, usa a desestruturação para criar três variáveis: `titulo`, `realizador` e `ano`. Depois, cria um novo objeto `filmeComRating` que tenha todas as propriedades do objeto original mais uma nova propriedade `rating: 9`.",
+        starterCode: `const filme = {
+  titulo: "Inception",
+  realizador: "Christopher Nolan",
+  ano: 2010
+};
+
+// Desestrutura aqui
+
+// Cria o novo objeto com spread aqui`,
+        solution: `const { titulo, realizador, ano } = filme;
+console.log(\`Filme: \${titulo} (\${ano}) por \${realizador}\`);
+
+const filmeComRating = { ...filme, rating: 9 };
+console.log(filmeComRating);`
+      }
     },
     {
       id: '7.2',
-      title: 'Callbacks e o "Callback Hell"',
+      title: 'Módulos ES (import/export)',
+      illustration: React.createElement(ESModulesIllustration),
       theory: React.createElement(
         'div',
         null,
-        React.createElement('p', { className: 'mb-4' }, 'Uma das formas mais antigas de lidar com código assíncrono é usar callbacks. Um callback é simplesmente uma função que é passada como argumento a outra função, para ser executada mais tarde.'),
-        React.createElement('p', { className: 'mb-4' }, 'Quando temos várias operações assíncronas que dependem umas das outras, acabamos por aninhar callbacks dentro de callbacks. Isto cria uma estrutura de código conhecida como "Callback Hell" ou "Pyramid of Doom", que é muito difícil de ler e manter.')
+        React.createElement('p', { className: 'mb-4' }, 'À medida que as nossas aplicações crescem, não podemos ter todo o nosso código num único ficheiro. Os Módulos ES permitem-nos dividir o nosso código em múltiplos ficheiros para o mantermos organizado e reutilizável.'),
+        React.createElement(
+          'ul',
+          { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`export`:'), ' Usado num ficheiro para disponibilizar variáveis, funções ou classes para outros ficheiros.'),
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`import`:'), ' Usado noutro ficheiro para "puxar" o que foi exportado.')
+        )
       ),
       practice: {
         examples: [
           {
-            title: 'Exemplo: O "Pyramid of Doom"',
-            description: 'Imagina que queremos simular o processo de fazer um bolo em várias etapas, cada uma demorando 1 segundo. O resultado é um código que cresce para a direita e se torna confuso.',
-            code: `setTimeout(() => {
-  console.log("1. Misturar ingredientes");
-  setTimeout(() => {
-    console.log("2. Colocar no forno");
-    setTimeout(() => {
-      console.log("3. Bolo pronto!");
-    }, 1000);
-  }, 1000);
-}, 1000);`
+            title: 'Exemplo 1: O Básico - `export` e `import` nomeados',
+            description: 'No ficheiro `utils.js`, exportamos duas funções. No `main.js`, importamo-las pelo nome, dentro de chaves `{}`.',
+            code: `// Ficheiro: utils.js
+export const PI = 3.14;
+export function somar(a, b) {
+  return a + b;
+}
+
+// Ficheiro: main.js
+import { PI, somar } from './utils.js';
+console.log(somar(5, 2) * PI);`
+          },
+          {
+            title: 'Exemplo 2: O Caso Comum - `export default`',
+            description: 'Cada ficheiro pode ter uma (e apenas uma) exportação padrão. Ao importar, não usamos chaves e podemos dar-lhe o nome que quisermos.',
+            code: `// Ficheiro: saudacao.js
+export default function saudar(nome) {
+  return \`Olá, \${nome}\`;
+}
+
+// Ficheiro: main.js
+import minhaSaudacao from './saudacao.js';
+console.log(minhaSaudacao("Mundo"));`
           }
         ]
       },
       quiz: [
         {
-          question: 'Qual é o principal problema do "Callback Hell"?',
-          options: ['O código fica mais rápido.', 'O código fica muito aninhado e difícil de ler.', 'Usa demasiada memória.', 'Só funciona com `setTimeout`.'],
+          question: 'Qual é a principal vantagem de usar módulos?',
+          options: ['Tornar o código mais rápido.', 'Organizar o código em ficheiros separados e reutilizáveis.', 'Funciona melhor em servidores.', 'Reduz o tamanho dos ficheiros.'],
           correctAnswerIndex: 1,
-          explanation: 'A dificuldade de leitura e manutenção é o grande problema que o "Callback Hell" apresenta, o que levou à criação de soluções como as Promises.'
+          explanation: 'Os módulos são a base da arquitetura de software moderna, promovendo a organização, a manutenção e a reutilização de código.'
         }
       ]
     },
     {
       id: '7.3',
-      title: 'Promises',
-      illustration: React.createElement(PromiseIllustration),
+      title: 'Código Mais Seguro: Optional Chaining e Nullish Coalescing',
+      illustration: React.createElement(OptionalChainingIllustration),
       theory: React.createElement(
         'div',
         null,
-        React.createElement('p', { className: 'mb-4' }, 'Promises (Promessas) são objetos que representam a eventual conclusão (ou falha) de uma operação assíncrona. São uma solução elegante para o "Callback Hell".'),
-        React.createElement(
+        React.createElement('p', { className: 'mb-4' }, 'Estas duas funcionalidades modernas do ES2020 ajudam-nos a escrever código mais robusto ao lidar com valores que podem ser `null` ou `undefined`.'),
+         React.createElement(
           'ul',
           { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
-          React.createElement('li', null, 'Uma Promise pode estar em um de três estados: `pending` (pendente), `fulfilled` (resolvida/sucesso), ou `rejected` (rejeitada/falha).'),
-          React.createElement('li', null, 'Usamos o método `.then()` para lidar com o caso de sucesso e o `.catch()` para lidar com o caso de falha.'),
-          React.createElement('li', null, 'Podemos encadear `.then()` para executar operações assíncronas em sequência de forma legível.')
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Optional Chaining (`?.`):'), ' Impede que o código quebre ao tentar aceder a propriedades de um objeto que não existe. Se o valor antes de `?.` for `null` ou `undefined`, a expressão inteira retorna `undefined` em vez de lançar um erro.'),
+          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Nullish Coalescing Operator (`??`):'), ' Retorna o valor do lado direito apenas se o valor do lado esquerdo for `null` ou `undefined`. É uma alternativa mais segura ao `||` para definir valores padrão, pois o `||` também reage a outros valores "falsy" como `0` ou `""`.')
         )
       ),
       practice: {
         examples: [
           {
-            title: 'Exemplo: Resolvendo o "Callback Hell"',
-            description: 'Vamos reescrever o exemplo do bolo usando Promises. Cada passo retorna uma nova Promise, permitindo-nos encadear as ações de forma linear e muito mais legível.',
-            code: `function passo1() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("1. Misturar ingredientes");
-      resolve();
-    }, 1000);
-  });
-}
+            title: 'Exemplo 1: O Básico - Optional Chaining',
+            description: 'Tentar aceder a `utilizador.morada.cidade` daria um erro se `morada` não existisse. Com `?.`, o código continua a funcionar e retorna `undefined`.',
+            code: `const utilizador = { nome: "Ana" }; // sem morada
 
-function passo2() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("2. Colocar no forno");
-      resolve();
-    }, 1000);
-  });
-}
+// Daria um erro: const cidade = utilizador.morada.cidade;
+const cidade = utilizador.morada?.cidade;
+console.log(cidade); // undefined`
+          },
+          {
+            title: 'Exemplo 2: O Caso Comum - Nullish Coalescing',
+            description: 'Queremos que o volume 0 seja um valor válido, mas `||` tratá-lo-ia como "falsy". `??` só reage a `null` ou `undefined`, dando-nos o resultado correto.',
+            code: `const config = { volume: 0 };
 
-passo1()
-  .then(passo2)
-  .then(() => {
-    console.log("3. Bolo pronto!");
-  })
-  .catch((erro) => {
-    console.error("Algo correu mal!", erro);
-  });`
+const volumeAntigo = config.volume || 50; // 50 (mau!)
+const volumeNovo = config.volume ?? 50;   // 0 (bom!)
+console.log(volumeNovo);`
           }
         ]
       },
       quiz: [
         {
-          question: 'Qual método de uma Promise é usado para tratar um resultado de sucesso?',
-          options: ['`.catch()`', '`.finally()`', '`.then()`', '`.error()`'],
-          correctAnswerIndex: 2,
-          explanation: '`.then()` recebe uma função de callback que será executada quando a Promise for resolvida com sucesso.'
+          question: 'O que o operador `??` (Nullish Coalescing) faz?',
+          options: ['Retorna o valor da direita se o da esquerda for "falsy".', 'Retorna o valor da direita se o da esquerda for `null` ou `undefined`.', 'Converte para booleano.', 'Causa um erro.'],
+          correctAnswerIndex: 1,
+          explanation: 'O `??` é mais específico que o `||`, reagindo apenas a `null` e `undefined`, o que o torna mais seguro para definir valores padrão quando `0` ou `""` são valores válidos.'
         }
       ]
     },
     {
       id: '7.4',
-      title: 'Async/Await',
-      illustration: React.createElement(AsyncAwaitIllustration),
+      title: 'Desafio Final: A Tua Pokédex',
+      illustration: React.createElement(PokedexIllustration),
       theory: React.createElement(
         'div',
         null,
-        React.createElement('p', { className: 'mb-4' }, '`async` e `await` são "açúcar sintático" por cima das Promises. Permitem-nos escrever código assíncrono que se parece e se comporta como código síncrono, tornando-o ainda mais fácil de ler.'),
-        React.createElement(
-          'ul',
-          { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
-          React.createElement('li', null, 'A palavra-chave `async` é usada para declarar uma função que vai lidar com operações assíncronas. Uma função `async` retorna sempre uma Promise.'),
-          React.createElement('li', null, 'A palavra-chave `await` só pode ser usada dentro de uma função `async`. Ela "pausa" a execução da função até que a Promise seja resolvida, e depois continua com o valor resolvido.')
-        )
+        React.createElement('p', { className: 'mb-4' }, 'Parabéns por chegares até aqui! É hora de unir tudo o que aprendeste. Este desafio final não tem teoria nova, é um projeto prático para construíres uma mini-aplicação do mundo real.'),
+        React.createElement('p', { className: 'mb-4' }, 'O objetivo é criar uma Pokédex simples. Terás um campo de texto e um botão. Ao escrever o nome de um Pokémon e clicar, a aplicação vai usar a PokéAPI para ir buscar os dados desse Pokémon e mostrá-los na página (nome, imagem e tipos).')
       ),
       practice: {
         examples: [
-          {
-            title: 'Exemplo: A forma mais limpa',
-            description: 'Vamos reescrever o exemplo do bolo uma última vez com `async/await`. O resultado é um código que se lê quase como uma lista de instruções síncronas.',
-            code: `// As funções passo1 e passo2 do exemplo anterior
-// ...
-
-async function fazerBolo() {
+            {
+                title: 'Passo 1: O HTML',
+                description: 'A estrutura base da nossa aplicação.',
+                code: `<h1>Pokédex</h1>
+<input type="text" id="pokemon-input" placeholder="Nome do Pokémon">
+<button id="buscar-btn">Buscar</button>
+<div id="pokedex-display">
+  <!-- Os dados do Pokémon aparecerão aqui -->
+</div>`
+            },
+            {
+                title: 'Passo 2: A Lógica Principal (Função de Fetch)',
+                description: 'Criamos uma função `async` que recebe o nome de um Pokémon, faz o `fetch` à API, e trata dos erros.',
+                code: `async function buscarPokemon(nome) {
   try {
-    await passo1();
-    await passo2();
-    console.log("3. Bolo pronto!");
-  } catch (erro) {
-    console.error("Algo correu mal!", erro);
-  }
-}
-
-fazerBolo();`
-          }
-        ]
-      },
-      quiz: [
-        {
-          question: 'Onde podes usar a palavra-chave `await`?',
-          options: ['Em qualquer função.', 'Apenas dentro de uma função declarada com `async`.', 'Apenas em loops `for`.', 'Em qualquer lado no código.'],
-          correctAnswerIndex: 1,
-          explanation: '`await` está sintaticamente ligado a funções `async` e só é válido dentro delas.'
-        }
-      ]
-    },
-    {
-      id: '7.5',
-      title: 'Trabalhar com APIs: `fetch`',
-      theory: React.createElement(
-        'div',
-        null,
-        React.createElement('p', { className: 'mb-4' }, 'A API `fetch` é a ferramenta moderna do navegador para fazer pedidos de rede (como obter dados de um servidor ou API). Ela é baseada em Promises.'),
-        React.createElement('p', { className: 'mb-4' }, 'O fluxo comum é: 1. Chamar `fetch()` com um URL. Isto retorna uma Promise que resolve para um objeto `Response`. 2. Chamar um método nesse objeto (ex: `.json()`) para extrair os dados. Isto também retorna uma Promise.'),
-        React.createElement('p', { className: 'mb-4' }, 'Como `fetch` retorna Promises, podemos usar `.then()` ou, de forma mais limpa, `async/await`.')
-      ),
-      practice: {
-        examples: [
-          {
-            title: 'Exemplo: Ir buscar dados de uma API',
-            description: 'Vamos usar `async/await` com `fetch` para ir buscar uma lista de utilizadores a uma API pública de teste (JSONPlaceholder).',
-            code: `async function buscarUtilizadores() {
-  try {
-    const url = 'https://jsonplaceholder.typicode.com/users/1';
-    const resposta = await fetch(url);
-    
-    if (!resposta.ok) {
-      throw new Error(\`Erro HTTP! Status: \${resposta.status}\`);
-    }
-    
+    const resposta = await fetch(\`https://pokeapi.co/api/v2/pokemon/\${nome.toLowerCase()}\`);
+    if (!resposta.ok) throw new Error("Pokémon não encontrado!");
     const dados = await resposta.json();
-    console.log("Primeiro utilizador:", dados.name);
+    mostrarPokemon(dados);
   } catch (erro) {
-    console.error("Não foi possível buscar os utilizadores:", erro);
+    alert(erro.message);
   }
-}
+}`
+            },
+            {
+                title: 'Passo 3: A Lógica de Renderização e Eventos',
+                description: 'Criamos a função que atualiza o DOM e ligamos tudo com um `event listener`.',
+                code: `const input = document.getElementById('pokemon-input');
+const botao = document.getElementById('buscar-btn');
+const display = document.getElementById('pokedex-display');
 
-buscarUtilizadores();`
-          }
+botao.addEventListener('click', () => {
+  if (input.value) buscarPokemon(input.value);
+});
+
+function mostrarPokemon(pokemon) {
+  const tipos = pokemon.types.map(tipoInfo => \`<li>\${tipoInfo.type.name}</li>\`).join('');
+  display.innerHTML = \`
+    <h2>\${pokemon.name}</h2>
+    <img src="\${pokemon.sprites.front_default}" alt="\${pokemon.name}">
+    <h3>Tipos:</h3>
+    <ul>\${tipos}</ul>
+  \`;
+}`
+            }
         ]
       },
-      quiz: [
-        {
-          question: 'O que `fetch(url)` retorna diretamente?',
-          options: ['Os dados em formato JSON.', 'Uma string HTML.', 'Uma Promise que resolve para um objeto Response.', 'Nada, apenas faz o pedido.'],
-          correctAnswerIndex: 2,
-          explanation: 'O primeiro passo com `fetch` é obter o objeto `Response`, que contém o status e os cabeçalhos do pedido. Depois, precisamos de um segundo passo (como `.json()`) para ler o corpo da resposta.'
-        }
-      ],
+      quiz: [],
       challenge: {
-        description: "Cria uma função `async` chamada `buscarTodo` que recebe um `id` (um número de 1 a 200). A função deve usar `fetch` para ir buscar uma tarefa ('todo') da API `https://jsonplaceholder.typicode.com/todos/ID`, onde ID é o número que a função recebeu. Depois, imprime o `title` da tarefa na consola.",
-        starterCode: `async function buscarTodo(id) {
-  // O teu código aqui
+        description: "Implementa o código completo da Pokédex. Junta as peças dos exemplos para criar a funcionalidade completa. Tenta adicionar o número da Pokédex (`pokemon.id`) ao display.",
+        starterCode: `// Junta aqui o código dos exemplos e faz as ligações necessárias.`,
+        solution: `const input = document.getElementById('pokemon-input');
+const botao = document.getElementById('buscar-btn');
+const display = document.getElementById('pokedex-display');
+
+botao.addEventListener('click', () => {
+  const nomePokemon = input.value.trim();
+  if (nomePokemon) {
+    buscarPokemon(nomePokemon);
+  }
+});
+
+async function buscarPokemon(nome) {
+  display.innerHTML = '<p>A procurar...</p>';
+  try {
+    const resposta = await fetch(\`https://pokeapi.co/api/v2/pokemon/\${nome.toLowerCase()}\`);
+    if (!resposta.ok) {
+      throw new Error("Pokémon não encontrado!");
+    }
+    const dados = await resposta.json();
+    mostrarPokemon(dados);
+  } catch (erro) {
+    display.innerHTML = \`<p style="color: red;">\${erro.message}</p>\`;
+  }
 }
 
-// Testa a tua função
-buscarTodo(5);`,
-        solution: `async function buscarTodo(id) {
-  try {
-    const resposta = await fetch(\`https://jsonplaceholder.typicode.com/todos/\${id}\`);
-    if (!resposta.ok) {
-      throw new Error("Não foi possível encontrar a tarefa.");
-    }
-    const tarefa = await resposta.json();
-    console.log(\`Título da Tarefa \${id}: \${tarefa.title}\`);
-  } catch (erro) {
-    console.error(erro.message);
-  }
+function mostrarPokemon(pokemon) {
+  const tipos = pokemon.types.map(tipoInfo => \`<li>\${tipoInfo.type.name}</li>\`).join('');
+  
+  display.innerHTML = \`
+    <h2>#\${pokemon.id} - \${pokemon.name}</h2>
+    <img src="\${pokemon.sprites.front_default}" alt="\${pokemon.name}" style="width: 150px;">
+    <h3>Tipos:</h3>
+    <ul>\${tipos}</ul>
+  \`;
 }`
       }
     }
