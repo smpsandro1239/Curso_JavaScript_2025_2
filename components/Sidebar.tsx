@@ -50,7 +50,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ courseData, currentLessonId, o
           ))}
         </nav>
         <div className="mt-4 text-xs text-center text-slate">
-          <p>Feito com ❤️ e React.</p>
+          <p> React by:</p>
+          <strong className="font-bold text-green">Sandro Pereira</strong> 2025.
         </div>
       </aside>
     </>
