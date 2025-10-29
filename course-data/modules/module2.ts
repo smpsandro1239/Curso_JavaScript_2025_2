@@ -93,7 +93,7 @@ export const module2: Module = {
       practice: {
         examples: [
           {
-            title: "O Básico: Usar `let` para valores que mudam",
+            title: "Exemplo 1: O Básico - Usar `let` para valores que mudam",
             description: "Declaramos uma variável `pontos` com `let` porque esperamos que a pontuação do jogador mude ao longo do tempo. Podemos reatribuir um novo valor sem problemas.",
             code: `let pontos = 100;
 console.log("Pontuação inicial:", pontos); // Imprime 100
@@ -102,7 +102,7 @@ pontos = 150; // Reatribuição válida
 console.log("Pontuação atualizada:", pontos); // Imprime 150`
           },
           {
-            title: "O Caso Comum: Usar `const` para valores fixos",
+            title: "Exemplo 2: O Caso Comum - Usar `const` para valores fixos",
             description: "O número de minutos numa hora é um valor que nunca muda. Usar `const` garante que este valor não seja alterado acidentalmente noutra parte do programa.",
             code: `const MINUTOS_NUMA_HORA = 60;
 console.log("Minutos numa hora:", MINUTOS_NUMA_HORA);
@@ -111,7 +111,7 @@ console.log("Minutos numa hora:", MINUTOS_NUMA_HORA);
 // MINUTOS_NUMA_HORA = 61; // TypeError: Assignment to constant variable.`
           },
           {
-            title: "A Armadilha: `const` com Objetos e Arrays",
+            title: "Exemplo 3: A Armadilha - `const` com Objetos e Arrays",
             description: 'Uma nuance importante: `const` impede a reatribuição da variável, mas não impede a modificação do conteúdo de um objeto ou array. A "caixa selada" contém uma referência para o objeto, e essa referência não pode mudar, mas o objeto em si pode.',
             code: `const utilizador = { nome: "Ana" };
 console.log(utilizador.nome); // "Ana"
@@ -181,7 +181,7 @@ console.log(\`Nova população: \${populacaoAtual} milhões\`);`
       practice: {
         examples: [
           {
-            title: 'O Básico: Declarar diferentes tipos primitivos',
+            title: 'Exemplo 1: O Básico - Declarar diferentes tipos primitivos',
             description: 'Aqui declaramos uma variável para cada tipo primitivo e verificamos o seu tipo com `typeof`.',
             code: `const nome = "Sandro";     // String
 const idade = 30;          // Number
@@ -196,7 +196,7 @@ console.log(\`'carro' é do tipo: \${typeof carro}\`);
 console.log(\`'telemovel' é do tipo: \${typeof telemovel}\`); // Peculiaridade: object`
           },
           {
-            title: "O Caso Comum: Usar tipos em conjunto",
+            title: "Exemplo 2: O Caso Comum - Usar tipos em conjunto",
             description: "Numa aplicação real, os tipos de dados são usados em conjunto para descrever algo. Aqui, usamos diferentes tipos para guardar informação sobre um produto.",
             code: `const nomeProduto = "Monitor 4K";
 const preco = 399.99;
@@ -208,7 +208,7 @@ console.log(\`Preço: \${preco}€\`);
 console.log(\`Disponível: \${emStock}\`);`
           },
           {
-            title: "A Armadilha: `null` vs. `undefined`",
+            title: "Exemplo 3: A Armadilha - `null` vs. `undefined`",
             description: "`undefined` significa que a variável existe, mas nunca lhe foi dado um valor. `null` é um valor que tu atribuis para indicar uma ausência de valor. Pensa em `undefined` como uma pergunta que ainda não foi respondida, e `null` como a resposta 'Não há resposta'.",
             code: `let proximaAula; // Não sabemos qual é a próxima aula ainda
 console.log(proximaAula); // undefined
@@ -237,7 +237,18 @@ console.log(vencedor); // null`
           correctAnswerIndex: 1,
           explanation: 'Como o "5" está entre aspas, é tratado como texto, ou seja, uma String.'
         }
-      ]
+      ],
+      challenge: {
+          description: "Cria 3 variáveis: `titulo` (string), `duracao` (number), e `assistido` (boolean). Atribui-lhes valores que descrevam um filme à tua escolha e imprime cada uma na consola.",
+          starterCode: `// Descreve aqui o teu filme favorito`,
+          solution: `const titulo = "Interstellar";
+const duracao = 169; // em minutos
+const assistido = true;
+
+console.log(\`Filme: \${titulo}\`);
+console.log(\`Duração: \${duracao} minutos\`);
+console.log(\`Já assisti?: \${assistido}\`);`
+      }
     },
     {
       id: '2.3',
@@ -257,7 +268,7 @@ console.log(vencedor); // null`
       practice: {
         examples: [
           {
-            title: 'O Básico: Template Literals',
+            title: 'Exemplo 1: O Básico - Template Literals',
             description: 'Usamos `${...}` para inserir variáveis diretamente numa string com crases. É muito mais legível do que a concatenação com `+`.',
             code: `const nome = "Carlos";
 const idade = 42;
@@ -271,7 +282,7 @@ const fraseModerna = \`Olá, o meu nome é \${nome} e tenho \${idade} anos.\`;
 console.log(fraseModerna);`
           },
           {
-            title: 'O Caso Comum: Métodos de Strings',
+            title: 'Exemplo 2: O Caso Comum - Métodos de Strings',
             description: 'Strings têm propriedades e métodos úteis. `.length` dá o tamanho, `.toUpperCase()` converte para maiúsculas, etc. Estes métodos não alteram a string original, eles retornam uma nova.',
             code: `const mensagem = "JavaScript é incrível";
 
@@ -281,7 +292,7 @@ console.log(mensagem.startsWith("Java")); // true
 console.log(mensagem); // "JavaScript é incrível" (a original não mudou)`
           },
           {
-            title: 'A Armadilha: Conversão de Tipos com `+`',
+            title: 'Exemplo 3: A Armadilha - Conversão de Tipos com `+`',
             description: "O operador `+` é especial. Se o usares entre um número e uma string, ele converte o número para string e concatena os dois. Os outros operadores matemáticos tentam converter a string para número.",
             code: `console.log("5" + 3); // "53" (concatenação)
 console.log("5" - 3); // 2 (subtração)
@@ -333,7 +344,7 @@ console.log(frase);`
         practice: {
             examples: [
                 {
-                    title: 'O Básico: Ordem de Operações',
+                    title: 'Exemplo 1: O Básico - Ordem de Operações',
                     description: 'JavaScript segue a ordem matemática padrão (PEMDAS/BODMAS). Parênteses primeiro, depois exponenciação, multiplicação/divisão, e por fim adição/subtração.',
                     code: `const resultado = 5 + 2 * 3; // 2 * 3 = 6, depois 5 + 6 = 11
 console.log(resultado); // 11
@@ -342,7 +353,7 @@ const resultado2 = (5 + 2) * 3; // 5 + 2 = 7, depois 7 * 3 = 21
 console.log(resultado2); // 21`
                 },
                 {
-                    title: 'O Caso Comum: Atalhos de Atribuição',
+                    title: 'Exemplo 2: O Caso Comum - Atalhos de Atribuição',
                     description: 'Estes atalhos são extremamente comuns para atualizar contadores ou totais.',
                     code: `let pontuacao = 100;
 
@@ -353,7 +364,7 @@ pontuacao -= 20; // Equivalente a: pontuacao = pontuacao - 20;
 console.log(pontuacao); // 130`
                 },
                 {
-                    title: 'A Armadilha: `++` antes ou depois',
+                    title: 'Exemplo 3: A Armadilha - `++` antes ou depois',
                     description: 'A posição do `++` (ou `--`) importa. Se vier antes (`++x`), ele incrementa e DEPOIS retorna o novo valor. Se vier depois (`x++`), ele retorna o valor original e DEPOIS incrementa.',
                     code: `let a = 5;
 const b = a++; // b recebe 5, depois 'a' torna-se 6
@@ -371,10 +382,16 @@ console.log(\`c: \${c}, d: \${d}\`); // c: 6, d: 6`
                 options: ['12', '8', '20', '102'],
                 correctAnswerIndex: 2,
                 explanation: '`x *= 2` é um atalho para `x = x * 2`. Portanto, `10 * 2` é 20.'
+            },
+            {
+                question: 'O que a expressão `4 ** 2` calcula?',
+                options: ['4 vezes 2 (8)', 'A raiz quadrada de 4 (2)', '4 elevado à potência de 2 (16)', '4 dividido por 2 (2)'],
+                correctAnswerIndex: 2,
+                explanation: 'O operador `**` é o operador de exponenciação, introduzido no ES7.'
             }
         ],
         challenge: {
-            description: 'Cria uma variável `totalCarrinho` inicializada em 0. Adiciona o preço de três produtos (ex: 15, 50, e 8.50) usando o operador `+=`. No final, imprime o total.',
+            description: 'Cria uma variável `totalCarrinho` initializada em 0. Adiciona o preço de três produtos (ex: 15, 50, e 8.50) usando o operador `+=`. No final, imprime o total.',
             starterCode: 'let totalCarrinho = 0;',
             solution: `let totalCarrinho = 0;
 totalCarrinho += 15;
@@ -397,7 +414,7 @@ console.log(\`Total: \${totalCarrinho}€\`);`
         practice: {
             examples: [
                 {
-                    title: 'O Básico: Comparações',
+                    title: 'Exemplo 1: O Básico - Comparações',
                     description: 'Aqui vemos os operadores de comparação e igualdade em ação.',
                     code: `const idade = 25;
 const nome = "Ana";
@@ -408,29 +425,27 @@ console.log(nome === "ana"); // false (sensível a maiúsculas)
 console.log(10 !== 20);      // true`
                 },
                 {
-                    title: 'O Caso Comum: Combinar condições',
-                    description: 'Usamos operadores lógicos para criar verificações mais complexas.',
+                    title: 'Exemplo 2: O Caso Comum - Combinar condições com `&&`',
+                    description: 'Usamos o "E lógico" (`&&`) para criar verificações mais complexas. Para uma pessoa poder conduzir, tem de ter mais de 18 E ter carta.',
                     code: `const idade = 22;
 const temCarta = true;
 
-// Para conduzir, tem de ter mais de 18 E ter carta
 if (idade >= 18 && temCarta) {
   console.log("Pode conduzir.");
-}
-
-const fimDeSemana = true;
+}`
+                },
+                {
+                    title: 'Exemplo 3: A Nuance - Combinar condições com `||` e `!`',
+                    description: 'O "OU lógico" (`||`) é útil para situações onde basta uma condição ser verdadeira. O "NÃO lógico" (`!`) inverte um booleano.',
+                    code: `const fimDeSemana = true;
 const feriado = false;
 
 // Para descansar, basta ser fim de semana OU feriado
 if (fimDeSemana || feriado) {
   console.log("Dia de descanso!");
-}`
-                },
-                {
-                    title: 'A Armadilha: O operador `!` (NÃO)',
-                    description: 'O operador `!` inverte um valor booleano. É útil para verificar condições "negativas".',
-                    code: `const logado = false;
+}
 
+const logado = false;
 if (!logado) {
   console.log("Por favor, faça login."); // Executa porque !false é true
 }`
@@ -474,7 +489,7 @@ console.log(estaNoIntervalo);`,
         practice: {
             examples: [
                 {
-                    title: 'O Básico: Hoisting com `var`',
+                    title: 'Exemplo 1: O Básico - Hoisting com `var`',
                     description: 'Mesmo que a declaração venha depois, a variável `nome` já existe no escopo da função com o valor `undefined`.',
                     code: `function saudar() {
   console.log(nome); // undefined
@@ -484,7 +499,7 @@ console.log(estaNoIntervalo);`,
 saudar();`
                 },
                 {
-                    title: 'O Caso Comum: A Temporal Dead Zone (TDZ) com `let`',
+                    title: 'Exemplo 2: O Caso Comum - A Temporal Dead Zone (TDZ) com `let`',
                     description: 'Descomentar a primeira linha causaria um erro porque estamos a tentar aceder a `cidade` antes da sua declaração.',
                     code: `function visitar() {
   // console.log(cidade); // ReferenceError: Cannot access 'cidade' before initialization
@@ -494,7 +509,7 @@ saudar();`
 visitar();`
                 },
                 {
-                    title: 'A Nuance: Hoisting de Funções',
+                    title: 'Exemplo 3: A Nuance - Hoisting de Funções',
                     description: 'A declaração da função `cantar()` é içada na totalidade, por isso podemos chamá-la antes de a declararmos.',
                     code: `cantar(); // Funciona!
 
@@ -510,8 +525,35 @@ function cantar() {
                 options: ['`5`', '`undefined`', '`ReferenceError`', '`null`'],
                 correctAnswerIndex: 1,
                 explanation: 'Com `var`, a declaração (`var x`) é içada, mas a atribuição (`= 5`) não. Por isso, quando o `console.log` é executado, `x` existe mas ainda não tem valor.'
+            },
+            {
+                question: 'O que acontece se tentares aceder a uma variável `let` antes da sua declaração?',
+                options: ['Recebes `undefined`.', 'O código funciona normalmente.', 'Recebes um `ReferenceError` por causa da TDZ.', 'Recebes `null`.'],
+                correctAnswerIndex: 2,
+                explanation: '`let` e `const` estão na Temporal Dead Zone (TDZ) até à sua linha de declaração, o que previne o uso de variáveis antes de serem declaradas, ao contrário de `var`.'
             }
-        ]
+        ],
+        challenge: {
+            description: "Prevê o output do seguinte código sem o executares. Qual será a ordem dos logs e o que cada um irá imprimir?",
+            starterCode: `console.log("Primeiro log:", a);
+// console.log("Log comentado:", b);
+
+var a = 1;
+let b = 2;
+
+minhaFuncao();
+
+function minhaFuncao() {
+  console.log("Segundo log:", a);
+}
+
+console.log("Terceiro log:", b);`,
+            solution: `// Output esperado:
+// Primeiro log: undefined  (var 'a' é içada com undefined)
+// (O segundo log daria um ReferenceError por causa da TDZ de 'b')
+// Segundo log: 1          (a função tem acesso à variável global 'a', que já tem valor 1)
+// Terceiro log: 2         ('b' já foi declarada e inicializada)`
+        }
     },
     {
         id: '2.7',
@@ -527,7 +569,7 @@ function cantar() {
         practice: {
             examples: [
                 {
-                    title: 'O Básico: Passagem por Valor',
+                    title: 'Exemplo 1: O Básico - Passagem por Valor',
                     description: 'A variável `b` recebe uma cópia do valor de `a`. Mudar `b` não afeta `a`.',
                     code: `let a = 10;
 let b = a; // 'b' recebe uma cópia do valor 10
@@ -538,7 +580,7 @@ console.log(a); // 10 (o original não mudou)
 console.log(b); // 20`
                 },
                 {
-                    title: 'O Caso Comum: Passagem por Referência',
+                    title: 'Exemplo 2: O Caso Comum - Passagem por Referência',
                     description: 'A variável `obj2` recebe uma referência para o mesmo objeto que `obj1`. Alterar a propriedade através de `obj2` afeta o que vemos através de `obj1`, porque ambos "apontam" para o mesmo sítio.',
                     code: `const obj1 = { nome: "Ana" };
 const obj2 = obj1; // 'obj2' aponta para o MESMO objeto
@@ -549,7 +591,7 @@ console.log(obj1.nome); // "Bia" (o original MUDOU!)
 console.log(obj2.nome); // "Bia"`
                 },
                 {
-                    title: 'A Nuance: Funções',
+                    title: 'Exemplo 3: A Nuance - Funções',
                     description: 'O mesmo comportamento aplica-se quando passamos variáveis para funções. Alterar um objeto dentro da função irá alterar o objeto original fora dela.',
                     code: `function mudarNome(utilizador) {
   utilizador.nome = "Carlos";
@@ -570,8 +612,26 @@ console.log("Depois:", pessoa.nome); // "Carlos"`
                 options: ['`[1, 2]`', '`[1, 2, 3]`', '`[3]`', '`undefined`'],
                 correctAnswerIndex: 1,
                 explanation: 'Arrays são objetos, logo são passados por referência. `arr1` e `arr2` apontam para o mesmo array na memória. Alterar um, altera ambos.'
+            },
+            {
+                question: 'Qual dos seguintes tipos é passado por valor?',
+                options: ['`Array`', '`Object`', '`Boolean`', '`Function`'],
+                correctAnswerIndex: 2,
+                explanation: '`Boolean` é um tipo de dado primitivo, e todos os primitivos (`String`, `Number`, `Boolean`, `null`, `undefined`, `Symbol`, `BigInt`) são passados por valor.'
             }
-        ]
+        ],
+        challenge: {
+            description: "Cria um objeto `jogo` com uma propriedade `pontuacao`. Cria uma segunda variável `jogoCopia` e atribui-lhe `jogo`. Altera a pontuação através de `jogoCopia`. O que acontece à pontuação em `jogo`? Imprime ambos na consola para ver.",
+            starterCode: `const jogo = { pontuacao: 1000 };`,
+            solution: `const jogo = { pontuacao: 1000 };
+const jogoCopia = jogo;
+
+jogoCopia.pontuacao = 1500;
+
+// Ambos vão mostrar a pontuação de 1500, porque apontam para o mesmo objeto.
+console.log("Original:", jogo);
+console.log("Cópia:", jogoCopia);`
+        }
     },
     {
         id: '2.8',
@@ -585,13 +645,13 @@ console.log("Depois:", pessoa.nome); // "Carlos"`
         practice: {
             examples: [
                 {
-                    title: 'O Básico: A diferença em ação',
+                    title: 'Exemplo 1: O Básico - A diferença em ação',
                     description: '`==` converte a string "5" para um número antes de comparar. `===` vê que os tipos são diferentes (number vs string) e retorna `false`.',
                     code: `console.log(5 == "5");  // true (mau!)
 console.log(5 === "5"); // false (bom!)`
                 },
                 {
-                    title: 'O Caso Comum: `null` e `undefined`',
+                    title: 'Exemplo 2: O Caso Comum - `null` e `undefined`',
                     description: 'Uma das "exceções" onde `==` pode ser útil é para verificar se uma variável é `null` ou `undefined` de uma só vez. No entanto, ser explícito é muitas vezes mais claro.',
                     code: `let x; // undefined
 
@@ -599,13 +659,12 @@ console.log(x == null);  // true
 console.log(x === null); // false`
                 },
                 {
-                    title: 'A Armadilha: Casos estranhos de coerção',
+                    title: 'Exemplo 3: A Armadilha - Casos estranhos de coerção',
                     description: 'A coerção de tipos pode levar a resultados muito estranhos que são famosos em JavaScript.',
-                    // FIX: Escaped backticks in the template literal comment to prevent syntax errors.
                     code: `console.log(true == 1);       // true
 console.log(false == 0);      // true
 console.log('' == false);     // true
-console.log([] == false);     // true (um array vazio é "truthy", mas na coerção \\\`==\\\` comporta-se de forma estranha)`
+console.log([] == false);     // true (um array vazio é "truthy", mas na coerção \`==\` comporta-se de forma estranha)`
                 }
             ]
         },
@@ -615,8 +674,25 @@ console.log([] == false);     // true (um array vazio é "truthy", mas na coerç
                 options: ['`true`', '`false`', '`TypeError`'],
                 correctAnswerIndex: 1,
                 explanation: 'Com a igualdade estrita (`===`), o JavaScript compara primeiro os tipos. Como `Number` é diferente de `Boolean`, o resultado é `false` sem sequer olhar para os valores.'
+            },
+            {
+                question: 'Para garantir que estás a comparar o valor E o tipo, qual operador deves usar?',
+                options: ['`=`', '`==`', '`===`', '`~=`'],
+                correctAnswerIndex: 2,
+                explanation: 'A igualdade estrita (`===`) é a escolha segura e recomendada para comparações em JavaScript, evitando surpresas com a coerção de tipos.'
             }
-        ]
+        ],
+        challenge: {
+            description: "Prevê o resultado de cada uma das seguintes comparações e depois testa-as na consola. Tenta entender o porquê de cada resultado.",
+            starterCode: `console.log("1." , "0" == 0);
+console.log("2." , "0" === 0);
+console.log("3." , [] == ![]);
+console.log("4." , 1 !== true);`,
+            solution: `// 1. true  ("0" é coagido para o número 0)
+// 2. false (string vs number)
+// 3. true  ([] é truthy, ![] é false. [] == false é uma coerção estranha que dá true)
+// 4. false (1 é coagido para true, e true não é diferente de true)`
+        }
     }
   ]
 };

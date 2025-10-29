@@ -85,7 +85,7 @@ const ClosureIllustration = () => React.createElement(
 
 export const module4: Module = {
   id: '4',
-  title: 'Módulo 4: Funções',
+  title: 'Módulo 4: Funções e Escopo',
   lessons: [
     {
       id: '4.1',
@@ -106,7 +106,7 @@ export const module4: Module = {
       practice: {
         examples: [
           {
-            title: 'O Básico: Declarar e Chamar',
+            title: 'Exemplo 1: O Básico - Declarar e Chamar',
             description: 'Uma função simples que não recebe "ingredientes" nem devolve nada específico, apenas executa uma ação.',
             code: `// 1. Declarar a função
 function cumprimentar() {
@@ -117,7 +117,7 @@ function cumprimentar() {
 cumprimentar();`
           },
           {
-            title: 'O Caso Comum: Parâmetros e Retorno',
+            title: 'Exemplo 2: O Caso Comum - Parâmetros e Retorno',
             description: 'Esta função é como uma máquina que recebe dois números (parâmetros `a` e `b`), soma-os, e devolve (`return`) o resultado. Podemos guardar esse resultado numa variável.',
             code: `function somar(a, b) {
   const resultado = a + b;
@@ -128,7 +128,7 @@ const total = somar(10, 5); // 'total' vai guardar o valor 15
 console.log(total);`
           },
           {
-            title: 'A Armadilha: Função sem `return` explícito',
+            title: 'Exemplo 3: A Armadilha - Função sem `return` explícito',
             description: 'Se não usares a palavra-chave `return`, a função executa o seu código, mas devolve `undefined` por defeito.',
             code: `function mostrarSoma(a, b) {
   console.log(a + b); // Mostra 7 na consola
@@ -145,12 +145,30 @@ console.log(valorDevolvido); // Imprime undefined`
           options: ['Imprime um valor na consola.', 'Termina a execução da função e especifica um valor a ser devolvido.', 'Cria uma nova variável.', 'Chama outra função.'],
           correctAnswerIndex: 1,
           explanation: 'O `return` é essencial para obter um resultado de uma função. Assim que um `return` é executado, a função para imediatamente.'
+        },
+        {
+          question: 'Qual é a diferença entre um parâmetro e um argumento?',
+          options: ['Nenhuma, são a mesma coisa.', 'Parâmetro é o valor, argumento é o nome.', 'Parâmetro é o nome na declaração da função, argumento é o valor passado na chamada.', 'Argumentos são sempre números.'],
+          correctAnswerIndex: 2,
+          explanation: 'Parâmetros são as "variáveis" na definição da função, enquanto argumentos são os "valores" que preenchem esses parâmetros quando a função é chamada.'
         }
-      ]
+      ],
+      challenge: {
+        description: "Cria uma função chamada `calcularArea` que recebe dois parâmetros, `largura` e `altura`. A função deve multiplicar estes dois valores e retornar o resultado. Depois, chama a função com os valores 10 e 5 e imprime o resultado na consola.",
+        starterCode: `// Define a tua função aqui
+
+// Chama a função e imprime o resultado`,
+        solution: `function calcularArea(largura, altura) {
+  return largura * altura;
+}
+
+const area = calcularArea(10, 5);
+console.log("A área é:", area); // A área é: 50`
+      }
     },
     {
         id: '4.2',
-        title: 'Parâmetros e Argumentos',
+        title: 'Parâmetros: Detalhes e Padrões',
         theory: React.createElement('div', null, 
           React.createElement('p', {className: 'mb-4'}, 'Apesar de serem usados de forma intercambiável, há uma diferença técnica: `Parâmetros` são os nomes listados na definição da função (os ingredientes na receita). `Argumentos` são os valores reais passados à função quando ela é chamada (os ingredientes que vais usar).'),
           React.createElement('ul', {className: 'list-disc list-inside mb-4 pl-4 space-y-2'},
@@ -161,7 +179,7 @@ console.log(valorDevolvido); // Imprime undefined`
         practice: {
             examples: [
                 {
-                    title: 'O Básico: Parâmetros vs. Argumentos',
+                    title: 'Exemplo 1: O Básico - Parâmetros vs. Argumentos',
                     description: '`nome` e `linguagem` são parâmetros. `"Ana"` e `"Python"` são argumentos.',
                     code: `function saudarProgramador(nome, linguagem) {
   console.log(\`Olá, \${nome}! Vejo que gostas de \${linguagem}.\`);
@@ -170,7 +188,7 @@ console.log(valorDevolvido); // Imprime undefined`
 saudarProgramador("Ana", "Python");`
                 },
                 {
-                    title: 'O Caso Comum: Parâmetros Padrão',
+                    title: 'Exemplo 2: O Caso Comum - Parâmetros Padrão',
                     description: 'Se não passarmos um `cumprimento`, a função usa "Olá" por defeito, evitando erros.',
                     code: `function criarMensagem(nome, cumprimento = "Olá") {
   return \`\${cumprimento}, \${nome}!\`;
@@ -180,7 +198,7 @@ console.log(criarMensagem("Rui"));          // "Olá, Rui!"
 console.log(criarMensagem("Sara", "Bom dia")); // "Bom dia, Sara!"`
                 },
                 {
-                    title: 'A Nuance: Parâmetro Rest',
+                    title: 'Exemplo 3: A Nuance - Parâmetro Rest',
                     description: 'A função `somarTudo` pode receber quantos argumentos quisermos. O `...numeros` agrupa-os todos num array chamado `numeros`.',
                     code: `function somarTudo(...numeros) {
   let total = 0;
@@ -201,8 +219,26 @@ console.log(somarTudo(10, 20, 30, 40)); // 100`
                 options: ['`undefined`', '`5`', '`1`', '`Error`'],
                 correctAnswerIndex: 2,
                 explanation: 'Como nenhum segundo argumento foi fornecido, o parâmetro `b` assume o seu valor padrão, que é 1.'
+            },
+            {
+                question: 'O que o parâmetro Rest (`...args`) faz?',
+                options: ['Ignora todos os argumentos.', 'Aceita apenas o resto da divisão.', 'Agrupa todos os argumentos restantes num array.', 'Causa um erro.'],
+                correctAnswerIndex: 2,
+                explanation: 'O parâmetro Rest é uma forma conveniente de permitir que uma função aceite um número variável de argumentos, que são depois disponibilizados como um array.'
             }
-        ]
+        ],
+        challenge: {
+            description: "Cria uma função `apresentar` que recebe dois parâmetros: `nome` e `saudacao` (com o valor padrão 'Olá'). A função deve retornar uma string como 'Olá, [nome]!'. Testa a função chamando-a com um e com dois argumentos.",
+            starterCode: `// Define a tua função aqui
+
+// Testa aqui`,
+            solution: `function apresentar(nome, saudacao = "Olá") {
+  return \`\${saudacao}, \${nome}!\`;
+}
+
+console.log(apresentar("Maria")); // Olá, Maria!
+console.log(apresentar("João", "Bem-vindo")); // Bem-vindo, João!`
+        }
     },
     {
       id: '4.3',
@@ -223,7 +259,7 @@ console.log(somarTudo(10, 20, 30, 40)); // 100`
       practice: {
         examples: [
           {
-            title: 'O Básico: Conversão de uma função',
+            title: 'Exemplo 1: O Básico - Conversão de uma função',
             description: 'Vamos converter uma expressão de função tradicional para a sintaxe de arrow function.',
             code: `// Função Tradicional
 const multiplicar_trad = function(a, b) {
@@ -233,21 +269,27 @@ const multiplicar_trad = function(a, b) {
 // Arrow Function
 const multiplicar_arrow = (a, b) => {
   return a * b;
-};`
+};
+
+console.log(multiplicar_trad(5, 4) === multiplicar_arrow(5, 4)); // true`
           },
           {
-            title: 'O Caso Comum: Retorno Implícito',
+            title: 'Exemplo 2: O Caso Comum - Retorno Implícito',
             description: 'Como a nossa função tem apenas uma linha (`return ...`), podemos simplificá-la drasticamente. Esta é a forma mais comum de ver arrow functions.',
             code: `const multiplicar = (a, b) => a * b;
 
 console.log(multiplicar(5, 4)); // 20`
           },
           {
-            title: 'A Armadilha: O comportamento de `this`',
-            description: 'Uma diferença crucial (que exploraremos mais tarde) é que as arrow functions não têm o seu próprio `this`. Elas "herdam" o `this` do escopo onde foram criadas. Isto resolve muitos problemas, mas é uma nuance importante a ter em conta.',
-            code: `// Este é um tópico mais avançado, mas fica a nota:
-// Numa arrow function, 'this' refere-se ao contexto exterior.
-// Numa função tradicional, 'this' pode mudar dependendo de como é chamada.`
+            title: 'Exemplo 3: A Armadilha - Retornar um objeto',
+            description: 'Se quiseres retornar um objeto literal numa única linha, tens de o envolver em parênteses `()` para que o JavaScript não confunda as chaves `{}` do objeto com as chaves de um bloco de função.',
+            code: `// Errado! Tenta retornar um bloco de código, não um objeto
+// const criarPessoaErrado = (nome) => { nome: nome };
+
+// Correto! Envolvemos o objeto em parênteses
+const criarPessoa = (nome) => ({ nome: nome });
+
+console.log(criarPessoa("Ana")); // { nome: "Ana" }`
           }
         ]
       },
@@ -258,7 +300,14 @@ console.log(multiplicar(5, 4)); // 20`
           correctAnswerIndex: 0,
           explanation: 'Com um único parâmetro, os parênteses são opcionais. Com um retorno de uma única linha, as chaves e o `return` são implícitos. A forma mais curta e correta é `x => x * x;`.'
         }
-      ]
+      ],
+      challenge: {
+        description: "Converte a seguinte função tradicional numa arrow function, usando a sintaxe mais concisa possível.",
+        starterCode: `const saudar = function(nome) {
+  return "Olá, " + nome + "!";
+};`,
+        solution: `const saudar = nome => \`Olá, \${nome}!\`;`
+      }
     },
     {
       id: '4.4',
@@ -280,7 +329,7 @@ console.log(multiplicar(5, 4)); // 20`
       practice: {
         examples: [
           {
-            title: 'O Básico: Global vs. Local',
+            title: 'Exemplo 1: O Básico - Global vs. Local',
             description: 'A variável `planeta` é global e pode ser lida dentro da função. A variável `satelite` é local e tentar acedê-la fora da função daria um erro.',
             code: `const planeta = "Terra"; // Escopo Global
 
@@ -291,6 +340,31 @@ function mostrarAstros() {
 
 mostrarAstros();
 // console.log(satelite); // ReferenceError: satelite is not defined`
+          },
+          {
+            title: 'Exemplo 2: O Caso Comum - Escopo de Bloco',
+            description: 'A variável `mensagem` só existe dentro do bloco `if`. Tentar usá-la fora causa um erro. Isto previne que variáveis "vazem" para fora do seu contexto.',
+            code: `const logado = true;
+
+if (logado) {
+  const mensagem = "Bem-vindo!";
+  console.log(mensagem);
+}
+
+// console.log(mensagem); // ReferenceError: mensagem is not defined`
+          },
+          {
+            title: 'Exemplo 3: A Armadilha - Sombreamento de Variáveis (Shadowing)',
+            description: 'Dentro da função, declaramos uma nova variável `animal` que "sombreia" a global. As alterações feitas à variável local não afetam a global.',
+            code: `let animal = "Gato"; // Global
+
+function exemplo() {
+  let animal = "Cão"; // Local (sombreia a global)
+  console.log("Dentro da função:", animal);
+}
+
+exemplo();
+console.log("Fora da função:", animal);`
           }
         ]
       },
@@ -301,7 +375,29 @@ mostrarAstros();
           correctAnswerIndex: 1,
           explanation: '`let` e `const` têm escopo de bloco, o que significa que só são acessíveis dentro do par de chaves `{...}` onde foram declaradas.'
         }
-      ]
+      ],
+      challenge: {
+        description: "Prevê o que o seguinte código vai imprimir na consola, linha a linha, e explica o porquê com base nas regras de escopo.",
+        starterCode: `let a = 1;
+
+function primeira() {
+  let b = 2;
+  console.log(a); // O que imprime aqui?
+
+  function segunda() {
+    let c = 3;
+    console.log(b); // O que imprime aqui?
+  }
+  
+  segunda();
+  // console.log(c); // O que aconteceria aqui?
+}
+
+primeira();`,
+        solution: `// 1. Imprime 1. A função 'primeira' tem acesso ao escopo global.
+// 2. Imprime 2. A função 'segunda' tem acesso ao escopo da sua função "mãe", a 'primeira'.
+// 3. Causaria um ReferenceError. A função 'primeira' não tem acesso ao escopo da sua função "filha", a 'segunda'.`
+      }
     },
     {
         id: '4.5',
@@ -318,7 +414,7 @@ mostrarAstros();
         practice: {
             examples: [
                 {
-                    title: 'O Básico: Callbacks',
+                    title: 'Exemplo 1: O Básico - Callbacks',
                     description: 'O método `.forEach` de um array é uma Higher-Order Function. Ele aceita uma função (callback) como argumento e executa-a para cada item do array.',
                     code: `const nomes = ["Ana", "Rui", "Bia"];
 
@@ -330,7 +426,7 @@ function imprimirNome(nome) {
 nomes.forEach(imprimirNome);`
                 },
                 {
-                    title: 'O Caso Comum: Funções Anónimas como Callbacks',
+                    title: 'Exemplo 2: O Caso Comum - Funções Anónimas como Callbacks',
                     description: 'É muito comum definir a função de callback diretamente no local onde ela é usada, como uma arrow function anónima.',
                     code: `const numeros = [1, 2, 3, 4];
 const quadrados = numeros.map(n => n * n); // .map é outra HOF
@@ -338,7 +434,7 @@ const quadrados = numeros.map(n => n * n); // .map é outra HOF
 console.log(quadrados); // [1, 4, 9, 16]`
                 },
                 {
-                    title: 'A Nuance: Retornar uma função',
+                    title: 'Exemplo 3: A Nuance - Retornar uma função',
                     description: 'A função `criarMultiplicador` é uma HOF que retorna uma nova função. A função retornada "lembra-se" do valor do `fator`. (Isto é um vislumbre de "closures"!)',
                     code: `function criarMultiplicador(fator) {
   return function(numero) {
@@ -361,7 +457,27 @@ console.log(triplicar(10)); // 30`
                 correctAnswerIndex: 1,
                 explanation: 'A função que "volta a chamar" (calls back) é o callback. A função que a recebe é a Higher-Order Function.'
             }
-        ]
+        ],
+        challenge: {
+            description: "Cria uma HOF chamada `operar`. Ela deve receber 3 argumentos: dois números e uma função de callback (a operação). A função `operar` deve executar a operação com os dois números e retornar o resultado.",
+            starterCode: `function somar(a, b) { return a + b; }
+function subtrair(a, b) { return a - b; }
+
+function operar(x, y, operacao) {
+  // O teu código aqui
+}
+
+// Testa aqui com somar e subtrair`,
+            solution: `function somar(a, b) { return a + b; }
+function subtrair(a, b) { return a - b; }
+
+function operar(x, y, operacao) {
+  return operacao(x, y);
+}
+
+console.log(operar(10, 5, somar)); // 15
+console.log(operar(10, 5, subtrair)); // 5`
+        }
     },
     {
         id: '4.6',
@@ -375,7 +491,7 @@ console.log(triplicar(10)); // 30`
         practice: {
             examples: [
                 {
-                    title: 'O Básico: O exemplo do Multiplicador',
+                    title: 'Exemplo 1: O Básico - O exemplo do Multiplicador',
                     description: 'Quando chamamos `criarMultiplicador(2)`, a função interior é criada. Ela cria um closure que "captura" a variável `fator` com o valor 2. Essa função retornada (`duplicar`) carrega essa "mochila" com ela para sempre.',
                     code: `function criarMultiplicador(fator) {
   // A função interior tem um closure sobre a variável 'fator'
@@ -388,7 +504,7 @@ const duplicar = criarMultiplicador(2);
 console.log(duplicar(5)); // 10`
                 },
                 {
-                    title: 'O Caso Comum: Variáveis Privadas',
+                    title: 'Exemplo 2: O Caso Comum - Variáveis Privadas',
                     description: 'A variável `contador` só existe dentro da função `criarContador`. É impossível acedê-la ou modificá-la de fora, exceto através da função que foi retornada. Isto é encapsulamento.',
                     code: `function criarContador() {
   let contador = 0; // 'contador' é privada
@@ -403,6 +519,15 @@ const meuContador = criarContador();
 meuContador(); // 1
 meuContador(); // 2
 // console.log(contador); // ReferenceError: contador is not defined`
+                },
+                {
+                    title: 'Exemplo 3: A Armadilha - Loops e Closures',
+                    description: 'Um erro clássico. Se usássemos `var` no loop, todas as funções de timeout teriam um closure sobre a MESMA variável `i`, que no final teria o valor 3. Com `let`, cada iteração cria um novo escopo de bloco, e cada função tem um closure sobre uma `i` diferente.',
+                    code: `for (let i = 0; i < 3; i++) {
+  setTimeout(function() {
+    console.log(i); // Imprime 0, 1, 2 (com 1 segundo de intervalo)
+  }, 1000 * i);
+}`
                 }
             ]
         },
