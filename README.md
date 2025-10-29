@@ -171,7 +171,7 @@ Distribuído sob a Licença MIT. Veja o ficheiro `LICENSE.md` (a ser criado) par
 
 **Sandro Pereira**
 
-*   **GitHub**: `https://github.com/sandropereira` (placeholder)
-*   **LinkedIn**: `https://linkedin.com/in/sandropereira` (placeholder)
+*   **GitHub**: `https://github.com/smpsandro1239` (placeholder)
+*   **LinkedIn**: `https://linkedin.com/in/sandro-pereira-a5ab0236` (placeholder)
 
 ---
