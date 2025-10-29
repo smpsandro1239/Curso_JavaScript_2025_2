@@ -299,6 +299,12 @@ console.log(criarPessoa("Ana")); // { nome: "Ana" }`
           options: ['`x => x * x;`', '`function(x) => x * x;`', '`x => { x * x };`', '`=> x * x;`'],
           correctAnswerIndex: 0,
           explanation: 'Com um único parâmetro, os parênteses são opcionais. Com um retorno de uma única linha, as chaves e o `return` são implícitos. A forma mais curta e correta é `x => x * x;`.'
+        },
+        {
+          question: 'Arrow functions são sempre a melhor escolha?',
+          options: ['Sim, são a forma moderna e devem substituir todas as outras.', 'Não, por exemplo, o seu comportamento com `this` é diferente, o que as torna inadequadas para métodos de objetos que precisam do `this` tradicional.', 'Sim, exceto para funções muito longas.', 'Não, porque são mais lentas.'],
+          correctAnswerIndex: 1,
+          explanation: 'As Arrow Functions não têm o seu próprio `this`, elas herdam-no do escopo exterior. Isto é ótimo para callbacks, mas problemático para métodos de objetos ou construtores onde se espera que `this` se refira ao próprio objeto.'
         }
       ],
       challenge: {
@@ -374,6 +380,12 @@ console.log("Fora da função:", animal);`
           options: ['Sim, sempre', 'Não, porque `let` tem escopo de bloco', 'Apenas se for um número', 'Sim, mas terá o valor `undefined`'],
           correctAnswerIndex: 1,
           explanation: '`let` e `const` têm escopo de bloco, o que significa que só são acessíveis dentro do par de chaves `{...}` onde foram declaradas.'
+        },
+        {
+          question: "No exemplo de 'shadowing', se a linha `let animal = 'Cão'` dentro da função fosse removida, o que seria impresso?",
+          options: ["'Dentro da função: Cão'", "'Dentro da função: Gato'", "'Dentro da função: undefined'", "Um erro"],
+          correctAnswerIndex: 1,
+          explanation: "Se não houvesse uma declaração local de `animal`, a função procuraria no escopo superior (o global) e encontraria a variável `animal` com o valor 'Gato'."
         }
       ],
       challenge: {
@@ -456,6 +468,12 @@ console.log(triplicar(10)); // 30`
                 options: ['`return`', '`callback`', '`argumento`', '`HOF`'],
                 correctAnswerIndex: 1,
                 explanation: 'A função que "volta a chamar" (calls back) é o callback. A função que a recebe é a Higher-Order Function.'
+            },
+            {
+                question: 'O método `.map()` é uma Higher-Order Function?',
+                options: ['Sim, porque aceita uma função (callback) como argumento.', 'Não, porque apenas funciona em arrays.', 'Não, porque retorna um novo array.', 'Sim, porque usa `this`.'],
+                correctAnswerIndex: 0,
+                explanation: 'Qualquer função que aceite outra função como argumento ou retorne uma função é, por definição, uma Higher-Order Function. `.map`, `.filter`, `.reduce`, `.forEach` são todos exemplos.'
             }
         ],
         challenge: {
@@ -537,6 +555,12 @@ meuContador(); // 2
                 options: ['Um tipo de erro em JavaScript.', 'Uma função que é executada imediatamente.', 'A combinação de uma função com o seu ambiente léxico, permitindo-lhe aceder a variáveis do seu escopo exterior.', 'Uma forma de fechar uma página web.'],
                 correctAnswerIndex: 2,
                 explanation: 'Um closure é a capacidade de uma função de "se lembrar" e aceder às variáveis do escopo onde foi criada, mesmo quando é executada num escopo diferente.'
+            },
+            {
+              question: "No exemplo do contador, se chamarmos `criarContador()` duas vezes, teremos dois contadores independentes?",
+              options: ["Não, ambos irão partilhar a mesma variável `contador`.", "Sim, cada chamada a `criarContador` cria um novo escopo e uma nova variável `contador` privada.", "Dará um erro na segunda chamada.", "Sim, mas só o primeiro irá funcionar."],
+              correctAnswerIndex: 1,
+              explanation: "Cada execução de `criarContador` cria um novo ambiente léxico (um novo 'saco'). Portanto, `const c1 = criarContador()` e `const c2 = criarContador()` criam dois contadores completamente independentes, cada um com a sua própria variável `contador` privada."
             }
         ],
         challenge: {
