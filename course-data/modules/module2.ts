@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import type { Module } from '../../types';
 
@@ -29,6 +28,33 @@ const VariablesIllustration = () => React.createElement(
     React.createElement('text', { x: "40", y: "10", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1", fontWeight: "bold", opacity: "0.5" }, "var"),
      React.createElement('text', { x: "40", y: "40", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1", opacity: "0.5" }, "(antigo)")
   )
+);
+
+const ValueVsReferenceIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 220 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-lg h-auto text-lightest-slate" },
+    // Value (Copy)
+    React.createElement('g', { transform: "translate(10, 10)" },
+        React.createElement('rect', { x: "0", y: "0", width: "80", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+        React.createElement('text', { x: "40", y: "15", textAnchor: "middle", fontSize: "10", fill: "#ccd6f6" }, "Por Valor"),
+        React.createElement('rect', { x: "15", y: "25", width: "20", height: "30", fill: "#233554", stroke: "#8892b0"}),
+        React.createElement('text', { x: "25", y: "45", textAnchor: "middle", fontSize: "12", fill: "#64ffda" }, "A"),
+        React.createElement('path', { d: "M 40 40 H 50", stroke: "#64ffda", strokeWidth: "1", strokeDasharray: "2 2" }),
+        React.createElement('rect', { x: "55", y: "25", width: "20", height: "30", fill: "#233554", stroke: "#8892b0" }),
+        React.createElement('text', { x: "65", y: "45", textAnchor: "middle", fontSize: "12", fill: "#a8b2d1" }, "A"),
+        React.createElement('text', { x: "40", y: "70", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "(Fotocópia)")
+    ),
+    React.createElement('line', { x1: "110", y1: "10", x2: "110", y2: "90", stroke: "#233554" }),
+    // Reference (Shared)
+    React.createElement('g', { transform: "translate(130, 10)" },
+        React.createElement('rect', { x: "0", y: "0", width: "80", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+        React.createElement('text', { x: "40", y: "15", textAnchor: "middle", fontSize: "10", fill: "#ccd6f6" }, "Por Referência"),
+        React.createElement('rect', { x: "25", y: "30", width: "30", height: "20", fill: "#233554", stroke: "#8892b0" }),
+        React.createElement('text', { x: "40", y: "44", textAnchor: "middle", fontSize: "12", fill: "#64ffda" }, "A"),
+        React.createElement('path', { d: "M 15 25 L 30 35", stroke: "#a8b2d1", strokeWidth: "1"}),
+        React.createElement('path', { d: "M 15 65 L 30 45", stroke: "#a8b2d1", strokeWidth: "1"}),
+        React.createElement('text', { x: "40", y: "70", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "(Link Partilhado)")
+    )
 );
 
 export const module2: Module = {
@@ -92,7 +118,7 @@ console.log(idade); // Imprime 25. Com let/const, daria erro.`
           question: 'O que acontece se tentares reatribuir um valor a uma variável declarada com `const`?',
           options: ['O valor é atualizado silenciosamente.', 'O programa avisa, mas continua.', 'O programa pára com um erro do tipo TypeError.', 'O valor antigo e o novo são somados.'],
           correctAnswerIndex: 2,
-          explanation: 'JavaScript lança um erro `TypeError` quando se tenta modificar uma constante, o que ajuda a apanhar bugs cedo no desenvolvimento.'
+          explanation: 'JavaScript lança um erro `TypeError` quando se tenta modificar uma constante, o que ajuda a apanhar bugs cedo no desenvolvimento. A excepção são os objetos e arrays, cujas propriedades internas podem ser alteradas.'
         }
       ]
     },
@@ -224,6 +250,75 @@ console.log("Não tem bilhete (!):", !temBilhete); // true`
           correctAnswerIndex: 1,
           explanation: 'Quando o operador `+` é usado com uma string, ele realiza uma concatenação, não uma soma. Ele converte o número 2 para a string "2" e junta-as.'
         }
+      ]
+    },
+    {
+      id: '2.4',
+      title: 'Valor vs. Referência',
+      illustration: React.createElement(ValueVsReferenceIllustration),
+      theory: React.createElement(
+          'div',
+          null,
+          React.createElement('p', { className: 'mb-4' }, 'Este é um dos conceitos mais importantes (e que causa mais confusão) em JavaScript. A forma como o JS lida com variáveis depende do seu tipo:'),
+          React.createElement(
+            'ul',
+            { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+            React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Tipos Primitivos (String, Number, etc.):'), ' São passados "por valor". Quando atribuis um primitivo a outra variável, estás a criar uma cópia. É como dar uma fotocópia de um documento. A cópia é independente do original.'),
+            React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Tipos Complexos (Objetos, Arrays):'), ' São passados "por referência". Quando atribuis um objeto a outra variável, não estás a criar uma cópia do objeto. Em vez disso, ambas as variáveis ficam a apontar para o MESMO objeto na memória. É como partilhar um link para um Google Doc. Todos editam o mesmo documento.')
+          )
+      ),
+      practice: {
+        examples: [
+            {
+                title: "Exemplo 1: Passagem por Valor (Primitivos)",
+                description: "Repara como a variável `original` não é afetada quando a `copia` é alterada. São independentes.",
+                code: `let original = 10;
+let copia = original; // 'copia' recebe uma cópia do valor 10
+
+copia = 20;
+
+console.log(original); // 10
+console.log(copia);    // 20`
+            },
+            {
+                title: "Exemplo 2: Passagem por Referência (Objetos)",
+                description: "Vê como ao alterar a propriedade no `objetoCopia`, o `objetoOriginal` também é modificado. Isto acontece porque ambas as variáveis apontam para o mesmo objeto.",
+                code: `const objetoOriginal = { nome: "Ana" };
+const objetoCopia = objetoOriginal; // 'objetoCopia' aponta para o MESMO objeto
+
+objetoCopia.nome = "Bia";
+
+console.log(objetoOriginal.nome); // "Bia"
+console.log(objetoCopia.nome);    // "Bia"`
+            },
+            {
+                title: "Exemplo 3: A Nuance com Funções",
+                description: "Este comportamento é especialmente importante em funções. Mudar um objeto dentro de uma função afeta o objeto original fora dela.",
+                code: `function mudarNome(pessoa) {
+  pessoa.nome = "Carlos"; // Modifica o objeto original
+}
+
+const joao = { nome: "João" };
+console.log("Antes:", joao.nome); // "João"
+
+mudarNome(joao);
+console.log("Depois:", joao.nome); // "Carlos"`
+            }
+        ]
+      },
+      quiz: [
+          {
+              question: '`let a = [1, 2]; let b = a; b.push(3);`. Qual é o valor de `a`?',
+              options: ['[1, 2]', '[1, 2, 3]', '[3]', 'Erro'],
+              correctAnswerIndex: 1,
+              explanation: 'Arrays são objetos (tipo complexo), por isso são passados por referência. `a` e `b` apontam para o mesmo array. Modificar `b` também modifica `a`.'
+          },
+          {
+              question: '`let x = "olá"; let y = x; y = "mundo";`. Qual é o valor de `x`?',
+              options: ['"mundo"', '"olá"', '"olámundo"', 'undefined'],
+              correctAnswerIndex: 1,
+              explanation: 'Strings são tipos primitivos, passados por valor. `y` recebe uma cópia de "olá". Mudar `y` não tem qualquer efeito sobre a variável `x` original.'
+          }
       ]
     }
   ]
