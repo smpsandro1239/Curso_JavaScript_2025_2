@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import type { Module } from '../../types';
 
@@ -26,6 +25,26 @@ const DOMIllustration = () => React.createElement(
   React.createElement('line', { x1: "140", y1: "43", x2: "160", y2: "55" }),
   React.createElement('rect', { x: "155", y: "60", width: "10", height: "10", fill: "#64ffda", opacity: "0.5" }),
   React.createElement('text', { x: "160", y: "78", textAnchor: "middle", fontSize: "5", fill: "#a8b2d1" }, "p")
+);
+
+const EventBubblingIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    // Concentric circles representing elements
+    React.createElement('rect', { x: "10", y: "10", width: "180", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('text', { x: "20", y: "25", fontSize: "8", fill: "#a8b2d1" }, "div (pai)"),
+    React.createElement('rect', { x: "40", y: "20", width: "120", height: "60", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('text', { x: "50", y: "35", fontSize: "8", fill: "#a8b2d1" }, "form (filho)"),
+    React.createElement('rect', { x: "70", y: "30", width: "60", height: "40", fill: "#233554", stroke: "#8892b0", rx: "5" }),
+    React.createElement('text', { x: "100", y: "55", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "button"),
+
+    // Click event
+    React.createElement('path', { d: "M 100 50 L 90 40", stroke: "#64ffda", strokeWidth: "1.5" }),
+    React.createElement('text', { x: "85", y: "38", fontSize: "10", fill: "#64ffda" }, "Click!"),
+
+    // Bubbling path
+    React.createElement('path', { d: "M 100 60 C 120 75, 140 85, 160 90", fill: "none", stroke: "#64ffda", strokeWidth: "1", strokeDasharray: "3 3" }),
+    React.createElement('path', { d: "M 165 90 L 160 90 L 162 85", fill: "#64ffda" })
 );
 
 export const module6: Module = {
@@ -205,18 +224,15 @@ aviso.classList.add('alerta');`
     },
     {
       id: '6.4',
-      title: 'Eventos',
+      title: 'Eventos e a sua Propagação',
+      illustration: React.createElement(EventBubblingIllustration),
       theory: React.createElement(
         'div',
         null,
         React.createElement('p', { className: 'mb-4' }, 'O JavaScript torna as páginas interativas ao "ouvir" por ações do utilizador. A estas ações chamamos eventos. Os mais comuns são `click`, `mouseover` (passar o rato por cima), `keydown` (pressionar uma tecla), e `submit` (submeter um formulário).'),
-        React.createElement('p', { className: 'mb-4' }, 'A forma moderna de lidar com eventos é o método `addEventListener`. Ele recebe dois argumentos principais:'),
-        React.createElement(
-          'ul',
-          { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
-          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'O tipo de evento:'), ' Uma string com o nome do evento (ex: `"click"`).'),
-          React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'O "listener" ou "handler":'), ' Uma função (callback) que será executada QUANDO o evento ocorrer.')
-        )
+        React.createElement('p', { className: 'mb-4' }, 'A forma moderna de lidar com eventos é o método `addEventListener`. Ele recebe dois argumentos principais: o tipo de evento e uma função (callback) que será executada QUANDO o evento ocorrer.'),
+        React.createElement('p', { className: 'mb-4 font-bold text-light-slate' }, 'Propagação de Eventos (Bubbling):'),
+        React.createElement('p', { className: 'mb-4' }, 'Quando um evento acontece num elemento (ex: um clique num botão), ele não pára aí. Depois de o evento ser tratado no botão, ele "borbulha" (bubbles up) para o elemento pai, depois para o pai desse, e assim por diante, até chegar ao `<html>` e ao `document`. Isto permite-nos capturar eventos de forma mais flexível (delegação de eventos).')
       ),
       practice: {
         examples: [
@@ -233,28 +249,32 @@ botao.addEventListener('click', () => {
 });`
           },
           {
-            title: 'Exemplo 2: Interagir com a Página',
-            description: 'Uma utilização mais prática. Ao clicar no botão, mudamos o texto de um parágrafo.',
+            title: 'Exemplo 2: Vendo o Bubbling em Ação',
+            description: 'Aqui, adicionamos um ouvinte de clique tanto ao `div` exterior como ao botão interior. Clica no botão e verás que AMBOS os alertas são acionados, porque o evento "borbulha" do botão para o `div`.',
             code: `// HTML:
-// <button id="muda-texto">Mudar Texto</button>
-// <p id="paragrafo">Texto original.</p>
+// <div id="exterior">
+//   <button id="interior">Clica Aqui</button>
+// </div>
 
-// JavaScript
-const botao = document.getElementById('muda-texto');
-const paragrafo = document.getElementById('paragrafo');
+const exterior = document.getElementById('exterior');
+const interior = document.getElementById('interior');
 
-botao.addEventListener('click', () => {
-  paragrafo.textContent = 'O texto foi alterado pelo evento!';
+interior.addEventListener('click', () => {
+  alert('Botão Interior Clicado!'); // Este corre primeiro
+});
+
+exterior.addEventListener('click', () => {
+  alert('Div Exterior Clicado!'); // Este corre a seguir
 });`
           }
         ]
       },
       quiz: [
         {
-          question: 'Quais são os dois argumentos principais de `addEventListener`?',
-          options: ['Um seletor CSS e um nome de classe.', 'O nome do evento e uma função para executar.', 'Um ID e um estilo.', 'Uma variável e um valor.'],
+          question: 'O que é "event bubbling"?',
+          options: ['Um erro que acontece com eventos.', 'A propagação de um evento desde o elemento alvo até aos seus ancestrais (pais).', 'Um tipo especial de evento de clique.', 'A criação de múltiplos eventos ao mesmo tempo.'],
           correctAnswerIndex: 1,
-          explanation: '`addEventListener` precisa de saber a que evento reagir (ex: "click") e o que fazer quando esse evento acontece (a função de callback).'
+          explanation: 'O "borbulhar" é o comportamento padrão do DOM onde um evento se propaga hierarquia acima, do elemento mais específico para o mais geral.'
         }
       ]
     },

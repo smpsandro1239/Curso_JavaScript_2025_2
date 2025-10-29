@@ -36,6 +36,91 @@ const HouseAnalogyIllustration = () => React.createElement(
   )
 );
 
+const AddJSIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-md h-auto text-lightest-slate" },
+    // External Script
+    React.createElement('g', { transform: "translate(10, 20)" },
+        React.createElement('rect', { x: "0", y: "0", width: "60", height: "40", fill: "#112240", stroke: "#233554", rx: "3" }),
+        React.createElement('text', { x: "30", y: "25", textAnchor: "middle", fontSize: "10", fill: "#64ffda" }, ".js"),
+        React.createElement('text', { x: "30", y: "15", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Externo"),
+    ),
+    // HTML Document
+    React.createElement('g', { transform: "translate(90, 10)" },
+        React.createElement('rect', { x: "0", y: "0", width: "100", height: "80", fill: "#233554", stroke: "#8892b0", rx: "3" }),
+        React.createElement('text', { x: "50", y: "15", textAnchor: "middle", fontSize: "10", fill: "#ccd6f6" }, "index.html"),
+        // Internal script area
+        React.createElement('rect', { x: "10", y: "50", width: "80", height: "20", fill: "#112240" }),
+        React.createElement('text', { x: "50", y: "63", textAnchor: "middle", fontSize: "7", fill: "#64ffda" }, "<script>...</script>"),
+        React.createElement('text', { x: "50", y: "45", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Interno"),
+    ),
+    // Link from external to html
+    React.createElement('path', { d: "M 70 40 Q 80 40, 90 45", stroke: "#64ffda", strokeWidth: "1.5", fill: "none", strokeDasharray: "3 3" }),
+    React.createElement('circle', { cx: "90", cy: "45", r: "2", fill: "#64ffda" })
+);
+
+const DevToolsIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    // Toolbox
+    React.createElement('rect', { x: "10", y: "20", width: "180", height: "60", fill: "#112240", stroke: "#233554", rx: "5" }),
+    React.createElement('rect', { x: "10", y: "20", width: "180", height: "15", fill: "#233554" }),
+    React.createElement('text', { x: "100", y: "15", textAnchor: "middle", fontSize: "10", fill: "#64ffda" }, "DevTools"),
+    // Compartments
+    // Console
+    React.createElement('g', { transform: "translate(25, 45)" },
+      React.createElement('path', { d: "M 5 0 L 15 5 L 5 10 Z", fill: "none", stroke: "#a8b2d1", strokeWidth: "1" }),
+      React.createElement('line', { x1: "18", y1: "10", x2: "28", y2: "10", stroke: "#a8b2d1", strokeWidth: "1" }),
+      React.createElement('text', { x: "18", y: "25", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "Console")
+    ),
+    React.createElement('line', { x1: "70", y1: "35", y2: "80", stroke: "#233554" }),
+    // Elements
+    React.createElement('g', { transform: "translate(85, 45)" },
+        React.createElement('text', { x: "15", y: "8", textAnchor: "middle", fontSize: "12", fill: "#a8b2d1" }, "< >"),
+        React.createElement('text', { x: "15", y: "25", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "Elements")
+    ),
+    React.createElement('line', { x1: "130", y1: "35", y2: "80", stroke: "#233554" }),
+    // Sources
+    React.createElement('g', { transform: "translate(145, 45)" },
+        React.createElement('rect', { x: "5", y: "0", width: "20", height: "15", fill: "none", stroke: "#a8b2d1", strokeWidth: "1" }),
+        React.createElement('line', { x1: "8", y1: "5", x2: "22", y2: "5", stroke: "#a8b2d1", strokeWidth: "1" }),
+        React.createElement('line', { x1: "8", y1: "10", x2: "22", y2: "10", stroke: "#a8b2d1", strokeWidth: "1" }),
+        React.createElement('text', { x: "15", y: "25", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "Sources")
+    )
+);
+
+const FirstSiteIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    // HTML file
+    React.createElement('g', { transform: "translate(10, 30)" },
+        React.createElement('rect', { x: "0", y: "0", width: "50", height: "40", fill: "#112240", stroke: "#233554", rx: "3" }),
+        React.createElement('text', { x: "25", y: "25", textAnchor: "middle", fontSize: "8", fill: "#64ffda" }, "index.html")
+    ),
+    // JS file
+    React.createElement('g', { transform: "translate(70, 30)" },
+        React.createElement('rect', { x: "0", y: "0", width: "50", height: "40", fill: "#112240", stroke: "#233554", rx: "3" }),
+        React.createElement('text', { x: "25", y: "25", textAnchor: "middle", fontSize: "8", fill: "#64ffda" }, "script.js")
+    ),
+    // Arrow
+    React.createElement('path', { d: "M 40 20 L 100 20 L 100 10", stroke: "#233554", strokeWidth: "1", fill: "none" }),
+    React.createElement('path', { d: "M 90 20 L 130 20 L 130 10", stroke: "#233554", strokeWidth: "1", fill: "none" }),
+    React.createElement('path', { d: "M 115 10 L 140 10", stroke: "#233554", strokeWidth: "1", fill: "none" }),
+    React.createElement('path', { d: "M 140 10 L 140 25", stroke: "#64ffda", strokeWidth: "1.5", markerEnd: "url(#arrowhead-green)" }),
+     React.createElement('defs', null, 
+      React.createElement('marker', { id: "arrowhead-green", markerWidth: "5", markerHeight: "3.5", refX: "0", refY: "1.75", orient: "auto" },
+        React.createElement('polygon', { points: "0 0, 5 1.75, 0 3.5", fill: "#64ffda" })
+      )
+    ),
+    // Browser window
+    React.createElement('g', { transform: "translate(130, 30)" },
+        React.createElement('rect', { x: "0", y: "0", width: "60", height: "40", fill: "#233554", stroke: "#8892b0", rx: "3" }),
+        React.createElement('rect', { x: "0", y: "0", width: "60", height: "8", fill: "#112240" }),
+        React.createElement('circle', { cx: "5", cy: "4", r: "1.5", fill: "#a8b2d1" }),
+        React.createElement('text', { x: "30", y: "25", textAnchor: "middle", fontSize: "7", fill: "#64ffda" }, "Olá, JS!")
+    )
+);
+
 
 export const module1: Module = {
   id: '1',
@@ -164,6 +249,7 @@ console.log("A minha cidade é Lisboa.");`
     {
       id: '1.2',
       title: 'Adicionar JS a uma página',
+      illustration: React.createElement(AddJSIllustration),
       theory: React.createElement(
         'div',
         null,
@@ -300,6 +386,7 @@ console.log("Olá do ficheiro externo!");`
     {
       id: '1.3',
       title: 'O Teu Ambiente: Ferramentas do Navegador',
+      illustration: React.createElement(DevToolsIllustration),
       theory: React.createElement(
         'div',
         null,
@@ -375,6 +462,7 @@ console.log(\`O nome é \${nome}\`); // Podes executar isto passo a passo`
     {
       id: '1.4',
       title: 'Desafio do Módulo: O Teu Primeiro Site',
+      illustration: React.createElement(FirstSiteIllustration),
       theory: React.createElement(
         'div',
         null,

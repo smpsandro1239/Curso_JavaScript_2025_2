@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import type { Module } from '../../types';
 
@@ -23,6 +22,29 @@ const FunctionsIllustration = () => React.createElement(
   React.createElement('path', { d: "M 160 50 H 180", stroke: "#64ffda", strokeWidth: "2" }),
   React.createElement('rect', { x: "180", y: "45", width: "10", height: "10", fill: "#64ffda" }),
   React.createElement('text', { x: "185", y: "40", fontSize: "10", fill: "#64ffda", textAnchor: "middle" }, "Output")
+);
+
+const ClosuresIllustration = () => React.createElement(
+    'svg',
+    { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
+    // Environment
+    React.createElement('rect', { x: "0", y: "0", width: "100", height: "100", fill: "#112240", opacity: "0.8" }),
+    React.createElement('text', { x: "50", y: "20", textAnchor: "middle", fontSize: "10", fill: "#a8b2d1" }, "Escopo Original"),
+    React.createElement('text', { x: "50", y: "50", textAnchor: "middle", fontSize: "8", fill: "#64ffda" }, "variável = 10"),
+
+    // Traveler (Function)
+    React.createElement('g', { transform: "translate(120, 40)" },
+        // Body
+        React.createElement('circle', { cx: "15", cy: "15", r: "5", fill: "#ccd6f6" }),
+        React.createElement('path', { d: "M 15 20 V 35", stroke: "#ccd6f6", strokeWidth: "2" }),
+        // Backpack (Closure)
+        React.createElement('rect', { x: "0", y: "20", width: "15", height: "15", fill: "#233554", stroke: "#8892b0", rx: "3" }),
+        React.createElement('text', { x: "7.5", y: "30", textAnchor: "middle", fontSize: "6", fill: "#64ffda" }, "var"),
+        React.createElement('text', { x: "40", y: "25", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Função")
+    ),
+    
+    // Path
+    React.createElement('path', { d: "M 100 50 C 110 50, 110 55, 120 55", stroke: "#233554", strokeWidth: "1", fill: "none", strokeDasharray: "3 3" })
 );
 
 export const module4: Module = {
@@ -263,6 +285,91 @@ console.log(\`100°C é igual a \${temp2}°F\`); // Deve ser 212`
           options: ['`const conv = celsius => { (celsius * 9/5) + 32 }`', '`const conv = celsius => (celsius * 9/5) + 32;`', '`const conv = (celsius) => return (celsius * 9/5) + 32;`', 'Não é possível.'],
           correctAnswerIndex: 1,
           explanation: 'A sintaxe `parametro => expressao` é a forma mais concisa de escrever uma arrow function com um único parâmetro e um retorno implícito.'
+        }
+      ]
+    },
+    {
+      id: '4.5',
+      title: 'O Superpoder das Funções: Closures',
+      illustration: React.createElement(ClosuresIllustration),
+      theory: React.createElement(
+        'div',
+        null,
+        React.createElement('p', { className: 'mb-4' }, 'Um "closure" (fechamento) é um dos conceitos mais poderosos do JavaScript. Acontece quando uma função é capaz de "lembrar-se" e aceder às variáveis do escopo onde foi criada, mesmo depois de esse escopo já não existir.'),
+        React.createElement('p', { className: 'mb-4' }, 'A analogia é um viajante (a função) que, ao sair da sua cidade natal (o escopo onde foi criada), leva consigo uma mochila. Essa mochila contém todas as variáveis e referências da sua cidade. O viajante pode aceder a essa mochila em qualquer lugar do mundo para onde vá.'),
+        React.createElement('p', { className: 'mb-4' }, 'Isto é possível porque, em JavaScript, uma função e o seu ambiente léxico (as variáveis disponíveis no local onde a função foi declarada) formam um "closure". É a base para muitos padrões avançados, como a criação de variáveis privadas.')
+      ),
+      practice: {
+        examples: [
+          {
+            title: 'Exemplo 1: Uma Fábrica de Funções',
+            description: 'A função `saudacao` retorna outra função. A função interna "lembra-se" da variável `mensagem` do seu escopo pai, mesmo depois de `saudacao` ter terminado a sua execução.',
+            code: `function saudacao(mensagem) {
+  // A função interna "fecha" (closes over) a variável 'mensagem'
+  return function(nome) {
+    console.log(mensagem + ", " + nome);
+  };
+}
+
+const dizerOla = saudacao("Olá");
+const dizerAdeus = saudacao("Adeus");
+
+dizerOla("Ana");    // Olá, Ana
+dizerAdeus("Rui");   // Adeus, Rui`
+          },
+          {
+            title: 'Exemplo 2: Variáveis Privadas com Closures',
+            description: 'Este é o padrão mais famoso. A variável `contador` só é acessível dentro da função `criarContador`. As funções retornadas mantêm uma referência a `contador` (a sua "mochila"), mas não há forma de a modificar de fora, exceto através das funções que a própria `criarContador` nos deu.',
+            code: `function criarContador() {
+  let contador = 0; // Esta variável é "privada"
+
+  return {
+    incrementar: function() {
+      contador++;
+      console.log(contador);
+    },
+    decrementar: function() {
+      contador--;
+      console.log(contador);
+    },
+    valor: function() {
+      return contador;
+    }
+  };
+}
+
+const meuContador = criarContador();
+meuContador.incrementar(); // 1
+meuContador.incrementar(); // 2
+console.log(meuContador.valor()); // 2
+
+// Não podes fazer isto:
+// console.log(meuContador.contador); // undefined`
+          }
+        ]
+      },
+      quiz: [
+        {
+          question: 'O que é a característica principal de um closure?',
+          options: [
+            'Uma função que se chama a si mesma.',
+            'Uma função que retorna outra função.',
+            'A capacidade de uma função de se lembrar do escopo onde foi criada.',
+            'Uma função que só pode ser chamada uma vez.'
+          ],
+          correctAnswerIndex: 2,
+          explanation: 'A essência de um closure é a persistência do escopo. A função "carrega" consigo as variáveis do seu ambiente de criação.'
+        },
+        {
+          question: 'No exemplo do `criarContador`, porque é que a variável `contador` é considerada privada?',
+          options: [
+            'Porque `let` cria variáveis privadas.',
+            'Porque está dentro de um objeto.',
+            'Porque só é acessível diretamente dentro do escopo da função `criarContador`, e não de fora.',
+            'Porque o seu nome é "contador".'
+          ],
+          correctAnswerIndex: 2,
+          explanation: 'O escopo de função em JavaScript cria um ambiente "fechado". Só o código que está lá dentro tem acesso direto às variáveis declaradas com `let` ou `const` nesse escopo.'
         }
       ]
     }
