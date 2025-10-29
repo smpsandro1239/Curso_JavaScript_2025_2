@@ -61,7 +61,7 @@ const EventLoopIllustration = () => React.createElement(
 
 export const module6: Module = {
   id: '6',
-  title: 'Módulo 6: Tópicos Avançados: JavaScript Assíncrono',
+  title: 'Módulo 6: JavaScript Assíncrono',
   lessons: [
     {
       id: '6.1',
@@ -114,6 +114,12 @@ console.log("Fim da tarefa demorada.");`
           options: ['Só pode ser escrito por uma pessoa.', 'Só consegue executar uma operação de cada vez.', 'Só funciona com um tipo de dado.', 'Só pode ser usado no navegador.'],
           correctAnswerIndex: 1,
           explanation: 'Ser single-threaded significa que o motor de JavaScript tem apenas uma "call stack", pelo que executa o código de forma sequencial, uma instrução após a outra.'
+        },
+        {
+          question: 'Qual é o principal benefício do código assíncrono?',
+          options: ['É mais fácil de escrever.', 'Usa menos memória.', 'Não bloqueia a execução do resto do código, mantendo a página responsiva.', 'Executa sempre mais rápido.'],
+          correctAnswerIndex: 2,
+          explanation: 'O não-bloqueio (non-blocking) é a vantagem fundamental, permitindo que tarefas demoradas (como pedidos de rede) ocorram em segundo plano sem congelar a interface do utilizador.'
         }
       ],
       challenge: {
@@ -163,6 +169,28 @@ executarDepois(tarefa, 2000);`
     }, 1000);
   }, 1000);
 }, 1000);`
+          },
+          {
+            title: 'Exemplo 3: A Nuance - Callbacks de Erro',
+            description: 'Um padrão comum é o callback receber dois argumentos: um para o erro (se ocorrer) e outro para os dados (se for sucesso). O primeiro argumento é por convenção o erro.',
+            code: `function buscarDados(callback) {
+  const sucesso = Math.random() > 0.5;
+  setTimeout(() => {
+    if (sucesso) {
+      callback(null, { dados: "Informação secreta" });
+    } else {
+      callback(new Error("Não foi possível buscar os dados."));
+    }
+  }, 1000);
+}
+
+buscarDados((erro, dados) => {
+  if (erro) {
+    console.error(erro.message);
+  } else {
+    console.log(dados);
+  }
+});`
           }
         ]
       },
@@ -172,6 +200,12 @@ executarDepois(tarefa, 2000);`
           options: ['O código fica mais rápido.', 'O código fica muito aninhado e difícil de ler.', 'Usa demasiada memória.', 'Só funciona com `setTimeout`.'],
           correctAnswerIndex: 1,
           explanation: 'A dificuldade de leitura e manutenção é o grande problema que o "Callback Hell" apresenta, o que levou à criação de soluções como as Promises.'
+        },
+        {
+          question: 'O que é um callback?',
+          options: ['Uma função que chama outra função.', 'Uma função que é passada como argumento para ser executada mais tarde.', 'Um tipo de erro.', 'Uma variável global.'],
+          correctAnswerIndex: 1,
+          explanation: 'O nome "callback" vem da ideia de que a função principal "chama de volta" (calls back) a função que lhe foi passada quando termina a sua tarefa.'
         }
       ],
       challenge: {
@@ -219,11 +253,13 @@ buscarDados((dados) => {
                 code: `const minhaPromessa = new Promise((resolve, reject) => {
   const sucesso = true; // Tenta mudar para 'false'
   
-  if (sucesso) {
-    resolve("A operação foi um sucesso!");
-  } else {
-    reject("Algo correu mal.");
-  }
+  setTimeout(() => {
+    if (sucesso) {
+      resolve("A operação foi um sucesso!");
+    } else {
+      reject("Algo correu mal.");
+    }
+  }, 1000);
 });
 
 minhaPromessa
@@ -252,6 +288,14 @@ passo1()
   .then(() => {
     console.log("3. Bolo pronto!");
   });`
+            },
+            {
+                title: 'Exemplo 3: A Nuance - `fetch` retorna uma Promise',
+                description: 'A função `fetch`, que usamos para fazer pedidos de rede, é o exemplo mais comum de uma função que retorna uma Promise. O primeiro `.then` trata da resposta inicial, o segundo trata dos dados em formato JSON.',
+                code: `fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(resposta => resposta.json())
+  .then(dados => console.log(dados))
+  .catch(erro => console.error("Erro no fetch:", erro));`
             }
         ]
       },
@@ -261,6 +305,12 @@ passo1()
           options: ['`.catch()`', '`.finally()`', '`.then()`', '`.error()`'],
           correctAnswerIndex: 2,
           explanation: '`.then()` recebe uma função de callback que será executada quando a Promise for resolvida com sucesso.'
+        },
+        {
+          question: 'O que a função `fetch()` retorna?',
+          options: ['Os dados em JSON.', 'Um objeto de erro.', 'Uma Promise que resolve com o objeto de Resposta.', '`undefined`.'],
+          correctAnswerIndex: 2,
+          explanation: '`fetch` retorna imediatamente uma Promise. O trabalho de rede acontece em segundo plano, e a Promise será resolvida (ou rejeitada) quando o trabalho terminar.'
         }
       ],
       challenge: {
@@ -284,7 +334,6 @@ promessaDownload.then((mensagem) => {
     {
       id: '6.4',
       title: 'Async/Await',
-      // FIX: Corrected typo from AsyncAwaitIllustration to AsyncIllustration
       illustration: React.createElement(AsyncIllustration),
       theory: React.createElement(
         'div',
@@ -302,12 +351,13 @@ promessaDownload.then((mensagem) => {
           {
             title: 'Exemplo 1: O Básico - A forma mais limpa',
             description: 'Vamos reescrever o exemplo do bolo uma última vez com `async/await`. O resultado é um código que se lê quase como uma lista de instruções síncronas.',
-            code: `// As funções passo1 e passo2 do exemplo anterior
-// ...
+            code: `function passo(msg) {
+  return new Promise(res => setTimeout(() => { console.log(msg); res(); }, 1000));
+}
 
 async function fazerBolo() {
-  await passo1();
-  await passo2();
+  await passo("1. Misturar ingredientes");
+  await passo("2. Colocar no forno");
   console.log("3. Bolo pronto!");
 }
 
@@ -347,6 +397,12 @@ buscarDados();`
           options: ['Em qualquer função.', 'Apenas dentro de uma função declarada com `async`.', 'Apenas em loops `for`.', 'Em qualquer lado no código.'],
           correctAnswerIndex: 1,
           explanation: '`await` está sintaticamente ligado a funções `async` e só é válido dentro delas.'
+        },
+        {
+          question: 'Uma função declarada com `async` retorna sempre o quê?',
+          options: ['`undefined`', 'O valor da última expressão `await`.', 'Uma Promise.', 'Um objeto de erro.'],
+          correctAnswerIndex: 2,
+          explanation: 'Mesmo que não tenhas um `return` explícito, uma função `async` envolve o seu valor de retorno (ou `undefined`) numa Promise resolvida.'
         }
       ],
       challenge: {
@@ -381,7 +437,51 @@ iniciarDownload();`,
         React.createElement('p', { className: 'mb-4' }, 'Este modelo de concorrência é o que permite ao JavaScript ser não-bloqueante.' )
       ),
       practice: {
-        examples: []
+        examples: [
+          {
+            title: 'Exemplo 1: O Básico - Síncrono primeiro',
+            description: 'Este é o exemplo mais clássico. Todo o código síncrono na Call Stack é executado antes de o Event Loop verificar a Callback Queue.',
+            code: `console.log('Início');
+
+setTimeout(() => {
+  console.log('Timeout terminou');
+}, 0);
+
+Promise.resolve().then(() => {
+  console.log('Promise resolvida');
+});
+
+console.log('Fim');
+
+// Ordem: Início, Fim, Promise resolvida, Timeout terminou`
+          },
+          {
+            title: 'Exemplo 2: O Caso Comum - Microtasks vs. Macrotasks',
+            description: 'As Promises vão para uma fila prioritária (Microtask Queue), enquanto o `setTimeout` vai para a fila normal (Macrotask/Callback Queue). O Event Loop serve sempre todas as microtasks antes de servir uma macrotask.',
+            code: `// ... o mesmo código do exemplo anterior ...
+// A "Promise resolvida" aparece antes do "Timeout terminou"
+// porque a fila de Microtasks tem prioridade.`
+          },
+          {
+            title: 'Exemplo 3: A Nuance - Visualizar a Call Stack',
+            description: 'Podemos pensar na execução de funções aninhadas como pratos a serem empilhados. O último a entrar é o primeiro a sair.',
+            code: `function terceiro() {
+  console.log('Três');
+}
+function segundo() {
+  console.log('Dois');
+  terceiro();
+}
+function primeiro() {
+  console.log('Um');
+  segundo();
+}
+primeiro();
+// Stack: entra primeiro(), entra segundo(), entra terceiro().
+// Sai terceiro(), sai segundo(), sai primeiro().
+// Ordem do log: Um, Dois, Três`
+          }
+        ]
       },
       quiz: [
         {
@@ -389,6 +489,12 @@ iniciarDownload();`,
           options: ['O Chef principal.', 'Os ajudantes.', 'As tarefas demoradas.', 'A fila de pratos prontos à espera de serem servidos.'],
           correctAnswerIndex: 3,
           explanation: 'A Callback Queue (ou Fila de Callbacks) armazena as funções que estão prontas para serem executadas, assim que a Call Stack estiver vazia.'
+        },
+        {
+          question: 'O que tem prioridade para o Event Loop?',
+          options: ['A Callback Queue (Macrotasks).', 'A Microtask Queue (Promises).', 'Nenhuma, é aleatório.', 'A que tiver a tarefa mais rápida.'],
+          correctAnswerIndex: 1,
+          explanation: 'O Event Loop processará sempre todas as tarefas na Microtask Queue antes de pegar na próxima tarefa da Macrotask Queue.'
         }
       ],
       challenge: {
@@ -407,7 +513,7 @@ Ordem final: A, C, B.`
     },
     {
       id: '6.6',
-      title: 'Aprofundamento: Esperando por Várias Tarefas: `Promise.all()`',
+      title: 'Aprofundamento: `Promise.all()`',
       theory: React.createElement(
         'div',
         null,
@@ -424,27 +530,44 @@ Ordem final: A, C, B.`
       practice: {
         examples: [
           {
-            title: 'Exemplo: Ir buscar dados em paralelo',
-            description: 'Usamos a JSONPlaceholder API para ir buscar os dados de um utilizador e os seus posts em paralelo. Só mostramos a informação quando ambos os `fetch` estiverem concluídos, o que é muito mais rápido do que fazer um de cada vez.',
+            title: 'Exemplo 1: O Básico - Promises simples',
+            description: 'Criamos duas promises que resolvem em tempos diferentes. O `.then` do `Promise.all` só é executado depois de ambas terminarem.',
+            code: `const p1 = new Promise(res => setTimeout(() => res('Primeira'), 1000));
+const p2 = new Promise(res => setTimeout(() => res('Segunda'), 500));
+
+Promise.all([p1, p2])
+  .then(resultados => {
+    console.log(resultados); // ['Primeira', 'Segunda'] - na ordem original!
+  });`
+          },
+          {
+            title: 'Exemplo 2: O Caso Comum - `fetch` em paralelo',
+            description: 'Usamos a JSONPlaceholder API para ir buscar os dados de um utilizador e os seus posts em paralelo, o que é muito mais rápido do que fazer um de cada vez.',
             code: `async function buscarDadosCombinados() {
   try {
     const urls = [
       'https://jsonplaceholder.typicode.com/users/1',
       'https://jsonplaceholder.typicode.com/posts?userId=1'
     ];
-
     const promessas = urls.map(url => fetch(url).then(res => res.json()));
-
     const [utilizador, posts] = await Promise.all(promessas);
-
-    console.log("Nome do Utilizador:", utilizador.name);
-    console.log(\`Número de Posts: \${posts.length}\`);
+    console.log(\`Utilizador \${utilizador.name} tem \${posts.length} posts.\`);
   } catch (erro) {
     console.error("Falha ao buscar dados:", erro);
   }
 }
-
 buscarDadosCombinados();`
+          },
+          {
+            title: 'Exemplo 3: A Armadilha - Comportamento Fail-Fast',
+            description: 'Se uma das promises falhar, o `Promise.all` rejeita imediatamente e o `.catch` é acionado. Os resultados das outras promises são ignorados.',
+            code: `const p1 = Promise.resolve('Sucesso');
+const p2 = Promise.reject('Falha!');
+const p3 = new Promise(res => setTimeout(() => res('Outro Sucesso'), 1000));
+
+Promise.all([p1, p2, p3])
+  .then(resultados => console.log(resultados))
+  .catch(erro => console.error(erro)); // "Falha!"`
           }
         ]
       },
@@ -454,6 +577,12 @@ buscarDadosCombinados();`
           options: ['As outras promises continuam e o resultado é um sucesso parcial.', 'O `Promise.all()` é imediatamente rejeitado, ignorando as outras.', 'O `Promise.all()` espera que todas terminem e depois é rejeitado.', 'O programa dá um erro de sintaxe.'],
           correctAnswerIndex: 1,
           explanation: '`Promise.all` tem um comportamento "fail-fast". Assim que uma das promises falha, a promise principal é rejeitada com o motivo dessa falha.'
+        },
+        {
+          question: 'O que `Promise.all` retorna se todas as promises forem bem-sucedidas?',
+          options: ['Apenas o resultado da primeira promise.', 'Apenas o resultado da última promise.', 'Um array com os resultados de cada promise, na ordem em que foram passadas.', 'Um objeto com os resultados.'],
+          correctAnswerIndex: 2,
+          explanation: 'A ordem dos resultados no array de retorno corresponde sempre à ordem das promises no array de entrada, independentemente da ordem em que elas resolvem.'
         }
       ],
       challenge: {
@@ -540,8 +669,51 @@ buscarTempo();`
           options: ['Para o código ser mais rápido.', 'É uma exigência da sintaxe `async/await`.', 'Para lidar com erros de rede ou falhas da API de forma graciosa, sem quebrar a aplicação.', 'Para converter os dados para JSON.'],
           correctAnswerIndex: 2,
           explanation: 'Operações de rede podem falhar por muitas razões (falta de internet, servidor em baixo, etc.). `try...catch` permite-nos capturar esses erros e mostrar uma mensagem amigável ao utilizador em vez de uma aplicação quebrada.'
+        },
+        {
+          question: 'O que a linha `const dados = await resposta.json()` faz?',
+          options: ['Converte uma string para um objeto JavaScript.', 'É uma operação assíncrona que lê o corpo da resposta e o converte de JSON para um objeto JS.', 'Verifica se a resposta tem erros.', 'Envia dados em formato JSON.'],
+          correctAnswerIndex: 1,
+          explanation: 'O método `.json()` também retorna uma Promise, porque o corpo da resposta pode ser grande e demorar tempo a ser lido e processado. Por isso, também precisamos de usar `await` nele.'
         }
-      ]
+      ],
+      challenge: {
+        description: "Melhora a App do Tempo. Adiciona um `<input>` e um `<button>` ao HTML. Faz com que a função `buscarTempo` receba o nome de uma cidade como argumento e vá buscar o tempo para essa cidade, em vez de ser sempre Lisboa.",
+        starterCode: `// HTML:
+// <input id="cidade-input" placeholder="Nome da cidade">
+// <button id="buscar-tempo-btn">Buscar</button>
+
+// JavaScript:
+// Adapta a função buscarTempo para receber um argumento 'cidade'`,
+        solution: `const tempEl = document.getElementById('temperatura');
+const descEl = document.getElementById('descricao');
+const input = document.getElementById('cidade-input');
+const botao = document.getElementById('buscar-tempo-btn');
+
+async function buscarTempo(cidade) {
+  tempEl.textContent = \`A carregar tempo para \${cidade}...\`;
+  descEl.textContent = '';
+  try {
+    const url = \`https://goweather.herokuapp.com/weather/\${cidade}\`;
+    const resposta = await fetch(url);
+    const dados = await resposta.json();
+
+    tempEl.textContent = \`Temperatura: \${dados.temperature}\`;
+    descEl.textContent = \`Descrição: \${dados.description}\`;
+  } catch (erro) {
+    tempEl.textContent = \`Não foi possível carregar o tempo para \${cidade}.\`;
+  }
+}
+
+botao.addEventListener('click', () => {
+  const cidade = input.value.trim();
+  if (cidade) {
+    buscarTempo(cidade);
+  }
+});
+
+buscarTempo("Lisbon"); // Carga inicial`
+      }
     }
   ]
 };

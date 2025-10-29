@@ -376,7 +376,18 @@ console.log("A soma é:", soma); // 100`
     {
         id: '3.5',
         title: 'Como Percorrer um Objeto',
-        theory: React.createElement('p', null, 'Iterar sobre um objeto é um pouco diferente de um array, pois não temos índices numéricos. Em vez disso, iteramos sobre as suas chaves (propriedades).', React.createElement('strong', null, '`for...in`'), ': A forma clássica de iterar sobre as chaves de um objeto. Pode ter alguns efeitos secundários indesejados (itera sobre a cadeia de protótipos), por isso os métodos modernos são preferidos.', React.createElement('strong', null, '`Object.keys(obj)`'), ': Retorna um array com todas as chaves do objeto. A partir daí, podes usar qualquer método de iteração de arrays (como `forEach` ou `for...of`) para aceder aos valores.'),
+        theory: React.createElement(
+          'div', 
+          null,
+          React.createElement('p', { className: 'mb-4' }, 'Iterar sobre um objeto é um pouco diferente de um array, pois não temos índices numéricos. Em vez disso, iteramos sobre as suas chaves (propriedades).'),
+          React.createElement(
+            'ul',
+            { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+            React.createElement('li', null, React.createElement('strong', { className: 'text-light-slate' }, '`for...in`'), ': A forma clássica de iterar sobre as chaves de um objeto. Pode ter alguns efeitos secundários indesejados (itera sobre a cadeia de protótipos), por isso os métodos modernos são preferidos.'),
+            React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`Object.keys(obj)`'), ': Retorna um array com todas as chaves do objeto. A partir daí, podes usar qualquer método de iteração de arrays (como `forEach` ou `for...of`) para aceder aos valores.'),
+             React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`Object.entries(obj)`'), ': Retorna um array de pares `[chave, valor]`, o que pode ser ainda mais direto.')
+          )
+        ),
         practice: {
             examples: [
                 {
@@ -445,7 +456,18 @@ for (const [chave, valor] of Object.entries(produto)) {
     {
         id: '3.6',
         title: 'Atalhos: Ternário, break e continue',
-        theory: React.createElement('p', null, 'Existem algumas ferramentas para tornar o nosso controlo de fluxo mais conciso e poderoso. `Operador Ternário`: Um atalho para um `if/else` simples. `condição ? exprSeTrue : exprSeFalse`. `break`: Sai imediatamente do loop atual (`for`, `while`, `switch`). `continue`: Pula a iteração atual do loop e avança para a próxima.'),
+        theory: React.createElement(
+          'div', 
+          null,
+          React.createElement('p', { className: 'mb-4' }, 'Existem algumas ferramentas para tornar o nosso controlo de fluxo mais conciso e poderoso.'),
+          React.createElement(
+            'ul',
+            { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
+            React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Operador Ternário:'), ' Um atalho para um `if/else` simples. A sintaxe é `condição ? exprSeTrue : exprSeFalse`.'),
+            React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`break`:'), ' Sai imediatamente do loop atual (`for`, `while`, `switch`).'),
+            React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`continue`:'), ' Pula a iteração atual do loop e avança para a próxima.')
+          )
+        ),
         practice: {
             examples: [
                 {
@@ -487,6 +509,12 @@ for (const num of numeros) {
                 options: ['Termina o loop.', 'Pula a iteração atual e continua na seguinte.', 'Causa um erro.', 'Reinicia o loop desde o início.'],
                 correctAnswerIndex: 1,
                 explanation: '`continue` é o oposto de `break`: em vez de sair, ele apenas "salta" a volta atual.'
+            },
+            {
+              question: "Qual o resultado de `const x = 10; const res = x > 5 ? 'Maior' : 'Menor';`?",
+              options: ["`10`", "`'Maior'`", "`'Menor'`", "`true`"],
+              correctAnswerIndex: 1,
+              explanation: "O operador ternário avalia a condição `10 > 5`, que é verdadeira, e portanto retorna o primeiro valor após o `?`."
             }
         ],
         challenge: {
@@ -516,7 +544,12 @@ console.log(saida); // [4, 10, 16]`
     {
         id: '3.7',
         title: 'Desafio do Módulo: FizzBuzz',
-        theory: React.createElement('p', null, 'FizzBuzz é um desafio de programação clássico, frequentemente usado em entrevistas, para testar a compreensão básica de loops e condicionais. O objetivo é simples, mas requer a combinação de vários conceitos que aprendeste neste módulo. Regras: Escreve um programa que imprime os números de 1 a 100. Para múltiplos de três, imprime "Fizz" em vez do número. Para múltiplos de cinco, imprime "Buzz". Para números que são múltiplos de ambos, imprime "FizzBuzz".'),
+        theory: React.createElement(
+          'div', 
+          null,
+          React.createElement('p', { className: 'mb-4' }, 'FizzBuzz é um desafio de programação clássico, frequentemente usado em entrevistas, para testar a compreensão básica de loops e condicionais. O objetivo é simples, mas requer a combinação de vários conceitos que aprendeste neste módulo.'),
+          React.createElement('p', { className: 'mb-4' }, 'Regras: Escreve um programa que imprime os números de 1 a 100. Para múltiplos de três, imprime "Fizz" em vez do número. Para múltiplos de cinco, imprime "Buzz". Para números que são múltiplos de ambos, imprime "FizzBuzz".')
+        ),
         practice: {
             examples: [
                 {
@@ -552,6 +585,12 @@ console.log(saida); // [4, 10, 16]`
                 options: ['Não importa a ordem.', 'Porque é a condição mais restritiva. Se verificasses `i % 3` primeiro, um número como 15 imprimiria "Fizz" e nunca chegaria a ser verificado como "FizzBuzz".', 'Porque é mais rápido.', 'Porque o JavaScript exige essa ordem.'],
                 correctAnswerIndex: 1,
                 explanation: 'A lógica condicional `if/else if` para na primeira condição verdadeira. Se não verificarmos o caso mais específico (múltiplo de ambos) primeiro, ele será incorretamente apanhado por uma das condições mais gerais (`i % 3` ou `i % 5`).'
+            },
+            {
+              question: "Qual operador é essencial para resolver o FizzBuzz?",
+              options: ["`**` (Exponenciação)", "`++` (Incremento)", "`%` (Módulo)", "`&&` (E Lógico)"],
+              correctAnswerIndex: 2,
+              explanation: "O operador Módulo (`%`) é a chave para determinar se um número é múltiplo de outro, ao verificar se o resto da divisão é zero."
             }
         ],
         challenge: {

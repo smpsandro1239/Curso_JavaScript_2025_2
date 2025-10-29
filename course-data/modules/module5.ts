@@ -97,6 +97,12 @@ console.log(document);`
           options: ['Uma linguagem de programação.', 'Uma representação em memória do documento HTML em forma de árvore.', 'Um ficheiro de estilos CSS.', 'Um servidor web.'],
           correctAnswerIndex: 1,
           explanation: 'O DOM é a estrutura de objetos que o navegador cria para representar o HTML, permitindo que linguagens como o JavaScript a manipulem.'
+        },
+        {
+          question: 'Onde podes inspecionar a árvore do DOM visualmente?',
+          options: ['Na consola do navegador.', 'No ficheiro `script.js`.', 'Na aba "Elements" das Ferramentas de Programador.', 'No painel de controlo do servidor.'],
+          correctAnswerIndex: 2,
+          explanation: 'A aba "Elements" das DevTools é a ferramenta principal para explorar e interagir com a estrutura do DOM em tempo real.'
         }
       ],
       challenge: {
@@ -124,35 +130,32 @@ document.body`,
       practice: {
         examples: [
           {
-            title: 'Exemplo de HTML para os seletores',
-            description: 'Vamos usar este pequeno HTML como base para os exemplos seguintes.',
+            title: 'Exemplo 1: O Básico - `getElementById`',
+            description: 'Este método é muito rápido e direto, mas requer que o teu elemento tenha um `id` único. Usaremos um HTML de contexto para os exemplos.',
             code: `<!-- HTML de Exemplo -->
 <div id="principal">
   <h1 class="titulo">Título Principal</h1>
   <p>Um parágrafo de texto.</p>
-  <p class="destaque">Outro parágrafo.</p>
-</div>`
-          },
-          {
-            title: 'Exemplo 1: O Básico - `getElementById`',
-            description: 'Este método é muito rápido e direto, mas requer que o teu elemento tenha um `id`.',
-            code: `// Assume o HTML acima.
+</div>
+
+// JavaScript
 const divPrincipal = document.getElementById('principal');
 console.log(divPrincipal);`
           },
           {
             title: 'Exemplo 2: O Caso Comum - `querySelector` (Recomendado)',
-            description: 'Podemos usar qualquer seletor CSS. Aqui, apanhamos o `h1` pela sua classe e o parágrafo que está dentro do `div` com id `principal`.',
-            code: `const titulo = document.querySelector('.titulo');
-const paragrafo = document.querySelector('#principal p');
-console.log(titulo.textContent);`
+            description: 'Podemos usar qualquer seletor CSS que já conheces. Aqui, apanhamos o `h1` pela sua classe. É extremamente flexível.',
+            code: `// Assume o HTML anterior.
+const titulo = document.querySelector('.titulo');
+console.log(titulo.textContent); // "Título Principal"`
           },
           {
             title: 'Exemplo 3: A Nuance - `querySelectorAll`',
-            description: 'Aqui, selecionamos todos os parágrafos (`<p>`). O resultado é uma NodeList, que parece um array e podemos percorrer com `forEach`.',
-            code: `const todosOsParagrafos = document.querySelectorAll('p');
-todosOsParagrafos.forEach(p => {
-  console.log(p.textContent);
+            description: 'Para apanhar múltiplos elementos, como todos os parágrafos, usamos `querySelectorAll`. O resultado é uma NodeList, que parece um array e podemos percorrer com `forEach`.',
+            code: `// HTML: <ul><li class="item">A</li><li class="item">B</li></ul>
+const todosOsItens = document.querySelectorAll('.item');
+todosOsItens.forEach(item => {
+  console.log(item.textContent);
 });`
           }
         ]
@@ -236,6 +239,12 @@ container.innerHTML = '<strong>Isto é HTML a sério!</strong>';`
           options: ['Usar `elemento.style` para todas as propriedades.', 'Definir estilos numa classe CSS e depois adicionar/remover essa classe com `elemento.classList`.', 'Usar `elemento.innerHTML`.'],
           correctAnswerIndex: 1,
           explanation: 'Usar `classList` mantém a separação de responsabilidades (CSS para estilos, JS para comportamento), tornando o código mais limpo.'
+        },
+        {
+          question: "O que `el.setAttribute('disabled', 'true')` faz?",
+          options: ["Lê o atributo 'disabled'.", "Remove o atributo 'disabled'.", "Define o atributo 'disabled' para o valor 'true'.", "Causa um erro."],
+          correctAnswerIndex: 2,
+          explanation: "`setAttribute` é o método para definir o valor de qualquer atributo de um elemento HTML."
         }
       ],
       challenge: {
@@ -313,6 +322,12 @@ setTimeout(() => {
           options: ['`document.create("h2")`', '`document.createElement("h2")`', '`document.new("h2")`'],
           correctAnswerIndex: 1,
           explanation: '`document.createElement()` é o método correto para criar um novo nó de elemento a partir de um nome de tag.'
+        },
+        {
+          question: 'Qual método adiciona um elemento como o último filho de outro elemento?',
+          options: ['`.add()`', '`.insert()`', '`.append()`', '`.push()`'],
+          correctAnswerIndex: 2,
+          explanation: '`.append()` é o método moderno para adicionar um ou mais nós ao final de um elemento pai.'
         }
       ],
       challenge: {
@@ -365,8 +380,9 @@ input.addEventListener('keydown', (event) => {
           {
             title: 'Exemplo 3: A Nuance - `this` em Event Listeners',
             description: 'Dentro de um event listener declarado com `function` (e não arrow function), a palavra-chave `this` refere-se ao elemento que despoletou o evento. Com arrow functions, `this` mantém o seu valor do contexto exterior.',
-            code: `const botao = document.getElementById('meu-botao');
-botao.addEventListener('click', function() {
+            code: `// HTML: <button id="meu-botao-this">Clica em Mim</button>
+const botaoThis = document.getElementById('meu-botao-this');
+botaoThis.addEventListener('click', function() {
   // 'this' aqui é o próprio botão
   this.textContent = 'Fui clicado!';
 });`
@@ -379,6 +395,12 @@ botao.addEventListener('click', function() {
           options: ['A função a executar.', 'Um objeto de configuração.', 'Uma string com o nome do evento (ex: "click").'],
           correctAnswerIndex: 2,
           explanation: 'O primeiro argumento especifica o tipo de evento que queremos "ouvir".'
+        },
+        {
+          question: 'Qual propriedade do objeto de evento nos diz qual a tecla pressionada?',
+          options: ['`event.target`', '`event.key`', '`event.keyCode`', '`event.value`'],
+          correctAnswerIndex: 1,
+          explanation: '`event.key` contém o valor da tecla pressionada (ex: "a", "Enter", "Escape").'
         }
       ],
       challenge: {
@@ -455,6 +477,12 @@ lista.addEventListener('click', (e) => {
           options: ['Causa um erro.', 'Impede que o evento se propague para os elementos pais.', 'Executa o evento duas vezes.'],
           correctAnswerIndex: 1,
           explanation: '`stopPropagation()` é o método que usamos no objeto de evento para impedir o comportamento de bubbling.'
+        },
+        {
+          question: 'O que é a "delegação de eventos"?',
+          options: ['Parar um evento.', 'Adicionar um evento a cada elemento filho.', 'Adicionar um único evento a um elemento pai para gerir eventos nos seus filhos.', 'Um erro comum.'],
+          correctAnswerIndex: 2,
+          explanation: 'A delegação de eventos é um padrão de performance poderoso que tira partido do "bubbling" para gerir eventos de forma eficiente.'
         }
       ],
       challenge: {
@@ -549,6 +577,12 @@ form.addEventListener('submit', (e) => {
           options: ['Apaga os dados do formulário.', 'Impede que a página seja recarregada.', 'Submete o formulário duas vezes.'],
           correctAnswerIndex: 1,
           explanation: '`preventDefault()` é essencial para que possamos lidar com os dados do formulário com JavaScript sem que o navegador execute a sua ação padrão.'
+        },
+        {
+          question: 'Em que elemento devemos ouvir o evento para capturar a submissão de um formulário?',
+          options: ['No botão de `submit`.', 'No elemento `<form>`.', 'No `document.body`.', 'No elemento `<input>`.'],
+          correctAnswerIndex: 1,
+          explanation: 'O evento `submit` é despoletado no próprio elemento do formulário, por isso é aí que devemos adicionar o nosso listener.'
         }
       ],
       challenge: {
@@ -640,6 +674,12 @@ if (localStorage.getItem('theme') === 'dark') {
           options: ['Adiciona sempre a classe.', 'Remove sempre a classe.', 'Adiciona a classe se ela não existir e remove-a se existir.'],
           correctAnswerIndex: 2,
           explanation: '`.toggle()` é a forma mais eficiente de alternar uma classe, perfeita para funcionalidades como menus, modos escuros, etc.'
+        },
+        {
+          question: 'Para criar um Dark Mode, a maior parte do trabalho é feita em...',
+          options: ['HTML', 'JavaScript', 'CSS', 'No servidor'],
+          correctAnswerIndex: 2,
+          explanation: 'O JavaScript apenas alterna uma classe. É o CSS que faz todo o trabalho de definir a aparência para o modo normal e para a classe `.dark-mode`.'
         }
       ],
       challenge: {
