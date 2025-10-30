@@ -120,6 +120,12 @@ if (nota >= 90) {
           options: ['Sempre.', 'Apenas se a condição `A` for verdadeira.', 'Apenas se a condição `A` for falsa.', 'Nunca.'],
           correctAnswerIndex: 2,
           explanation: 'A cadeia `if/else if` é sequencial. A segunda condição (`B`) só é avaliada se a primeira (`A`) falhar.'
+        },
+        {
+          question: "Qual será o valor final da variável `resultado` no código: `const valor = 10; let resultado; if (valor > 20) { resultado = 'maior'; } else { resultado = 'menor'; }`?",
+          options: ["'maior'", "'menor'", "`undefined`", "10"],
+          correctAnswerIndex: 1,
+          explanation: "Como a condição `10 > 20` é falsa, o bloco de código do `else` é executado, atribuindo o valor 'menor' à variável `resultado`."
         }
       ],
       challenge: {
@@ -209,6 +215,12 @@ if (carrinho.length > 0) {
             options: ['Não imprime nada.', 'Dá um erro.', 'Imprime "olá".', 'Imprime `true`.'],
             correctAnswerIndex: 2,
             explanation: 'Um array vazio, apesar de vazio, é um objeto, e todos os objetos em JavaScript (exceto `null`) são "truthy".'
+        },
+        {
+            question: "Qual será a saída do código: `if (0) { console.log('A'); } else { console.log('B'); }`?",
+            options: ["'A'", "'B'", "Nada", "Erro"],
+            correctAnswerIndex: 1,
+            explanation: "O número `0` é um dos seis valores 'falsy' em JavaScript. Portanto, a condição do `if` é falsa e o bloco `else` é executado."
         }
       ],
       challenge: {
@@ -242,6 +254,18 @@ if (resposta) {
           { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
           React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`for`'), ': Ideal quando sabemos exatamente quantas vezes queremos que o loop seja executado. Tem três partes: inicialização, condição e incremento.'),
           React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`while`'), ': Executa um bloco de código ENQUANTO (while) uma condição for verdadeira. A condição é testada ANTES de cada iteração. Ideal quando não sabemos o número de iterações.')
+        ),
+         React.createElement(
+            'div',
+            { className: 'mt-6 p-4 bg-lightest-navy rounded-lg border-l-4 border-slate' },
+            React.createElement('h4', { className: 'font-bold text-lightest-slate mb-2' }, '💡 Nota Rápida: do...while'),
+            React.createElement(
+                'p',
+                { className: 'text-sm' },
+                'Existe também o loop `do...while`, que é menos comum. A sua particularidade é que executa o bloco de código ',
+                React.createElement('strong', null, 'pelo menos uma vez'),
+                ' ANTES de verificar a condição. Útil quando a primeira iteração tem de acontecer incondicionalmente.'
+            )
         )
       ),
       practice: {
@@ -287,6 +311,12 @@ while (i < 5) {
           options: ['Sempre', 'Nunca', 'Quando sabemos o número exato de iterações', 'Quando o número de iterações é desconhecido e depende de uma condição'],
           correctAnswerIndex: 3,
           explanation: '`while` brilha quando a continuação do loop depende de uma condição que pode mudar de forma imprevisível, como input do utilizador ou respostas de rede.'
+        },
+        {
+          question: "Quantas vezes a mensagem 'Olá' será impressa pelo loop: `let i = 5; do { console.log('Olá'); i++; } while (i < 5);`?",
+          options: ["0 vezes", "1 vez", "5 vezes", "Loop infinito"],
+          correctAnswerIndex: 1,
+          explanation: "O loop `do...while` executa o bloco de código pelo menos uma vez ANTES de verificar a condição. Mesmo que `i` já seja 5, a mensagem é impressa uma vez."
         }
       ],
       challenge: {
@@ -311,6 +341,18 @@ while (i < 5) {
           React.createElement('li', null, React.createElement('strong', { className: 'text-light-slate' }, 'Loop `for` clássico:'), ' Funciona, mas pode ser verboso. Dá-te controlo total sobre o índice.'),
           React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`forEach`:'), ' Um método de array que executa uma função (callback) para cada elemento. É mais declarativo e geralmente mais legível. Não podes usar `break` dentro dele.'),
           React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`for...of`:'), ' A forma mais moderna e limpa de iterar sobre os VALORES de um iterável (como um array). É a escolha recomendada na maioria dos casos.')
+        ),
+        React.createElement(
+            'div',
+            { className: 'mt-6 p-4 bg-lightest-navy rounded-lg border-l-4 border-slate' },
+            React.createElement('h4', { className: 'font-bold text-lightest-slate mb-2' }, '💡 Dica Avançada: Transformar com .map()'),
+            React.createElement(
+                'p',
+                { className: 'text-sm' },
+                'Se o teu objetivo não é apenas percorrer, mas sim ',
+                React.createElement('strong', null, 'criar um novo array'),
+                ' transformado a partir do original (ex: obter o dobro de cada número), o método `.map()` é a ferramenta ideal. Veremos mais sobre ele no futuro!'
+            )
         )
       ),
       practice: {
@@ -353,6 +395,12 @@ for (const fruta of frutas) {
             options: ['É mais lento', 'Não podes parar o loop a meio com `break`', 'Não funciona com strings', 'Só funciona com números'],
             correctAnswerIndex: 1,
             explanation: 'Não podes usar `break` ou `continue` dentro de um `forEach`. Se precisares de sair do loop prematuramente, um `for` clássico ou `for...of` são melhores opções.'
+        },
+        {
+            question: "Qual é o principal propósito do método de array `.map()`?",
+            options: ["Apenas percorrer os elementos do array.", "Remover elementos do array.", "Criar um novo array com base nos resultados de uma função aplicada a cada elemento.", "Verificar se algum elemento satisfaz uma condição."],
+            correctAnswerIndex: 2,
+            explanation: "Enquanto `.forEach` apenas itera, `.map()` é usado para transformar cada elemento e retorna um novo array com essas transformações, mantendo o array original intacto."
         }
       ],
       challenge: {
@@ -383,7 +431,7 @@ console.log("A soma é:", soma); // 100`
           React.createElement(
             'ul',
             { className: 'list-disc list-inside mb-4 pl-4 space-y-2' },
-            React.createElement('li', null, React.createElement('strong', { className: 'text-light-slate' }, '`for...in`'), ': A forma clássica de iterar sobre as chaves de um objeto. Pode ter alguns efeitos secundários indesejados (itera sobre a cadeia de protótipos), por isso os métodos modernos são preferidos.'),
+            React.createElement('li', null, React.createElement('strong', { className: 'text-light-slate' }, '`for...in`'), ': A forma clássica de iterar sobre as chaves de um objeto. Pode ter efeitos secundários indesejados (itera sobre a cadeia de protótipos), por isso é crucial usá-lo com uma verificação `hasOwnProperty`.'),
             React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`Object.keys(obj)`'), ': Retorna um array com todas as chaves do objeto. A partir daí, podes usar qualquer método de iteração de arrays (como `forEach` ou `for...of`) para aceder aos valores.'),
              React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`Object.entries(obj)`'), ': Retorna um array de pares `[chave, valor]`, o que pode ser ainda mais direto.')
           )
@@ -391,16 +439,19 @@ console.log("A soma é:", soma); // 100`
         practice: {
             examples: [
                 {
-                    title: 'Exemplo 1: O Básico - `for...in`',
-                    description: 'O loop `for...in` dá-nos cada chave do objeto. Depois, usamos a notação de parênteses retos `objeto[chave]` para obter o valor correspondente.',
+                    title: 'Exemplo 1: O Básico - `for...in` (com segurança)',
+                    description: "O loop `for...in` dá-nos cada chave. É uma boa prática usar `Object.prototype.hasOwnProperty.call()` para garantir que estamos a processar apenas as propriedades do próprio objeto, e não propriedades herdadas.",
                     code: `const utilizador = { nome: "Ana", idade: 30, cidade: "Porto" };
 for (const chave in utilizador) {
-  console.log(\`\${chave}: \${utilizador[chave]}\`);
+  // Boa prática: verificar se a propriedade pertence ao próprio objeto
+  if (Object.prototype.hasOwnProperty.call(utilizador, chave)) {
+    console.log(\`\${chave}: \${utilizador[chave]}\`);
+  }
 }`
                 },
                 {
                     title: 'Exemplo 2: O Caso Comum - `Object.keys()` com `forEach` (Recomendado)',
-                    description: 'Esta é uma abordagem mais robusta. `Object.keys()` dá-nos um array seguro das chaves do próprio objeto, que podemos depois iterar.',
+                    description: 'Esta é uma abordagem mais robusta e moderna. `Object.keys()` dá-nos um array seguro das chaves do próprio objeto, que podemos depois iterar.',
                     code: `const utilizador = { nome: "Ana", idade: 30, cidade: "Porto" };
 const chaves = Object.keys(utilizador); // ["nome", "idade", "cidade"]
 
@@ -427,10 +478,16 @@ for (const [chave, valor] of Object.entries(utilizador)) {
                 explanation: '`Object.keys()` extrai as chaves (propriedades) de um objeto e retorna-as como um array de strings.'
             },
             {
-                question: 'Por que motivo `for...in` pode ser problemático?',
-                options: ['É muito lento', 'Só funciona com arrays', 'Pode iterar sobre propriedades herdadas (do protótipo)', 'Não funciona em navegadores modernos'],
+                question: 'Por que motivo `for...in` deve ser usado com `hasOwnProperty`?',
+                options: ['É mais rápido', 'Para evitar iterar sobre propriedades herdadas (do protótipo)', 'Só funciona com arrays se não for usado', 'É uma regra de sintaxe obrigatória'],
+                correctAnswerIndex: 1,
+                explanation: '`for...in` não itera apenas sobre as propriedades do próprio objeto, mas também sobre as da sua cadeia de protótipos, o que pode levar a resultados inesperados. O `hasOwnProperty` filtra apenas as propriedades "próprias".'
+            },
+            {
+                question: "Qual é a estrutura de cada item no array retornado por `Object.entries(obj)`?",
+                options: ["Apenas as chaves do objeto.", "Apenas os valores do objeto.", "Um array com um par `[chave, valor]`.", "Um objeto com a chave e o valor."],
                 correctAnswerIndex: 2,
-                explanation: '`for...in` não itera apenas sobre as propriedades do próprio objeto, mas também sobre as da sua cadeia de protótipos, o que pode levar a resultados inesperados se não for usado com cuidado.'
+                explanation: "`Object.entries()` é muito útil porque retorna um array de arrays, onde cada array interior contém a chave e o valor de uma propriedade, facilitando a iteração sobre ambos ao mesmo tempo."
             }
         ],
         challenge: {
@@ -466,6 +523,16 @@ for (const [chave, valor] of Object.entries(produto)) {
             React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, 'Operador Ternário:'), ' Um atalho para um `if/else` simples. A sintaxe é `condição ? exprSeTrue : exprSeFalse`.'),
             React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`break`:'), ' Sai imediatamente do loop atual (`for`, `while`, `switch`).'),
             React.createElement('li', null, React.createElement('strong', { className: 'text-green' }, '`continue`:'), ' Pula a iteração atual do loop e avança para a próxima.')
+          ),
+          React.createElement(
+            'div',
+            { className: 'mt-6 p-4 bg-red-900/30 rounded-lg border-l-4 border-red-400' },
+            React.createElement('h4', { className: 'font-bold text-red-300 mb-2' }, '⚠️ Cuidado com Ternários Aninhados'),
+            React.createElement(
+                'p',
+                { className: 'text-sm' },
+                "É possível aninhar operadores ternários (`a ? b : c ? d : e`), mas o código rapidamente se torna ilegível. Para lógicas com mais de duas condições, é quase sempre preferível usar `if/else if` para manter a clareza."
+            )
           )
         ),
         practice: {
@@ -515,6 +582,12 @@ for (const num of numeros) {
               options: ["`10`", "`'Maior'`", "`'Menor'`", "`true`"],
               correctAnswerIndex: 1,
               explanation: "O operador ternário avalia a condição `10 > 5`, que é verdadeira, e portanto retorna o primeiro valor após o `?`."
+            },
+            {
+                question: "Num loop `for` dentro de outro loop `for` (aninhado), o que a instrução `break` faz?",
+                options: ["Sai de ambos os loops.", "Sai apenas do loop mais interior.", "Pula a iteração de ambos os loops.", "Causa um erro."],
+                correctAnswerIndex: 1,
+                explanation: "`break` afeta apenas o loop em que se encontra. Para sair de loops aninhados, são necessárias técnicas mais avançadas como 'labels'."
             }
         ],
         challenge: {
@@ -576,6 +649,25 @@ console.log(saida); // [4, 10, 16]`
 } else {
   // ...
 }`
+                },
+                {
+                    title: '💡 Versão com Função (Bónus)',
+                    description: 'Uma ótima forma de tornar o código reutilizável é envolvê-lo numa função. Isto prepara-nos para o próximo módulo sobre Funções!',
+                    code: `function fizzBuzz(limite) {
+  for (let i = 1; i <= limite; i++) {
+    if (i % 15 === 0) {
+      console.log("FizzBuzz");
+    } else if (i % 3 === 0) {
+      console.log("Fizz");
+    } else if (i % 5 === 0) {
+      console.log("Buzz");
+    } else {
+      console.log(i);
+    }
+  }
+}
+
+fizzBuzz(100);`
                 }
             ]
         },
@@ -591,6 +683,12 @@ console.log(saida); // [4, 10, 16]`
               options: ["`**` (Exponenciação)", "`++` (Incremento)", "`%` (Módulo)", "`&&` (E Lógico)"],
               correctAnswerIndex: 2,
               explanation: "O operador Módulo (`%`) é a chave para determinar se um número é múltiplo de outro, ao verificar se o resto da divisão é zero."
+            },
+            {
+                question: "No desafio FizzBuzz, o que deve ser impresso para o número 30?",
+                options: ["'Fizz'", "'Buzz'", "'FizzBuzz'", "30"],
+                correctAnswerIndex: 2,
+                explanation: "30 é múltiplo de 3 (30 / 3 = 10) e também de 5 (30 / 5 = 6). Portanto, a condição para imprimir 'FizzBuzz' é satisfeita."
             }
         ],
         challenge: {

@@ -14,6 +14,35 @@ const FunctionsIllustration = () => React.createElement(
     React.createElement('text', { x: "100", y: "55", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "return a + b")
 );
 
+const ParametersIllustration = () => React.createElement(
+  'svg',
+  { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-md h-auto text-lightest-slate" },
+  // Machine Body
+  React.createElement('rect', { x: "50", y: "10", width: "100", height: "80", fill: "#112240", stroke: "#233554", rx: "5" }),
+  React.createElement('text', { x: "100", y: "55", textAnchor: "middle", fontSize: "8", fill: "#ccd6f6" }, "function body"),
+  
+  // Regular Param
+  React.createElement('path', { d: "M 20 25 L 50 25", stroke: "#a8b2d1", strokeWidth: "2" }),
+  React.createElement('text', { x: "35", y: "20", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Param 'a'"),
+  
+  // Default Param
+  React.createElement('path', { d: "M 20 45 L 50 45", stroke: "#a8b2d1", strokeWidth: "2" }),
+  React.createElement('text', { x: "35", y: "40", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Param 'b' (default)"),
+  React.createElement('rect', { x: "10", y: "41", width: "10", height: "8", fill: "#64ffda", opacity: "0.5" }),
+
+  // Rest Param
+  React.createElement('path', { d: "M 20 70 L 50 70", stroke: "#a8b2d1", strokeWidth: "2" }),
+  React.createElement('text', { x: "35", y: "65", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "Rest '...c'"),
+  React.createElement('circle', { cx: "15", cy: "70", r: "2", fill: "#64ffda" }),
+  React.createElement('circle', { cx: "22", cy: "70", r: "2", fill: "#64ffda" }),
+  React.createElement('circle', { cx: "29", cy: "70", r: "2", fill: "#64ffda" }),
+
+  // Output
+  React.createElement('path', { d: "M 150 50 L 180 50", stroke: "#a8b2d1", strokeWidth: "2" }),
+  React.createElement('text', { x: "165", y: "45", textAnchor: "middle", fontSize: "8", fill: "#a8b2d1" }, "return")
+);
+
+
 const ArrowFunctionIllustration = () => React.createElement(
     'svg',
     { viewBox: "0 0 200 100", xmlns: "http://www.w3.org/2000/svg", className: "w-full max-w-sm h-auto text-lightest-slate" },
@@ -151,6 +180,12 @@ console.log(valorDevolvido); // Imprime undefined`
           options: ['Nenhuma, são a mesma coisa.', 'Parâmetro é o valor, argumento é o nome.', 'Parâmetro é o nome na declaração da função, argumento é o valor passado na chamada.', 'Argumentos são sempre números.'],
           correctAnswerIndex: 2,
           explanation: 'Parâmetros são as "variáveis" na definição da função, enquanto argumentos são os "valores" que preenchem esses parâmetros quando a função é chamada.'
+        },
+        {
+          question: 'No código `function teste() { console.log(5); } const res = teste();`, qual será o valor da constante `res`?',
+          options: ['`5`', '`null`', '`undefined`', 'Um erro'],
+          correctAnswerIndex: 2,
+          explanation: 'Uma função sem uma instrução `return` explícita devolve `undefined` por defeito. O `console.log` apenas imprime um valor, não o retorna da função.'
         }
       ],
       challenge: {
@@ -169,6 +204,7 @@ console.log("A área é:", area); // A área é: 50`
     {
         id: '4.2',
         title: 'Parâmetros: Detalhes e Padrões',
+        illustration: React.createElement(ParametersIllustration),
         theory: React.createElement('div', null, 
           React.createElement('p', {className: 'mb-4'}, 'Apesar de serem usados de forma intercambiável, há uma diferença técnica: `Parâmetros` são os nomes listados na definição da função (os ingredientes na receita). `Argumentos` são os valores reais passados à função quando ela é chamada (os ingredientes que vais usar).'),
           React.createElement('ul', {className: 'list-disc list-inside mb-4 pl-4 space-y-2'},
@@ -225,6 +261,12 @@ console.log(somarTudo(10, 20, 30, 40)); // 100`
                 options: ['Ignora todos os argumentos.', 'Aceita apenas o resto da divisão.', 'Agrupa todos os argumentos restantes num array.', 'Causa um erro.'],
                 correctAnswerIndex: 2,
                 explanation: 'O parâmetro Rest é uma forma conveniente de permitir que uma função aceite um número variável de argumentos, que são depois disponibilizados como um array.'
+            },
+            {
+                question: 'A declaração de função `function fn(a, ...b, c)` é válida?',
+                options: ['Sim, funciona sem problemas.', 'Não, porque o parâmetro Rest deve ser o último parâmetro.', 'Sim, mas `c` será sempre `undefined`.', 'Não, porque não se pode misturar parâmetros normais com Rest.'],
+                correctAnswerIndex: 1,
+                explanation: 'A sintaxe do parâmetro Rest exige que ele seja o último na lista de parâmetros de uma função, pois ele agrupa todos os argumentos restantes.'
             }
         ],
         challenge: {
@@ -254,6 +296,17 @@ console.log(apresentar("João", "Bem-vindo")); // Bem-vindo, João!`
           React.createElement('li', null, 'Removem a palavra-chave `function` e usam uma "seta" `=>`.'),
           React.createElement('li', null, 'Se houver apenas um parâmetro, os parênteses `()` são opcionais.'),
           React.createElement('li', null, 'Se a função tiver apenas uma linha de código que é um `return`, as chaves `{}` e a palavra `return` são opcionais (isto chama-se "retorno implícito").')
+        ),
+        React.createElement(
+            'div',
+            { className: 'mt-6 p-4 bg-lightest-navy rounded-lg border-l-4 border-slate' },
+            React.createElement('h4', { className: 'font-bold text-lightest-slate mb-2' }, '💡 Comportamento de `this`'),
+            React.createElement(
+                'p',
+                { className: 'text-sm' },
+                React.createElement('strong', null, '`this` não é redefinido'),
+                ' em arrow functions. Ele herda o `this` do escopo onde a função foi criada. Isto é ótimo para callbacks, mas pode ser problemático para métodos de objetos.'
+            )
         )
       ),
       practice: {
@@ -305,6 +358,12 @@ console.log(criarPessoa("Ana")); // { nome: "Ana" }`
           options: ['Sim, são a forma moderna e devem substituir todas as outras.', 'Não, por exemplo, o seu comportamento com `this` é diferente, o que as torna inadequadas para métodos de objetos que precisam do `this` tradicional.', 'Sim, exceto para funções muito longas.', 'Não, porque são mais lentas.'],
           correctAnswerIndex: 1,
           explanation: 'As Arrow Functions não têm o seu próprio `this`, elas herdam-no do escopo exterior. Isto é ótimo para callbacks, mas problemático para métodos de objetos ou construtores onde se espera que `this` se refira ao próprio objeto.'
+        },
+        {
+            question: 'Quando é obrigatório usar chaves `{}` numa arrow function?',
+            options: ['Sempre.', 'Apenas quando tem mais de um parâmetro.', 'Quando o corpo da função tem mais do que uma instrução.', 'Nunca.'],
+            correctAnswerIndex: 2,
+            explanation: 'Se o corpo da função precisar de múltiplas linhas para a sua lógica, é necessário usar chaves `{}`. Nestes casos, se quiseres retornar um valor, tens de usar a palavra-chave `return` explicitamente.'
         }
       ],
       challenge: {
@@ -386,6 +445,12 @@ console.log("Fora da função:", animal);`
           options: ["'Dentro da função: Cão'", "'Dentro da função: Gato'", "'Dentro da função: undefined'", "Um erro"],
           correctAnswerIndex: 1,
           explanation: "Se não houvesse uma declaração local de `animal`, a função procuraria no escopo superior (o global) e encontraria a variável `animal` com o valor 'Gato'."
+        },
+        {
+            question: 'Se uma variável não é encontrada no escopo de uma função, o que o JavaScript faz a seguir?',
+            options: ['Lança um `ReferenceError` imediatamente.', 'Procura no escopo da função "mãe", continuando até ao escopo global.', 'Cria a variável automaticamente.', 'Retorna `null`.'],
+            correctAnswerIndex: 1,
+            explanation: 'Este mecanismo é a "scope chain" (cadeia de escopos). O JavaScript procura a variável no escopo atual e vai subindo na hierarquia até a encontrar ou até chegar ao escopo global.'
         }
       ],
       challenge: {
@@ -474,6 +539,12 @@ console.log(triplicar(10)); // 30`
                 options: ['Sim, porque aceita uma função (callback) como argumento.', 'Não, porque apenas funciona em arrays.', 'Não, porque retorna um novo array.', 'Sim, porque usa `this`.'],
                 correctAnswerIndex: 0,
                 explanation: 'Qualquer função que aceite outra função como argumento ou retorne uma função é, por definição, uma Higher-Order Function. `.map`, `.filter`, `.reduce`, `.forEach` são todos exemplos.'
+            },
+            {
+                question: 'Qual das seguintes opções descreve uma Higher-Order Function (HOF)?',
+                options: ['Uma função que só aceita números.', 'Uma função que retorna `undefined`.', 'Uma função que opera sobre outras funções (aceitando-as como argumentos ou retornando-as).', 'Uma função declarada com `let`.'],
+                correctAnswerIndex: 2,
+                explanation: 'As HOFs são um pilar da programação funcional e permitem abstrair ações, tornando o código mais modular e reutilizável.'
             }
         ],
         challenge: {
@@ -539,8 +610,8 @@ meuContador(); // 2
 // console.log(contador); // ReferenceError: contador is not defined`
                 },
                 {
-                    title: 'Exemplo 3: A Armadilha - Loops e Closures',
-                    description: 'Um erro clássico. Se usássemos `var` no loop, todas as funções de timeout teriam um closure sobre a MESMA variável `i`, que no final teria o valor 3. Com `let`, cada iteração cria um novo escopo de bloco, e cada função tem um closure sobre uma `i` diferente.',
+                    title: 'Exemplo 3: A Armadilha - Loops e Closures (Pergunta de Entrevista!)',
+                    description: 'Um erro clássico e uma pergunta de entrevista muito comum! Se usássemos `var` no loop, todas as funções de timeout teriam um closure sobre a MESMA variável `i`, que no final teria o valor 3. Com `let`, cada iteração cria um novo escopo de bloco, e cada função tem um closure sobre uma `i` diferente, resolvendo o problema.',
                     code: `for (let i = 0; i < 3; i++) {
   setTimeout(function() {
     console.log(i); // Imprime 0, 1, 2 (com 1 segundo de intervalo)
@@ -561,6 +632,12 @@ meuContador(); // 2
               options: ["Não, ambos irão partilhar a mesma variável `contador`.", "Sim, cada chamada a `criarContador` cria um novo escopo e uma nova variável `contador` privada.", "Dará um erro na segunda chamada.", "Sim, mas só o primeiro irá funcionar."],
               correctAnswerIndex: 1,
               explanation: "Cada execução de `criarContador` cria um novo ambiente léxico (um novo 'saco'). Portanto, `const c1 = criarContador()` e `const c2 = criarContador()` criam dois contadores completamente independentes, cada um com a sua própria variável `contador` privada."
+            },
+            {
+                question: 'Qual é um dos principais casos de uso prático para closures?',
+                options: ['Criar loops `for`.', 'Permitir o encapsulamento e a criação de "variáveis privadas".', 'Operações matemáticas básicas.', 'Substituir o `if/else`.'],
+                correctAnswerIndex: 1,
+                explanation: 'Como as variáveis do escopo exterior não são acessíveis de fora, a não ser através da função retornada, os closures são o mecanismo que permite emular variáveis privadas em JavaScript.'
             }
         ],
         challenge: {
