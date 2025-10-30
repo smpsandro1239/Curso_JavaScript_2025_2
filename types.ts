@@ -9,7 +9,7 @@ export interface Question {
 
 export interface PracticeExample {
   title: string;
-  description: string;
+  description: ReactNode;
   code: string;
 }
 
@@ -30,6 +30,7 @@ export interface Lesson {
   };
   quiz: Question[];
   challenge?: Challenge;
+  glossary?: ReactNode;
 }
 
 export interface Module {

@@ -175,13 +175,59 @@ export const module1: Module = {
           'p',
           null,
           'Resumindo, JavaScript é uma linguagem de programação que permite criar conteúdo dinâmico, controlar multimédia, animar imagens e praticamente tudo o resto. É o que torna os websites modernos interativos e funcionais.'
+        ),
+        React.createElement(
+            'div',
+            { className: 'mt-8 space-y-6' },
+            React.createElement(
+                'div',
+                { className: 'p-4 bg-lightest-navy rounded-lg border-l-4 border-slate' },
+                React.createElement('h4', { className: 'font-bold text-lightest-slate mb-2' }, 'Um Pouco de História'),
+                React.createElement(
+                    'p',
+                    { className: 'text-sm' },
+                    'O JavaScript foi criado em apenas 10 dias por Brendan Eich na Netscape, em 1995. Inicialmente chamado de LiveScript, o seu objetivo era ser uma linguagem de "scripting" simples para o navegador Netscape Navigator. Rapidamente se tornou a linguagem padrão para tornar páginas web interativas.'
+                )
+            ),
+            React.createElement(
+                'div',
+                { className: 'p-4 bg-yellow-900/30 rounded-lg border-l-4 border-yellow-400' },
+                React.createElement('h4', { className: 'font-bold text-yellow-300 mb-2' }, 'Sabias que? JavaScript ≠ Java'),
+                React.createElement(
+                    'p',
+                    { className: 'text-sm' },
+                    'Apesar do nome, JavaScript e Java são linguagens completamente diferentes. A analogia comum é: "Java está para JavaScript assim como Carro está para Carrapato". São mundos distintos!'
+                )
+            ),
+            React.createElement(
+                'div',
+                null,
+                React.createElement('h4', { className: 'font-bold text-lightest-slate mb-2' }, 'JavaScript Fora do Navegador'),
+                React.createElement(
+                    'p',
+                    null,
+                    'Embora tenha nascido no navegador, hoje em dia o JavaScript é usado em todo o lado! Graças a ambientes como o ',
+                    React.createElement('strong', { className: 'text-green' }, 'Node.js'),
+                    ', podemos usar JavaScript para construir servidores, aplicações de desktop, controlar robôs e muito mais.'
+                )
+            )
         )
       ),
       practice: {
         examples: [
           {
             title: "Exemplo 1: O Básico - 'Olá, Mundo!'",
-            description: "O primeiro passo em qualquer linguagem é o famoso 'Olá, Mundo!'. Em JavaScript, usamos `console.log()` para imprimir mensagens na consola do navegador. É uma ferramenta essencial para depuração (debugging). Abre as ferramentas de programador do teu navegador (normalmente com F12 ou Ctrl+Shift+I) e vai ao separador 'Consola' para veres o resultado.",
+            description: React.createElement(
+                'div',
+                null,
+                React.createElement('p', null, "O primeiro passo em qualquer linguagem é o famoso 'Olá, Mundo!'. Em JavaScript, usamos `console.log()` para imprimir mensagens na consola do navegador. É uma ferramenta essencial para depuração (debugging)."),
+                React.createElement(
+                    'div',
+                    { className: 'my-4 p-3 bg-lightest-navy border-l-4 border-green rounded-r-lg' },
+                    React.createElement('p', { className: 'font-bold text-lightest-slate' }, "⚠️ Abre a Consola!"),
+                    React.createElement('p', { className: 'text-sm mt-1' }, "Para veres o resultado deste e dos próximos exemplos, precisas de ter a consola do navegador aberta. Pressiona F12 ou Ctrl+Shift+I e vai ao separador 'Consola'.")
+                )
+            ),
             code: `console.log('Olá, Mundo!');`
           },
           {
@@ -548,7 +594,35 @@ const titulo = document.getElementById("titulo-principal");
 botao.addEventListener('click', function() {
   titulo.textContent = "Fui clicado!";
 });`
-      }
+      },
+      glossary: React.createElement(
+        'dl',
+        { className: 'bg-light-navy p-6 rounded-lg shadow-lg space-y-4' },
+        React.createElement(
+            'div',
+            null,
+            React.createElement('dt', { className: 'font-bold text-green' }, 'Consola (Console)'),
+            React.createElement('dd', { className: 'text-sm text-light-slate ml-4' }, 'Uma ferramenta no navegador que permite aos programadores ver mensagens (logs), executar código JavaScript e depurar problemas.')
+        ),
+        React.createElement(
+            'div',
+            null,
+            React.createElement('dt', { className: 'font-bold text-green' }, 'Variável (Variable)'),
+            React.createElement('dd', { className: 'text-sm text-light-slate ml-4' }, 'Um "contentor" com um nome que guarda um valor (como um número ou texto) para ser usado mais tarde no código.')
+        ),
+        React.createElement(
+            'div',
+            null,
+            React.createElement('dt', { className: 'font-bold text-green' }, 'Depuração (Debugging)'),
+            React.createElement('dd', { className: 'text-sm text-light-slate ml-4' }, 'O processo de encontrar e corrigir erros (bugs) num programa de computador.')
+        ),
+        React.createElement(
+            'div',
+            null,
+            React.createElement('dt', { className: 'font-bold text-green' }, 'Sintaxe (Syntax)'),
+            React.createElement('dd', { className: 'text-sm text-light-slate ml-4' }, 'As regras gramaticais de uma linguagem de programação. Se a sintaxe estiver incorreta, o programa não consegue ser executado.')
+        )
+      )
     }
   ]
 };

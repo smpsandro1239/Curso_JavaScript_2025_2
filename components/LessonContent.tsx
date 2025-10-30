@@ -61,7 +61,7 @@ export const LessonContent: React.FC<LessonContentProps> = ({ lesson }) => {
             {lesson.practice.examples.map((example, index) => (
                 <div key={index}>
                     <h3 className="text-lg font-bold text-light-slate mb-2">{example.title}</h3>
-                    <p className="mb-4">{example.description}</p>
+                    <div className="mb-4 prose prose-invert max-w-none text-light-slate">{example.description}</div>
                     <CodeBlock code={example.code} />
                 </div>
             ))}
@@ -79,6 +79,13 @@ export const LessonContent: React.FC<LessonContentProps> = ({ lesson }) => {
             <h2 className="text-2xl font-bold text-lightest-slate mb-4 border-l-4 border-green pl-4">Desafio Prático</h2>
             <p className="mb-6">A melhor forma de aprender é a praticar. Tenta resolver o seguinte problema.</p>
             <ChallengeBlock challenge={lesson.challenge} />
+        </section>
+      )}
+
+      {lesson.glossary && (
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold text-lightest-slate mb-4 border-l-4 border-green pl-4">Glossário do Módulo</h2>
+          {lesson.glossary}
         </section>
       )}
 
