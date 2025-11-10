@@ -1,20 +1,58 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+  <img src="project-banner.svg" alt="Project Banner" width="1200" height="475"/>
 </div>
 
-# Run and deploy your AI Studio app
+# AI Studio Project
 
-This contains everything you need to run your app locally.
+This project is a web application that leverages the power of the Gemini API to provide intelligent features. It's designed to be a starting point for building your own AI-powered applications.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1KzXD6AqI8hbVeVhX0CWN6rJvNoDZ79e6
+## ✨ Features
 
-## Run Locally
+- **AI-Powered:** Integrates with the Gemini API for advanced AI capabilities.
+- **Modern Tech Stack:** Built with React, TypeScript, and Vite for a fast and efficient development experience.
+- **Easy to Run:** Simple setup and execution process.
 
-**Prerequisites:**  Node.js
+## 🚀 Getting Started
 
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v14 or later)
+- [npm](https://www.npmjs.com/)
+
+### Installation
+
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/your-username/your-repository.git
+    cd your-repository
+    ```
+2.  **Install dependencies:**
+    ```sh
+    npm install
+    ```
+3.  **Set up your environment variables:**
+    Create a `.env.local` file in the root of your project and add your Gemini API key:
+    ```
+    GEMINI_API_KEY=your_gemini_api_key
+    ```
+
+### Running the application
+
+```sh
+npm run dev
+```
+
+The application will be available at `http://localhost:3000`.
+
+## 💻 Technologies Used
+
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Gemini API](https://ai.google.dev/)
+
+## 🔗 Links
+
+- **View your app in AI Studio:** [AI Studio](https://aistudio.google.com/apps/drive/1KzXD6AqI8hbVeVhX0CWN6rJvNoDZ79e6?showPreview=true)
